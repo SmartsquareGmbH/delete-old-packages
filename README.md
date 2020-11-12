@@ -33,7 +33,7 @@ with:
 ```yaml
 uses: smartsquaregmbh/delete-old-packages@v0.0.1
 with:
-  version-pattern: "^\d+\.\d+\.\d+-RC\d+$"
+  version-pattern: "^\\d+\\.\\d+\\.\\d+-RC\\d+$"
   names: |
     package
 ```
