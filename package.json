@@ -9,6 +9,7 @@
   "private": true,
   "scripts": {
     "start": "node src/index.js",
+    "build": "ncc build src/index.js --license LICENSE.txt --target es2015 --minify",
     "lint": "eslint --ext .js src --max-warnings 0",
     "lint:fix": "eslint --ext .js src --max-warnings 0 --fix"
   },
