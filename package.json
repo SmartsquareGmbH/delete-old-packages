@@ -1,0 +1,26 @@
+{
+  "name": "delete-old-packages",
+  "version": "0.0.1",
+  "description": "Github Action for deleting old packages",
+  "main": "dist/index.js",
+  "repository": "https://github.com/SmartsquareGmbH/delete-old-packages",
+  "author": "Ruben Gees",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js",
+    "lint": "eslint --ext .js src --max-warnings 0",
+    "lint:fix": "eslint --ext .js src --max-warnings 0 --fix"
+  },
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.25.1",
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.1.2"
+  }
+}
