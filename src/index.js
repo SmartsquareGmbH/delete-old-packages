@@ -12,6 +12,7 @@ function getAllInput() {
     getInput("names")
       ? getInput("names")
           .split("\n")
+          .map((it) => it.trim())
           .filter((it) => it !== "")
       : "",
     getInput("version-pattern") ? getInput("version-pattern") : /^.+$/,
