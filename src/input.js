@@ -6,6 +6,8 @@ module.exports = class Input {
       throw new Error("repo cannot be empty")
     } else if (!names || names.length === 0) {
       throw new Error("names cannot be empty")
+    } else if (names.length > 20) {
+      throw new Error("names cannot contain more than 20 items")
     } else if (!versionPattern || versionPattern === "") {
       throw new Error("version-pattern cannot be empty")
     } else if (!Number.isInteger(keep) || keep < 0 || keep > 20) {

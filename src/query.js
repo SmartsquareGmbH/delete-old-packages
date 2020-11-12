@@ -6,16 +6,12 @@ async function getPackages(options) {
       repository(owner: $owner, name: $repo) {
         name
         packages(first: 20, names: $names) {
-          edges {
-            node {
-              name
-              versions(last: 20, orderBy: {field: CREATED_AT, direction: DESC}) {
-                edges {
-                  node {
-                    id
-                    version
-                  }
-                }
+          nodes {
+            name
+            versions(last: 20, orderBy: {field: CREATED_AT, direction: DESC}) {
+              nodes {
+                id
+                version
               }
             }
           }
@@ -33,9 +29,7 @@ async function getPackages(options) {
     },
   })
 
-  const packages = result.repository.packages.edges.map((it) => it.node)
-
-  return packages.map((it) => ({ ...it, versions: it.versions.edges.map((version) => version.node) }))
+  return result.repository.packages.nodes.map((it) => ({ ...it, versions: it.versions.nodes }))
 }
 
 async function deletePackage(id, options) {
