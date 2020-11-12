@@ -8,8 +8,8 @@ module.exports = class Input {
       throw new Error("names cannot be empty")
     } else if (!versionPattern || versionPattern === "") {
       throw new Error("version-pattern cannot be empty")
-    } else if (!Number.isInteger(keep) || keep < 0) {
-      throw new Error("keep must be an integer above or equal to 0")
+    } else if (!Number.isInteger(keep) || keep < 0 || keep > 20) {
+      throw new Error("keep must be an integer between 0 and 20 (inclusive)")
     } else if (!token || token === "") {
       throw new Error("token cannot be empty")
     }

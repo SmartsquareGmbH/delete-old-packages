@@ -5,7 +5,7 @@ async function getPackages(options) {
     query getVersions($owner: String!, $repo: String!, $names: [String!]!) {
       repository(owner: $owner, name: $repo) {
         name
-        packages(first: 1, names: $names) {
+        packages(first: 20, names: $names) {
           edges {
             node {
               name
