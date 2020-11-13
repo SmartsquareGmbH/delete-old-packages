@@ -21,7 +21,7 @@ but targets a different use case.
 > Delete old versions of the packages "package-1" and "package-2".
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.0.1
+uses: smartsquaregmbh/delete-old-packages@v0.0.2
 with:
   names: |
     package-1
@@ -31,7 +31,7 @@ with:
 > Delete old versions in the form of "1.0.0-RC1" of the package "package"
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.0.1
+uses: smartsquaregmbh/delete-old-packages@v0.0.2
 with:
   version-pattern: "^\\d+\\.\\d+\\.\\d+-RC\\d+$" # The regex needs to be escaped!
   names: |
@@ -41,7 +41,7 @@ with:
 > Delete old versions of the package "package" but keep at least 5 versions
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.0.1
+uses: smartsquaregmbh/delete-old-packages@v0.0.2
 with:
   keep: 5
   names: |
