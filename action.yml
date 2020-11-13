@@ -4,36 +4,36 @@ description: Deletes old package versions
 
 inputs:
   owner:
-    description: >
+    description: >-
       Owner of the repo containing the package(s).
       Defaults to the owner of the repo running the action.
     required: false
 
   repo:
-    description: >
+    description: >-
       Repo containing the package(s).
       Defaults to the repo running the action.
     required: false
 
   names:
-    description: >
+    description: >-
       Names of the packages.
     required: true
 
   version-pattern:
-    description: >
+    description: >-
       Regex pattern of the versions.
       Defaults to true for all versions.
     required: false
 
   keep:
-    description: >
+    description: >-
       Number of versions to exclude from deletions.
       Defaults to 2.
     required: false
 
   token:
-    description: >
+    description: >-
       Token with the necessary scopes to delete package versions.
       If num-old-versions-to-delete is used the token also needs the read packages scope.
       Defaults to github.token scoped to the repo running the action. To delete package versions
