@@ -27,6 +27,13 @@ async function main() {
   core.info("Fetching packages")
 
   const packages = await getPackages(input)
+
+  await core.group(`Found ${packages.length} packages (before filtering)`, async () => {
+    packages.forEach((it) => {
+      core.info(`${it.name} with ${it.versions.length} versions`)
+    })
+  })
+
   const processedPackages = process(packages, input)
 
   if (processedPackages.length <= 0) {
