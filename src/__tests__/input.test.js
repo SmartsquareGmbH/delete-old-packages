@@ -1,7 +1,7 @@
 const Input = require("../input")
 
 test("valid input", () => {
-  const input = new Input("owner", "repo", ["package"], ".*", 2, "token")
+  const input = new Input("owner", "repo", ["package"], ".*", "2", "token")
 
   expect(input.owner).toBe("owner")
 })
