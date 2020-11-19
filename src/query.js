@@ -8,7 +8,7 @@ async function getPackages(options) {
         packages(first: 20, names: $names) {
           nodes {
             name
-            versions(last: 20, orderBy: {field: CREATED_AT, direction: DESC}) {
+            versions(last: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
               nodes {
                 id
                 version
