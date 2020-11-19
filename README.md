@@ -26,7 +26,7 @@ applying the `version-pattern` and `keep` filters on them and then deleting the 
 > Delete old versions of the packages "package-1" and "package-2".
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.1.0
+uses: smartsquaregmbh/delete-old-packages@v0.1.1
 with:
   names: |
     package-1
@@ -36,7 +36,7 @@ with:
 > Delete old versions in the form of "1.0.0-RC1" of the package "package"
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.1.0
+uses: smartsquaregmbh/delete-old-packages@v0.1.1
 with:
   version-pattern: "^\\d+\\.\\d+\\.\\d+-RC\\d+$" # The regex needs to be escaped!
   names: |
@@ -46,7 +46,7 @@ with:
 > Delete old versions of the package "package" but keep at least 5 versions
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.1.0
+uses: smartsquaregmbh/delete-old-packages@v0.1.1
 with:
   keep: 5
   names: |
