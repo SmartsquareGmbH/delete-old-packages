@@ -5,6 +5,11 @@ Github action for deleting old versions of packages in the Github package regist
 This is very similar to [actions/delete-package-versions](https://github.com/actions/delete-package-versions)
 but targets a different use case.
 
+The actions works by getting at most 20 packages with at most the oldest 100 versions,
+applying the `version-pattern` and `keep` filters on them and then deleting the matching versions.
+
+> If you have more than 100 versions and none of the 100 oldest versions match, no packages will be deleted!
+
 ### Inputs
 
 | Name              | Description                                                | Required           | Default       |
