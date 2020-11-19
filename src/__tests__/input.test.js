@@ -69,7 +69,7 @@ test("invalid keep", () => {
   }).toThrow()
 
   expect(() => {
-    new Input("owner", "repo", ["package"], ".*", 21, "token")
+    new Input("owner", "repo", ["package"], ".*", 101, "token")
   }).toThrow()
 })
 

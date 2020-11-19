@@ -10,8 +10,8 @@ module.exports = class Input {
       throw new Error("names cannot contain more than 20 items")
     } else if (!versionPattern || versionPattern === "") {
       throw new Error("version-pattern cannot be empty")
-    } else if (!Number.isInteger(Number(keep)) || Number(keep) < 0 || Number(keep) > 20) {
-      throw new Error("keep must be an integer between 0 and 20 (inclusive)")
+    } else if (!Number.isInteger(Number(keep)) || Number(keep) < 0 || Number(keep) > 100) {
+      throw new Error("keep must be an integer between 0 and 100 (inclusive)")
     } else if (!token || token === "") {
       throw new Error("token cannot be empty")
     }
