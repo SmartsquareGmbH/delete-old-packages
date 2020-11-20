@@ -1,5 +1,5 @@
 module.exports = class Input {
-  constructor(owner, repo, names, versionPattern, keep, token) {
+  constructor(owner, repo, names, versionPattern, keep, token, version = null) {
     if (!owner || owner === "") {
       throw new Error("owner cannot be empty")
     } else if (!repo || repo === "") {
@@ -20,6 +20,7 @@ module.exports = class Input {
     this.repo = repo
     this.names = names
     this.token = token
+    this.version = version
 
     this.keep = Number(keep)
 
