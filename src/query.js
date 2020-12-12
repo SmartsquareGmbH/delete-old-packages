@@ -48,7 +48,6 @@ async function getPackages(options) {
   })
 
   // Normalize results of each query so that we get a `versions` array for each package in either case.
-  let packages
   if (options.version) {
     return result.repository.packages.nodes.map((it) => ({ ...it, versions: [it.version] }))
   } else {

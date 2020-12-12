@@ -5,23 +5,7 @@ const Input = require("./input.js")
 const { getPackages, deletePackage } = require("./query.js")
 const { process } = require("./process.js")
 
-const DEFAULT_VERSION_PATTERN = /^.+$/
-const DEFAULT_KEEP = 2
-
 function getAllInput() {
-  // Use `version` to determine two kinds of logic throughout.
-  const version = getInput("version") ? getInput("version") : null
-
-  // Ignore keep and version-pattern settings if version is set
-  let keep, versionPattern
-  if (version) {
-    keep = 0
-    versionPattern = DEFAULT_VERSION_PATTERN
-  } else {
-    keep = getInput("keep") ? getInput("keep") : DEFAULT_KEEP
-    versionPattern = getInput("version-pattern") ? getInput("version-pattern") : DEFAULT_VERSION_PATTERN
-  }
-
   return new Input(
     getInput("owner") ? getInput("owner") : context.repo.owner,
     getInput("repo") ? getInput("repo") : context.repo.repo,
@@ -31,9 +15,9 @@ function getAllInput() {
           .map((it) => it.trim())
           .filter((it) => it !== "")
       : "",
-    version,
-    versionPattern,
-    keep,
+    getInput("version"),
+    getInput("version-pattern"),
+    getInput("keep"),
     getInput("token")
   )
 }
