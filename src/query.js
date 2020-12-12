@@ -50,12 +50,10 @@ async function getPackages(options) {
   // Normalize results of each query so that we get a `versions` array for each package in either case.
   let packages
   if (options.version) {
-    packages = result.repository.packages.nodes.map((it) => ({ ...it, versions: [it.version] }))
+    return result.repository.packages.nodes.map((it) => ({ ...it, versions: [it.version] }))
   } else {
-    packages = result.repository.packages.nodes.map((it) => ({ ...it, versions: it.versions.nodes }))
+    return result.repository.packages.nodes.map((it) => ({ ...it, versions: it.versions.nodes }))
   }
-
-  return packages
 }
 
 async function deletePackage(id, options) {
