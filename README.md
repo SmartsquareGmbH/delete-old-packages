@@ -6,10 +6,9 @@ This is very similar to [actions/delete-package-versions](https://github.com/act
 but targets a different use case.
 
 The action works by getting at most 20 packages with at most the oldest 100 versions,
-applying the `version-pattern` and `keep` filters on them and then deleting the matching versions.
+applying either the `version` or `version-pattern` and `keep` filters on them and then deleting the matching versions.
 
 > If you have more than 100 versions and none of the 100 oldest versions match, no packages will be deleted!
-> If you provide a `version` key, then `keep` and `version-pattern` will be ignored.
 
 ### Inputs
 
@@ -22,6 +21,8 @@ applying the `version-pattern` and `keep` filters on them and then deleting the 
 | `version`         | Specific version to delete                                 | :x:                | null          |
 | `keep`            | Number of versions to exclude from deletions               | :x:                | 2             |
 | `token`           | Token with the necessary scopes to delete package versions | :x:                | Set by Github |
+
+> If you provide a `version` key, then `keep` and `version-pattern` must be empty or an error will be thrown.
 
 ### Example usage
 
