@@ -15,8 +15,9 @@ function getAllInput() {
           .map((it) => it.trim())
           .filter((it) => it !== "")
       : "",
-    getInput("version-pattern") ? getInput("version-pattern") : /^.+$/,
-    getInput("keep") ? getInput("keep") : 2,
+    getInput("version"),
+    getInput("version-pattern"),
+    getInput("keep"),
     getInput("token")
   )
 }

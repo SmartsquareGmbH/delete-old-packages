@@ -1,9 +1,37 @@
 const Input = require("../input")
 
-test("valid input", () => {
-  const input = new Input("owner", "repo", ["package"], ".*", "2", "token")
+test("valid input - no version", () => {
+  const input = new Input("owner", "repo", ["package"], "", ".*", "2", "token")
 
   expect(input.owner).toBe("owner")
+  expect(input.version).toBeNull()
+})
+
+test("valid input - with version", () => {
+  const input = new Input("owner", "repo", ["package"], "foo-bar", "", "", "token")
+
+  expect(input.owner).toBe("owner")
+  expect(input.version).toBe("foo-bar")
+  expect(input.versionPattern).toBeNull()
+  expect(input.keep).toBeNull()
+})
+
+test("invalid input - with version and keep", () => {
+  expect(() => {
+    new Input("owner", "repo", ["package"], "foo-bar", "", "2", "token")
+  }).toThrow()
+})
+
+test("invalid input - with version and version-pattern", () => {
+  expect(() => {
+    new Input("owner", "repo", ["package"], "foo-bar", ".*", "", "token")
+  }).toThrow()
+})
+
+test("invalid input - with version and version-pattern and keep", () => {
+  expect(() => {
+    new Input("owner", "repo", ["package"], "foo-bar", ".*", "2", "token")
+  }).toThrow()
 })
 
 test("invalid owner", () => {
