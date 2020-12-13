@@ -36,19 +36,19 @@ test("invalid input - with version and version-pattern and keep", () => {
 
 test("invalid owner", () => {
   expect(() => {
-    new Input("", "repo", ["package"], ".*", 2, "token")
+    new Input("", "repo", ["package"], "", ".*", 2, "token")
   }).toThrow()
 })
 
 test("invalid repo", () => {
   expect(() => {
-    new Input("owner", "", ["package"], ".*", 2, "token")
+    new Input("owner", "", ["package"], "", ".*", 2, "token")
   }).toThrow()
 })
 
 test("invalid names", () => {
   expect(() => {
-    new Input("owner", "repo", [], ".*", 2, "token")
+    new Input("owner", "repo", [], "", ".*", 2, "token")
   }).toThrow()
 
   expect(() => {
@@ -87,22 +87,22 @@ test("invalid names", () => {
 
 test("invalid regex", () => {
   expect(() => {
-    new Input("owner", "repo", ["package"], "[", 2, "token")
+    new Input("owner", "repo", ["package"], "", "[", 2, "token")
   }).toThrow()
 })
 
 test("invalid keep", () => {
   expect(() => {
-    new Input("owner", "repo", ["package"], ".*", -1, "token")
+    new Input("owner", "repo", ["package"], "", ".*", -1, "token")
   }).toThrow()
 
   expect(() => {
-    new Input("owner", "repo", ["package"], ".*", 101, "token")
+    new Input("owner", "repo", ["package"], "", ".*", 101, "token")
   }).toThrow()
 })
 
 test("invalid token", () => {
   expect(() => {
-    new Input("owner", "repo", ["package"], ".*", 2, "")
+    new Input("owner", "repo", ["package"], "", ".*", 2, "")
   }).toThrow()
 })
