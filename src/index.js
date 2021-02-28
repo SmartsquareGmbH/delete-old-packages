@@ -1,14 +1,13 @@
 const core = require("@actions/core")
 const { getInput, setFailed } = require("@actions/core")
 const { context } = require("@actions/github")
-const Input = require("./input.js")
-const { getPackages, deletePackage } = require("./query.js")
+const UserInput = require("./strategy/user-strategy.js")
+const OrganizationInput = require("./strategy/organization-strategy.js")
+const RepoInput = require("./strategy/repo-strategy.js")
 const { process } = require("./process.js")
 
-function getAllInput() {
-  return new Input(
-    getInput("owner") ? getInput("owner") : context.repo.owner,
-    getInput("repo") ? getInput("repo") : context.repo.repo,
+function getStrategyFromInput() {
+  const commonArgs = [
     getInput("names")
       ? getInput("names")
           .split("\n")
@@ -18,16 +17,36 @@ function getAllInput() {
     getInput("version"),
     getInput("version-pattern"),
     getInput("keep"),
-    getInput("token")
-  )
+    getInput("token"),
+  ]
+
+  if (getInput("user")) {
+    if (getInput("organization") || getInput("owner") || getInput("repo")) {
+      throw new Error("When user is provided, organization and owner/repo must not be specified")
+    }
+
+    return new UserInput(getInput("user"), ...commonArgs)
+  } else if (getInput("organization")) {
+    if (getInput("user") || getInput("owner") || getInput("repo")) {
+      throw new Error("When organization is provided, user and owner/repo must not be specified")
+    }
+
+    return new OrganizationInput(getInput("organization"), ...commonArgs)
+  } else {
+    return new RepoInput(
+      getInput("owner") ? getInput("owner") : context.repo.owner,
+      getInput("repo") ? getInput("repo") : context.repo.repo,
+      ...commonArgs
+    )
+  }
 }
 
 async function main() {
-  const input = getAllInput()
+  const strategy = getStrategyFromInput()
 
   core.info("Fetching packages")
 
-  const packages = await getPackages(input)
+  const packages = await strategy.queryPackages()
 
   await core.group(`Found ${packages.length} packages (before filtering)`, async () => {
     packages.forEach((it) => {
@@ -35,7 +54,7 @@ async function main() {
     })
   })
 
-  const processedPackages = process(packages, input)
+  const processedPackages = process(packages, strategy)
 
   if (processedPackages.length <= 0) {
     core.info("No packages to delete")
@@ -48,7 +67,7 @@ async function main() {
       processedPackages.map((it) => {
         core.info(`Deleting version ${it.version} of package ${it.name}`)
 
-        return deletePackage(it.id, input)
+        return strategy.deletePackage(it.id)
       })
     )
   })

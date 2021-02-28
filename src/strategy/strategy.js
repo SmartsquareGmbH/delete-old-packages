@@ -1,8 +1,18 @@
+const { getOctokit } = require("@actions/github")
+
 const DEFAULT_VERSION_PATTERN = /^.+$/
 const DEFAULT_KEEP = 2
 
-module.exports = class Input {
-  constructor(owner, repo, names, version, versionPattern, keep, token) {
+const deleteMutation = `
+  mutation deletePackageVersion($packageVersionId: String!) {
+    deletePackageVersion(input: {packageVersionId: $packageVersionId}) {
+      success
+    }
+  }
+`
+
+module.exports = class Strategy {
+  constructor(names, version, versionPattern, keep, token) {
     // Either (version) or (versionPattern and keep) may be provided by the user.
     // Use default (versionPattern and keep) if not specified.
     if (version) {
@@ -33,11 +43,7 @@ module.exports = class Input {
       this.version = null
     }
 
-    if (!owner || owner === "") {
-      throw new Error("owner cannot be empty")
-    } else if (!repo || repo === "") {
-      throw new Error("repo cannot be empty")
-    } else if (!names || names.length === 0) {
+    if (!names || names.length === 0) {
       throw new Error("names cannot be empty")
     } else if (names.length > 20) {
       throw new Error("names cannot contain more than 20 items")
@@ -45,9 +51,16 @@ module.exports = class Input {
       throw new Error("token cannot be empty")
     }
 
-    this.owner = owner
-    this.repo = repo
     this.names = names
     this.token = token
+  }
+
+  async deletePackage(id) {
+    await getOctokit(this.token).graphql(deleteMutation, {
+      packageVersionId: id,
+      headers: {
+        Accept: "application/vnd.github.package-deletes-preview+json",
+      },
+    })
   }
 }
