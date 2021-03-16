@@ -4,7 +4,7 @@ const { getOctokit } = require("@actions/github")
 const getMultipleVersionsQuery = `
   query getVersions($organization: String!, $names: [String!]!) {
     organization(login: $organization) {
-      packages(first: 20, names: $names, packageType: CONTAINER) {
+      packages(first: 20, names: $names) {
         nodes {
           name
           versions(last: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
@@ -22,7 +22,7 @@ const getMultipleVersionsQuery = `
 const getSingleVersionQuery = `
   query getVersion($organization: String!, $names: [String!]!, $version: String!) {
     organization(login: $organization) {
-      packages(first: 20, names: $names, packageType: CONTAINER) {
+      packages(first: 20, names: $names) {
         nodes {
           name
           version(version: $version) {
