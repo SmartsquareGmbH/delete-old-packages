@@ -36,8 +36,8 @@ const getSingleVersionQuery = `
 `
 
 module.exports = class RepoStrategy extends Input {
-  constructor(owner, repo, names, version, versionPattern, keep, token) {
-    super(names, version, versionPattern, keep, token)
+  constructor(owner, repo, names, version, versionPattern, keep, token, dryRun) {
+    super(names, version, versionPattern, keep, token, dryRun)
 
     if (!owner || owner === "") {
       throw new Error("owner cannot be empty")

@@ -1,11 +1,13 @@
-const core = require("@actions/core")
 const { getInput, setFailed } = require("@actions/core")
 const { context } = require("@actions/github")
-const UserInput = require("./strategy/user-strategy.js")
-const OrganizationInput = require("./strategy/organization-strategy.js")
-const RepoInput = require("./strategy/repo-strategy.js")
-const { process } = require("./process.js")
+const UserStrategy = require("./strategy/user-strategy.js")
+const OrganizationStrategy = require("./strategy/organization-strategy.js")
+const RepoStrategy = require("./strategy/repo-strategy.js")
+const run = require("./run.js")
 
+/**
+ * @returns {module.Strategy}
+ */
 function getStrategyFromInput() {
   const commonArgs = [
     getInput("names")
@@ -26,15 +28,15 @@ function getStrategyFromInput() {
       throw new Error("When user is provided, organization and owner/repo must not be specified")
     }
 
-    return new UserInput(getInput("user"), ...commonArgs)
+    return new UserStrategy(getInput("user"), ...commonArgs)
   } else if (getInput("organization")) {
     if (getInput("user") || getInput("owner") || getInput("repo")) {
       throw new Error("When organization is provided, user and owner/repo must not be specified")
     }
 
-    return new OrganizationInput(getInput("organization"), ...commonArgs)
+    return new OrganizationStrategy(getInput("organization"), ...commonArgs)
   } else {
-    return new RepoInput(
+    return new RepoStrategy(
       getInput("owner") ? getInput("owner") : context.repo.owner,
       getInput("repo") ? getInput("repo") : context.repo.repo,
       ...commonArgs
@@ -42,45 +44,7 @@ function getStrategyFromInput() {
   }
 }
 
-async function main() {
-  const strategy = getStrategyFromInput()
-
-  if (strategy.dryRun) {
-    core.warning("Dry run is set. No packages will be actually deleted.")
-  }
-
-  core.info("Fetching packages")
-
-  const packages = await strategy.queryPackages()
-
-  await core.group(`Found ${packages.length} packages (before filtering)`, async () => {
-    packages.forEach((it) => {
-      core.info(`${it.name} with ${it.versions.length} versions`)
-    })
-  })
-
-  const processedPackages = process(packages, strategy)
-
-  if (processedPackages.length <= 0) {
-    core.info("No packages to delete")
-
-    return
-  }
-
-  await core.group("Deleting packages", async () => {
-    await Promise.all(
-      processedPackages.map((it) => {
-        core.info(`Deleting version ${it.version} of package ${it.name}`)
-
-        return strategy.deletePackage(it.id)
-      })
-    )
-  })
-
-  core.info(`${processedPackages.length} packages deleted`)
-}
-
-main()
+run(getStrategyFromInput())
   .then()
   .catch((error) => {
     setFailed(error.message)

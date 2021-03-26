@@ -66,6 +66,10 @@ module.exports = class Strategy {
     }
   }
 
+  async queryPackages() {
+    throw new Error("Not implemented.")
+  }
+
   async deletePackage(id) {
     if (this.dryRun) return
 
