@@ -12,7 +12,7 @@ const deleteMutation = `
 `
 
 module.exports = class Strategy {
-  constructor(names, version, versionPattern, keep, token) {
+  constructor(names, version, versionPattern, keep, token, dryRun) {
     // Either (version) or (versionPattern and keep) may be provided by the user.
     // Use default (versionPattern and keep) if not specified.
     if (version) {
@@ -53,9 +53,22 @@ module.exports = class Strategy {
 
     this.names = names
     this.token = token
+
+    switch (dryRun) {
+      case "true":
+        this.dryRun = true
+        break
+      case "false":
+        this.dryRun = false
+        break
+      default:
+        throw new Error("dryRun must be either true or false")
+    }
   }
 
   async deletePackage(id) {
+    if (this.dryRun) return
+
     await getOctokit(this.token).graphql(deleteMutation, {
       packageVersionId: id,
       headers: {

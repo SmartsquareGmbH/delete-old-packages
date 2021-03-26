@@ -22,7 +22,7 @@ inputs:
 
   version:
     description: >-
-      Specific version to delete. 
+      Specific version to delete.
       Defaults to null.
     required: false
 
@@ -45,6 +45,12 @@ inputs:
       of a package outside the repo the action is running in use a Personal Access Token stored as a secret.
     required: false
     default: ${{ github.token }}
+
+  dry-run:
+    description: >-
+      If the action should only print what it would delete instead of actually deleting.
+    required: false
+    default: "false"
 
 runs:
   using: node12

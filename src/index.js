@@ -18,6 +18,7 @@ function getStrategyFromInput() {
     getInput("version-pattern"),
     getInput("keep"),
     getInput("token"),
+    getInput("dry-run"),
   ]
 
   if (getInput("user")) {
@@ -43,6 +44,10 @@ function getStrategyFromInput() {
 
 async function main() {
   const strategy = getStrategyFromInput()
+
+  if (strategy.dryRun) {
+    core.warning("Dry run is set. No packages will be actually deleted.")
+  }
 
   core.info("Fetching packages")
 
