@@ -18,6 +18,7 @@ function getStrategyFromInput() {
       : "",
     getInput("version"),
     getInput("version-pattern"),
+    getInput("semver-pattern"),
     getInput("keep"),
     getInput("token"),
     getInput("dry-run"),
