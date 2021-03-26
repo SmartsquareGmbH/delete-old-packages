@@ -16,6 +16,8 @@ table below) on them and then deleting the matching versions.
 | ----------------- | ---------------------------------------------------------- | ------------------ | ------------- |
 | `owner`           | Owner of the repo containing the package(s)                | :x:                | Set by Github |
 | `repo`            | Repo containing the package(s)                             | :x:                | Set by Github |
+| `user`            | User containing the package(s)                             | :x:                | :x:           |
+| `organization`    | Organization containing the package(s)                     | :x:                | :x:           |
 | `names`           | Names of the packages                                      | :heavy_check_mark: | :x:           |
 | `semver-pattern`  | [Semver](https://semver.org/) range of the versions        | :x:                | `^.+$`        |
 | `version-pattern` | Regex pattern of the versions                              | :x:                | :x:           |
@@ -24,13 +26,15 @@ table below) on them and then deleting the matching versions.
 | `token`           | Token with the necessary scopes to delete package versions | :x:                | Set by Github |
 | `dry-run`         | If the action should only print what it would do.          | :x:                | `false`       |
 
+> :warning: You can provide _either_ `owner` and `repo`, `user` or `organization`. An error is thrown for invalid combinations.
+
 > :warning: You can provide _either_ `version`, `semver-pattern` or `version-pattern`. An error is thrown for invalid combinations.
 
 > :warning: `keep` can not be set when `version` is set.
 
 ### Example usage
 
-> Delete old versions of the packages "package-1" and "package-2".
+> Delete old versions of the packages "package-1" and "package-2" for the current repository.
 
 ```yaml
 uses: smartsquaregmbh/delete-old-packages@v0.3.0
@@ -40,7 +44,18 @@ with:
     package-2
 ```
 
-> Delete old versions in the form of "1.0.0-RC1" of the package "package"
+> Delete old versions of the packages "package-1" and "package-2" for the organization "my-organization".
+
+```yaml
+uses: smartsquaregmbh/delete-old-packages@v0.3.0
+with:
+  organization: my-organization
+  names: |
+    package-1
+    package-2
+```
+
+> Delete old versions in the form of "1.0.0-RC1" of the package "package".
 
 ```yaml
 uses: smartsquaregmbh/delete-old-packages@v0.3.0
@@ -50,7 +65,7 @@ with:
     package
 ```
 
-> Delete old versions with a lower semver version than 2.x of the package "package"
+> Delete old versions with a lower semver version than 2.x of the package "package".
 
 ```yaml
 uses: smartsquaregmbh/delete-old-packages@v0.3.0
@@ -60,7 +75,7 @@ with:
     package
 ```
 
-> Delete old versions of the package "package" but keep at least 5 versions
+> Delete old versions of the package "package" but keep at least 5 versions.
 
 ```yaml
 uses: smartsquaregmbh/delete-old-packages@v0.3.0
@@ -70,7 +85,7 @@ with:
     package
 ```
 
-> Delete version `foo-bar` of the package "package"
+> Delete version `foo-bar` of the package "package".
 
 ```yaml
 uses: smartsquaregmbh/delete-old-packages@v0.3.0
