@@ -1,4 +1,4 @@
-const Strategy = require("../strategy/strategy.js")
+const Strategy = require("../../src/strategy/strategy.js")
 
 test("valid strategy - no version", () => {
   const strategy = new Strategy(["package"], "", ".*", "2", "token")

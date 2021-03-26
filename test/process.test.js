@@ -1,4 +1,4 @@
-const { process } = require("../process")
+const { process } = require("../src/process")
 
 test("filters correctly", () => {
   const result = process(
