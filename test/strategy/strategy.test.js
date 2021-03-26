@@ -1,53 +1,58 @@
 const Strategy = require("../../src/strategy/strategy.js")
 
 test("valid strategy - no version", () => {
-  const strategy = new Strategy(["package"], "", ".*", "2", "token", "false")
+  const strategy = new Strategy(["package"], "", ".*", "", "2", "token", "false")
+
+  expect(strategy.names).toEqual(["package"])
+  expect(strategy.version).toBeNull()
+})
+
+test("valid strategy - with semver-pattern", () => {
+  const strategy = new Strategy(["package"], "", "", ">=1.0.0", "2", "token", "false")
 
   expect(strategy.names).toEqual(["package"])
   expect(strategy.version).toBeNull()
 })
 
 test("valid strategy - with version", () => {
-  const strategy = new Strategy(["package"], "foo-bar", "", "", "token", "false")
+  const strategy = new Strategy(["package"], "foo-bar", "", "", "", "token", "false")
 
   expect(strategy.version).toEqual("foo-bar")
   expect(strategy.versionPattern).toBeNull()
   expect(strategy.keep).toBeNull()
 })
 
+test("invalid strategy - with version and semver-pattern", () => {
+  expect(() => {
+    new Strategy(["package"], "foo-bar", "", ">=1.0.0", "2", "token", "false")
+  }).toThrow()
+})
+
 test("invalid strategy - with version and keep", () => {
   expect(() => {
-    new Strategy(["package"], "foo-bar", "", "2", "token", "false")
+    new Strategy(["package"], "foo-bar", "", "", "2", "token", "false")
   }).toThrow()
 })
 
 test("invalid strategy - with version and version-pattern", () => {
   expect(() => {
-    new Strategy(["package"], "foo-bar", ".*", "", "token", "false")
+    new Strategy(["package"], "foo-bar", ".*", "", "", "token", "false")
   }).toThrow()
 })
 
 test("invalid strategy - with version and version-pattern and keep", () => {
   expect(() => {
-    new Strategy(["package"], "foo-bar", ".*", "2", "token", "false")
-  }).toThrow()
-})
-
-test("invalid owner", () => {
-  expect(() => {
-    new Strategy("", "repo", ["package"], "", ".*", 2, "token", "false")
+    new Strategy(["package"], "foo-bar", ".*", "", "2", "token", "false")
   }).toThrow()
 })
 
 test("invalid names", () => {
   expect(() => {
-    new Strategy([], "", ".*", 2, "token", "false")
+    new Strategy([], "", ".*", "", "2", "token", "false")
   }).toThrow()
 
   expect(() => {
     new Strategy(
-      "owner",
-      "repo",
       [
         "1",
         "2",
@@ -78,30 +83,36 @@ test("invalid names", () => {
   }).toThrow()
 })
 
-test("invalid regex", () => {
+test("invalid version-pattern regex", () => {
   expect(() => {
-    new Strategy(["package"], "", "[", 2, "token", "false")
+    new Strategy(["package"], "", "[", "", "2", "token", "false")
+  }).toThrow()
+})
+
+test("invalid semver-pattern", () => {
+  expect(() => {
+    new Strategy(["package"], "", "", "xyz", "2", "token", "false")
   }).toThrow()
 })
 
 test("invalid keep", () => {
   expect(() => {
-    new Strategy(["package"], "", ".*", -1, "token", "false")
+    new Strategy(["package"], "", ".*", "", "-1", "token", "false")
   }).toThrow()
 
   expect(() => {
-    new Strategy(["package"], "", ".*", 101, "token", "false")
+    new Strategy(["package"], "", ".*", "", "101", "token", "false")
   }).toThrow()
 })
 
 test("invalid token", () => {
   expect(() => {
-    new Strategy(["package"], "", ".*", 2, "", "false")
+    new Strategy(["package"], "", ".*", "", "2", "", "false")
   }).toThrow()
 })
 
 test("invalid dry-run", () => {
   expect(() => {
-    new Strategy(["package"], "", ".*", 2, "", "invalid")
+    new Strategy(["package"], "", ".*", "", "2", "token", "invalid")
   }).toThrow()
 })

@@ -36,8 +36,8 @@ const getSingleVersionQuery = `
 `
 
 module.exports = class OrganizationStrategy extends Input {
-  constructor(organization, names, version, versionPattern, keep, token, dryRun) {
-    super(names, version, versionPattern, keep, token, dryRun)
+  constructor(organization, names, version, versionPattern, semverPattern, keep, token, dryRun) {
+    super(names, version, versionPattern, semverPattern, keep, token, dryRun)
 
     if (!organization || organization === "") {
       throw new Error("organization cannot be empty")

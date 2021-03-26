@@ -25,6 +25,25 @@ test("filters correctly", () => {
   expect(result[1].version).toBe("1")
 })
 
+test("filters based on semver", () => {
+  const result = process(
+    [
+      {
+        name: "package 1",
+        versions: [{ version: "1.0.0" }, { version: "2.0.1" }, { version: "3.10.2" }],
+      },
+    ],
+    {
+      semverPattern: "^1 || >2.0.1 || >3 <=3.11",
+      keep: 0,
+    }
+  )
+
+  expect(result.length).toBe(2)
+  expect(result[0].version).toBe("1.0.0")
+  expect(result[1].version).toBe("3.10.2")
+})
+
 test("filters based on regex", () => {
   const result = process(
     [

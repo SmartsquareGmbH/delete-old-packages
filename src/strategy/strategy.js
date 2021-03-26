@@ -1,4 +1,5 @@
 const { getOctokit } = require("@actions/github")
+const semverValidRange = require("semver/ranges/valid")
 
 const DEFAULT_VERSION_PATTERN = /^.+$/
 const DEFAULT_KEEP = 2
@@ -12,11 +13,10 @@ const deleteMutation = `
 `
 
 module.exports = class Strategy {
-  constructor(names, version, versionPattern, keep, token, dryRun) {
-    // Either (version) or (versionPattern and keep) may be provided by the user.
+  constructor(names, version, versionPattern, semverPattern, keep, token, dryRun) {
+    // Either (version) or (versionPattern/semverPattern and keep) may be provided by the user.
     // Use default (versionPattern and keep) if not specified.
     if (version) {
-      // Ensure versionPattern and keep are empty.
       if (versionPattern || keep) {
         throw new Error("When version is provided, keep and version-pattern must not be specified")
       }
@@ -25,18 +25,30 @@ module.exports = class Strategy {
       this.version = version
       this.keep = null
     } else {
-      // Ensure versionPattern and keep.
-      if (!versionPattern || versionPattern === "") versionPattern = DEFAULT_VERSION_PATTERN
+      if (semverPattern) {
+        if (versionPattern) {
+          throw new Error("When semver-pattern is provided, version-pattern must not be specified")
+        }
+
+        if (!semverValidRange(semverPattern)) {
+          throw new Error("Invalid semver-pattern. See https://www.npmjs.com/package/semver for examples")
+        }
+
+        this.semverPattern = semverPattern
+      } else {
+        if (!versionPattern || versionPattern === "") versionPattern = DEFAULT_VERSION_PATTERN
+
+        try {
+          this.versionPattern = new RegExp(versionPattern)
+        } catch (error) {
+          throw new Error("version-pattern must be a valid regex: " + error.message)
+        }
+      }
+
       if (!keep) keep = DEFAULT_KEEP
 
       if (!Number.isInteger(Number(keep)) || Number(keep) < 0 || Number(keep) > 100) {
         throw new Error("keep must be an integer between 0 and 100 (inclusive)")
-      }
-
-      try {
-        this.versionPattern = new RegExp(versionPattern)
-      } catch (error) {
-        throw new Error("version-pattern must be a valid regex: " + error.message)
       }
 
       this.keep = Number(keep)

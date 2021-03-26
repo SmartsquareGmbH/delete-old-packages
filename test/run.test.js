@@ -24,6 +24,30 @@ test("queries and deletes packages", async () => {
   expect(strategy.deletePackage).toHaveBeenNthCalledWith(2, "MDE0OlBhY2thZ2VWZXJzaW9uNTA2NzYxNg==")
 })
 
+test("filters by semver-pattern", async () => {
+  const strategy = {
+    dryRun: false,
+    semverPattern: ">=1.0.0",
+    queryPackages: async () => {
+      return [
+        {
+          name: "test",
+          versions: [
+            { id: "MDE0OlBhY2thZ2VWZXJzaW9uNTA2NzYxOQ==", version: "1.0.0" },
+            { id: "MDE0OlBhY2thZ2VWZXJzaW9uNTA2NzYxNg==", version: "docker-base-layer" },
+          ],
+        },
+      ]
+    },
+    deletePackage: jest.fn(),
+  }
+
+  await run(strategy)
+
+  expect(strategy.deletePackage).toHaveBeenCalledTimes(1)
+  expect(strategy.deletePackage).toHaveBeenNthCalledWith(1, "MDE0OlBhY2thZ2VWZXJzaW9uNTA2NzYxOQ==")
+})
+
 test("filters by version-pattern", async () => {
   const strategy = {
     dryRun: false,
