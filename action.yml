@@ -15,21 +15,36 @@ inputs:
       Defaults to the repo running the action.
     required: false
 
+  user:
+    description: >-
+      User hosting the package(s).
+    required: false
+
+  organization:
+    description: >-
+      Organization hosting the package(s).
+    required: false
+
   names:
     description: >-
       Names of the packages.
     required: true
 
-  version:
+  semver-pattern:
     description: >-
-      Specific version to delete.
-      Defaults to null.
+      Semver range pattern of the versions.
     required: false
 
   version-pattern:
     description: >-
       Regex pattern of the versions.
       Defaults to true for all versions.
+    required: false
+
+  version:
+    description: >-
+      Specific version to delete.
+      Defaults to null.
     required: false
 
   keep:
