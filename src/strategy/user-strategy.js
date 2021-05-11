@@ -19,6 +19,24 @@ const getMultipleVersionsQuery = `
   }
 `
 
+const getMultipleVersionsQueryFirst100 = `
+  query getVersions($user: String!, $names: [String!]!) {
+    user(login: $user) {
+      packages(first: 20, names: $names) {
+        nodes {
+          name
+          versions(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
+            nodes {
+              id
+              version
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
 const getSingleVersionQuery = `
   query getVersion($user: String!, $names: [String!]!, $version: String!) {
     user(login: $user) {
@@ -47,7 +65,16 @@ module.exports = class UserStrategy extends Input {
   }
 
   async queryPackages() {
-    const query = this.version ? getSingleVersionQuery : getMultipleVersionsQuery
+    let query = null
+    if (this.version) {
+      query = getSingleVersionQuery
+    } else {
+      if (this.versionQueryOrder === "first") {
+        query = getMultipleVersionsQueryFirst100
+      } else {
+        query = getMultipleVersionsQuery
+      }
+    }
 
     const result = await getOctokit(this.token).graphql(query, {
       user: this.user,

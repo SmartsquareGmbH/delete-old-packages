@@ -13,7 +13,7 @@ const deleteMutation = `
 `
 
 module.exports = class Strategy {
-  constructor(names, version, versionPattern, semverPattern, keep, token, dryRun) {
+  constructor(names, version, versionPattern, semverPattern, keep, token, dryRun, versionQueryOrder) {
     // Either (version) or (versionPattern/semverPattern and keep) may be provided by the user.
     // Use default (versionPattern and keep) if not specified.
     if (version) {
@@ -24,6 +24,7 @@ module.exports = class Strategy {
       this.versionPattern = null
       this.version = version
       this.keep = null
+      this.versionQueryOrder = versionQueryOrder
     } else {
       if (semverPattern) {
         if (versionPattern) {
