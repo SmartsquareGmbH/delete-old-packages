@@ -66,6 +66,12 @@ inputs:
       If the action should only print what it would delete instead of actually deleting.
     required: false
     default: "false"
+  
+  version-query-order:
+    description: >-
+      Where to start looking for version regex matches. Default is "last". You can pick "first".
+    required: false
+    default: "last"
 
 runs:
   using: node12
