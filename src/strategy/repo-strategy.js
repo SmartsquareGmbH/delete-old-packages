@@ -65,6 +65,7 @@ module.exports = class RepoStrategy extends Input {
 
     this.owner = owner
     this.repo = repo
+    this.versionQueryOrder = versionQueryOrder
   }
 
   async queryPackages() {

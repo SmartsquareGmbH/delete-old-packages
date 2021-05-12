@@ -62,6 +62,7 @@ module.exports = class OrganizationStrategy extends Input {
     }
 
     this.organization = organization
+    this.versionQueryOrder = versionQueryOrder
   }
 
   async queryPackages() {

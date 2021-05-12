@@ -62,6 +62,7 @@ module.exports = class UserStrategy extends Input {
     }
 
     this.user = user
+    this.versionQueryOrder = versionQueryOrder
   }
 
   async queryPackages() {
