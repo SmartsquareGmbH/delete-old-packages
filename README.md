@@ -89,7 +89,7 @@ with:
 > Delete version `foo-bar` of the package "package".
 
 ```yaml
-uses: jackhowa/delete-github-package-versions@v0.4.3
+uses: smartsquaregmbh/delete-old-packages@v0.3.1
 with:
   version: foo-bar
   names: |
