@@ -54,8 +54,8 @@ const getSingleVersionQuery = `
 `
 
 module.exports = class UserStrategy extends Input {
-  constructor(user, names, version, versionPattern, semverPattern, keep, token, dryRun) {
-    super(names, version, versionPattern, semverPattern, keep, token, dryRun)
+  constructor(user, names, version, versionPattern, semverPattern, keep, token, dryRun, versionQueryOrder) {
+    super(names, version, versionPattern, semverPattern, keep, token, dryRun, versionQueryOrder)
 
     if (!user || user === "") {
       throw new Error("User cannot be empty")

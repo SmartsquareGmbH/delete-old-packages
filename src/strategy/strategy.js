@@ -24,7 +24,6 @@ module.exports = class Strategy {
       this.versionPattern = null
       this.version = version
       this.keep = null
-      this.versionQueryOrder = versionQueryOrder
     } else {
       if (semverPattern) {
         if (versionPattern) {
