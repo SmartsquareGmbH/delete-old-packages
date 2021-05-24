@@ -52,6 +52,7 @@ module.exports = class UserStrategy extends Input {
     const result = await getOctokit(this.token).graphql(query, {
       user: this.user,
       names: this.names,
+      version: this.version,
       headers: {
         Accept: "application/vnd.github.package-deletes-preview+json",
       },
