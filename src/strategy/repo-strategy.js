@@ -19,6 +19,24 @@ const getMultipleVersionsQuery = `
   }
 `
 
+const getMultipleVersionsQueryFirst100 = `
+  query getVersions($owner: String!, $repo: String!, $names: [String!]!) {
+    repository(owner: $owner, name: $repo) {
+      packages(first: 20, names: $names) {
+        nodes {
+          name
+          versions(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
+            nodes {
+              id
+              version
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
 const getSingleVersionQuery = `
   query getVersion($owner: String!, $repo: String!, $names: [String!]!, $version: String!) {
     repository(owner: $owner, name: $repo) {
@@ -36,8 +54,8 @@ const getSingleVersionQuery = `
 `
 
 module.exports = class RepoStrategy extends Input {
-  constructor(owner, repo, names, version, versionPattern, semverPattern, keep, token, dryRun) {
-    super(names, version, versionPattern, semverPattern, keep, token, dryRun)
+  constructor(owner, repo, names, version, versionPattern, semverPattern, keep, token, dryRun, versionQueryOrder) {
+    super(names, version, versionPattern, semverPattern, keep, token, dryRun, versionQueryOrder)
 
     if (!owner || owner === "") {
       throw new Error("owner cannot be empty")
@@ -47,10 +65,20 @@ module.exports = class RepoStrategy extends Input {
 
     this.owner = owner
     this.repo = repo
+    this.versionQueryOrder = versionQueryOrder
   }
 
   async queryPackages() {
-    const query = this.version ? getSingleVersionQuery : getMultipleVersionsQuery
+    let query = null
+    if (this.version) {
+      query = getSingleVersionQuery
+    } else {
+      if (this.versionQueryOrder === "first") {
+        query = getMultipleVersionsQueryFirst100
+      } else {
+        query = getMultipleVersionsQuery
+      }
+    }
 
     const result = await getOctokit(this.token).graphql(query, {
       owner: this.owner,

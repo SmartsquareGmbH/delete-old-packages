@@ -8,7 +8,7 @@ but targets a different use case.
 The action works by getting at most 20 packages with at most the oldest 100 versions of each, applying the filters (see
 table below) on them and then deleting the matching versions.
 
-> If you have more than 100 versions and none of the 100 oldest versions match, no packages will be deleted!
+> If you have more than 100 versions and none of the 100 oldest versions match, no packages will be deleted! Note: If you are looking for the 100 newest version matches, use `version-query-order` first.
 
 ### Inputs
 
@@ -25,6 +25,7 @@ table below) on them and then deleting the matching versions.
 | `keep`            | Number of versions to exclude from deletions               | :x:                | 2             |
 | `token`           | Token with the necessary scopes to delete package versions | :x:                | Set by Github |
 | `dry-run`         | If the action should only print what it would do.          | :x:                | `false`       |
+| `version-query-order`         | Where to start looking for version regex matches. Default is "last". You can pick "first".         | :x:                | `last`       |
 
 > :warning: You can provide _either_ `owner` and `repo`, `user` or `organization`. An error is thrown for invalid combinations.
 

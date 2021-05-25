@@ -22,6 +22,7 @@ function getStrategyFromInput() {
     getInput("keep"),
     getInput("token"),
     getInput("dry-run"),
+    getInput("version-query-order"),
   ]
 
   if (getInput("user")) {

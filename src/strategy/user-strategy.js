@@ -19,6 +19,24 @@ const getMultipleVersionsQuery = `
   }
 `
 
+const getMultipleVersionsQueryFirst100 = `
+  query getVersions($user: String!, $names: [String!]!) {
+    user(login: $user) {
+      packages(first: 20, names: $names) {
+        nodes {
+          name
+          versions(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
+            nodes {
+              id
+              version
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
 const getSingleVersionQuery = `
   query getVersion($user: String!, $names: [String!]!, $version: String!) {
     user(login: $user) {
@@ -36,18 +54,28 @@ const getSingleVersionQuery = `
 `
 
 module.exports = class UserStrategy extends Input {
-  constructor(user, names, version, versionPattern, semverPattern, keep, token, dryRun) {
-    super(names, version, versionPattern, semverPattern, keep, token, dryRun)
+  constructor(user, names, version, versionPattern, semverPattern, keep, token, dryRun, versionQueryOrder) {
+    super(names, version, versionPattern, semverPattern, keep, token, dryRun, versionQueryOrder)
 
     if (!user || user === "") {
       throw new Error("User cannot be empty")
     }
 
     this.user = user
+    this.versionQueryOrder = versionQueryOrder
   }
 
   async queryPackages() {
-    const query = this.version ? getSingleVersionQuery : getMultipleVersionsQuery
+    let query = null
+    if (this.version) {
+      query = getSingleVersionQuery
+    } else {
+      if (this.versionQueryOrder === "first") {
+        query = getMultipleVersionsQueryFirst100
+      } else {
+        query = getMultipleVersionsQuery
+      }
+    }
 
     const result = await getOctokit(this.token).graphql(query, {
       user: this.user,
