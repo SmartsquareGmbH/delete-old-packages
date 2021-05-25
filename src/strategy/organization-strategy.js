@@ -80,6 +80,7 @@ module.exports = class OrganizationStrategy extends Input {
     const result = await getOctokit(this.token).graphql(query, {
       organization: this.organization,
       names: this.names,
+      version: this.version,
       headers: {
         Accept: "application/vnd.github.package-deletes-preview+json",
       },

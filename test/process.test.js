@@ -30,7 +30,7 @@ test("filters based on semver", () => {
     [
       {
         name: "package 1",
-        versions: [{ version: "1.0.0" }, { version: "2.0.1" }, { version: "v3.10.2" }],
+        versions: [{ version: "1.0.0" }, { version: "2.0.1" }, { version: "3.0.1-alpha01" }, { version: "v3.10.2" }],
       },
     ],
     {
@@ -39,9 +39,10 @@ test("filters based on semver", () => {
     }
   )
 
-  expect(result.length).toBe(2)
+  expect(result.length).toBe(3)
   expect(result[0].version).toBe("1.0.0")
-  expect(result[1].version).toBe("v3.10.2")
+  expect(result[1].version).toBe("3.0.1-alpha01")
+  expect(result[2].version).toBe("v3.10.2")
 })
 
 test("filters based on regex", () => {

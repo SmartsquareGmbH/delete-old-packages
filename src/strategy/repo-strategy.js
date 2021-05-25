@@ -84,6 +84,7 @@ module.exports = class RepoStrategy extends Input {
       owner: this.owner,
       repo: this.repo,
       names: this.names,
+      version: this.version,
       headers: {
         Accept: "application/vnd.github.package-deletes-preview+json",
       },
