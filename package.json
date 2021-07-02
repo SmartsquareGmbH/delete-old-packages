@@ -1,32 +1,25 @@
 {
   "name": "delete-old-packages",
-  "version": "0.3.1",
+  "version": "0.0.1",
   "description": "Github Action for deleting old packages",
   "main": "dist/index.js",
-  "repository": "https://github.com/SmartsquareGmbH/delete-old-packages",
-  "author": "Ruben Gees",
+  "author": "journeyapps-platform",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "node src/index.js",
-    "build": "ncc build src/index.js --license LICENSE.txt --target es2015 --minify",
-    "lint": "eslint --ext .js src --max-warnings 0",
-    "lint:fix": "eslint --ext .js src --max-warnings 0 --fix",
-    "test": "jest"
+    "format": "journey-formatter format",
+    "prepare": "journey-formatter install",
+    "build": "ncc build -m src/index.ts"
   },
   "dependencies": {
     "@actions/core": "^1.2.6",
-    "@actions/github": "^4.0.0",
-    "semver": "^7.3.5"
+    "@actions/github": "^4.0.0"
   },
   "devDependencies": {
+    "@journeyapps-platform/formatter-cli": "^2.17.1",
+    "@types/node": "^15.14.0",
     "@vercel/ncc": "^0.28.2",
-    "eslint": "^7.23.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-jest": "^24.3.4",
-    "eslint-plugin-prettier": "^3.3.1",
-    "jest": "^26.6.3",
     "prettier": "^2.1.2",
-    "webpack": "^5.31.0"
+    "typescript": "^4.3.5"
   }
 }

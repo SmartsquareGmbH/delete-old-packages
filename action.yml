@@ -1,5 +1,4 @@
 name: Delete old packages
-
 description: Deletes old package versions
 
 inputs:
@@ -15,42 +14,20 @@ inputs:
       Defaults to the repo running the action.
     required: false
 
-  user:
+  package-pattern:
     description: >-
-      User hosting the package(s).
-    required: false
-
-  organization:
-    description: >-
-      Organization hosting the package(s).
-    required: false
-
-  names:
-    description: >-
-      Names of the packages.
+      Regex pattern for packages to find old versions within
     required: true
-
-  semver-pattern:
-    description: >-
-      Semver range pattern of the versions.
-    required: false
 
   version-pattern:
     description: >-
-      Regex pattern of the versions.
-      Defaults to true for all versions.
-    required: false
-
-  version:
-    description: >-
-      Specific version to delete.
-      Defaults to null.
+      Regex pattern for package versions to delete
     required: false
 
   keep:
     description: >-
       Number of versions to exclude from deletions.
-      Defaults to 2.
+      Defaults to 10.
     required: false
 
   token:
@@ -70,7 +47,3 @@ inputs:
 runs:
   using: node12
   main: dist/index.js
-
-branding:
-  icon: 'delete'
-  color: 'green'

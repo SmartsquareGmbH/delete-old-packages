@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2018",
+    "lib": ["ES2020"],
+    "outDir": "dist",
+    "rootDir": "src",
+    "composite": true,
+    "strict": true
+  },
+  "include": ["src"]
+}
