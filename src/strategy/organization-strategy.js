@@ -60,7 +60,9 @@ module.exports = class OrganizationStrategy extends Strategy {
 
     // Normalize results of each query so that we get a `versions` array for each package in either case.
     if (this.version) {
-      return result.organization.packages.nodes.map((it) => ({ ...it, versions: [it.version] }))
+      return result.organization.packages.nodes
+        .filter((it) => !!it.version)
+        .map((it) => ({ ...it, versions: [it.version] }))
     } else {
       return result.organization.packages.nodes.map((it) => ({ ...it, versions: it.versions.nodes }))
     }

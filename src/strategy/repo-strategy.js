@@ -64,7 +64,9 @@ module.exports = class RepoStrategy extends Strategy {
 
     // Normalize results of each query so that we get a `versions` array for each package in either case.
     if (this.version) {
-      return result.repository.packages.nodes.map((it) => ({ ...it, versions: [it.version] }))
+      return result.repository.packages.nodes
+        .filter((it) => !!it.version)
+        .map((it) => ({ ...it, versions: [it.version] }))
     } else {
       return result.repository.packages.nodes.map((it) => ({ ...it, versions: it.versions.nodes }))
     }

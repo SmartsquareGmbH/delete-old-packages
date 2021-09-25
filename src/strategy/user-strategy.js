@@ -60,7 +60,7 @@ module.exports = class UserStrategy extends Strategy {
 
     // Normalize results of each query so that we get a `versions` array for each package in either case.
     if (this.version) {
-      return result.user.packages.nodes.map((it) => ({ ...it, versions: [it.version] }))
+      return result.user.packages.nodes.filter((it) => !!it.version).map((it) => ({ ...it, versions: [it.version] }))
     } else {
       return result.user.packages.nodes.map((it) => ({ ...it, versions: it.versions.nodes }))
     }
