@@ -6,7 +6,7 @@ const RepoStrategy = require("./strategy/repo-strategy.js")
 const run = require("./run.js")
 
 /**
- * @returns {module.Strategy}
+ * @returns {Strategy}
  */
 function getStrategyFromInput() {
   const commonArgs = [

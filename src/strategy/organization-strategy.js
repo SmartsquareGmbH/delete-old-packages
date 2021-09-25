@@ -1,4 +1,4 @@
-const Input = require("./strategy")
+const Strategy = require("./strategy")
 const { getOctokit } = require("@actions/github")
 
 const getMultipleVersionsQuery = `
@@ -35,7 +35,7 @@ const getSingleVersionQuery = `
   }
 `
 
-module.exports = class OrganizationStrategy extends Input {
+module.exports = class OrganizationStrategy extends Strategy {
   constructor(organization, names, version, versionPattern, semverPattern, keep, token, dryRun) {
     super(names, version, versionPattern, semverPattern, keep, token, dryRun)
 

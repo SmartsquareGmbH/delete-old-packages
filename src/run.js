@@ -4,7 +4,7 @@ const { process } = require("./process.js")
 /**
  * Main function of the action.
  *
- * @param {module.Strategy} strategy The strategy to use.
+ * @param {Strategy} strategy The strategy to use.
  * @returns {Promise<void>}
  */
 module.exports = async function run(strategy) {
