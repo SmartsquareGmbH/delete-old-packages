@@ -16,9 +16,9 @@ module.exports = async function run(strategy) {
 
   const packages = await strategy.queryPackages()
 
-  await core.group(`Found ${packages.length} packages (before filtering)`, async () => {
+  await core.group(`Found ${packages.length} package(s) before filtering`, async () => {
     packages.forEach((it) => {
-      core.info(`${it.name} with ${it.versions.length} versions`)
+      core.info(`${it.name} with ${it.versions.length} version(s)`)
     })
   })
 
@@ -30,6 +30,12 @@ module.exports = async function run(strategy) {
     return
   }
 
+  await core.group(`Found ${processedPackages.length} package(s) after filtering`, async () => {
+    packages.forEach((it) => {
+      core.info(`${it.name} with ${it.versions.length} version(s)`)
+    })
+  })
+
   await core.group("Deleting packages", async () => {
     await Promise.all(
       processedPackages.map((it) => {
@@ -40,5 +46,5 @@ module.exports = async function run(strategy) {
     )
   })
 
-  core.info(`${processedPackages.length} packages deleted`)
+  core.info(`${processedPackages.length} package(s) deleted`)
 }
