@@ -5,7 +5,7 @@ const DEFAULT_VERSION_PATTERN = /^.+$/
 const DEFAULT_KEEP = 2
 
 const deleteMutation = `
-  mutation deletePackageVersion($packageVersionId: String!) {
+  mutation deletePackageVersion($packageVersionId: ID!) {
     deletePackageVersion(input: {packageVersionId: $packageVersionId}) {
       success
     }
