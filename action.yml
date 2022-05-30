@@ -41,12 +41,6 @@ inputs:
       Defaults to true for all versions.
     required: false
 
-  version:
-    description: >-
-      Specific version to delete.
-      Defaults to null.
-    required: false
-
   keep:
     description: >-
       Number of versions to exclude from deletions.
@@ -65,7 +59,7 @@ inputs:
     description: >-
       If the action should only print what it would delete instead of actually deleting.
     required: false
-    default: "false"
+    default: false
 
 runs:
   using: node12

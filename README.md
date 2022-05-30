@@ -84,13 +84,3 @@ with:
   names: |
     package
 ```
-
-> Delete version `foo-bar` of the package "package".
-
-```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.4.0
-with:
-  version: foo-bar
-  names: |
-    package
-```
