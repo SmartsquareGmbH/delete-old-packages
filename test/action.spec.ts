@@ -21,8 +21,8 @@ test("queries and deletes packages", async () => {
     dryRun: false,
     user: "user",
     organization: "",
-    owner: "",
-    repo: "",
+    owner: "SmartsquareGmbH",
+    repo: "delete-old-packages",
   }
 
   const queryStrategy = mock<QueryStrategy>({ queryPackages: () => Promise.resolve(packages) })
@@ -44,8 +44,8 @@ test("filters by semver-pattern", async () => {
     dryRun: false,
     user: "user",
     organization: "",
-    owner: "",
-    repo: "",
+    owner: "SmartsquareGmbH",
+    repo: "delete-old-packages",
   }
 
   const queryStrategy = mock<QueryStrategy>({ queryPackages: () => Promise.resolve(packages) })
@@ -66,8 +66,8 @@ test("filters by version-pattern", async () => {
     dryRun: false,
     user: "user",
     organization: "",
-    owner: "",
-    repo: "",
+    owner: "SmartsquareGmbH",
+    repo: "delete-old-packages",
   }
 
   const queryStrategy = mock<QueryStrategy>({ queryPackages: () => Promise.resolve(packages) })
@@ -88,8 +88,8 @@ test("Does nothing when empty packages are returned", async () => {
     dryRun: false,
     user: "user",
     organization: "",
-    owner: "",
-    repo: "",
+    owner: "SmartsquareGmbH",
+    repo: "delete-old-packages",
   }
 
   const queryStrategy = mock<QueryStrategy>({ queryPackages: () => Promise.resolve([]) })

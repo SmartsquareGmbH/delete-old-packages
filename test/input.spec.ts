@@ -33,8 +33,8 @@ describe("getActionInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "",
-      repo: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
     }
 
     expect(result).toEqual(expected)
@@ -60,8 +60,8 @@ describe("getActionInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "",
-      repo: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
     }
 
     expect(result).toEqual(expected)
@@ -77,8 +77,8 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "",
-      repo: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
     }
 
     expect(() => {
@@ -94,8 +94,8 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "",
-      repo: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
     }
 
     expect(() => {
@@ -133,8 +133,8 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "",
-      repo: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
     }
 
     expect(() => {
@@ -152,8 +152,8 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "",
-      repo: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
     }
 
     expect(() => {
@@ -169,8 +169,8 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "",
-      repo: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
     }
 
     expect(() => {
@@ -186,8 +186,8 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "",
-      repo: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
     }
 
     expect(() => {
@@ -203,8 +203,8 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "",
-      repo: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
     }
 
     expect(() => {
@@ -220,8 +220,8 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "",
-      repo: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
     }
 
     expect(() => {

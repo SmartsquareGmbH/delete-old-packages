@@ -11,8 +11,8 @@ test("decide default delete strategy", () => {
     dryRun: false,
     user: "user",
     organization: "",
-    owner: "",
-    repo: "",
+    owner: "SmartsquareGmbH",
+    repo: "delete-old-packages",
   }
 
   expect(decideDeleteStrategy(input)).toBeInstanceOf(DefaultDeleteStrategy)

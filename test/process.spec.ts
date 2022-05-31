@@ -11,8 +11,8 @@ test("filters correctly", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "",
-      repo: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
     },
     [
       {
@@ -49,8 +49,8 @@ test("filters based on semver", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "",
-      repo: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
     },
     [
       {
@@ -79,8 +79,8 @@ test("filters based on regex", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "",
-      repo: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
     },
     [
       {
@@ -117,8 +117,8 @@ test("respects keep", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "",
-      repo: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
     },
     [
       {

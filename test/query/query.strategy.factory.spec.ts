@@ -13,8 +13,8 @@ test("decide user query strategy", () => {
     dryRun: false,
     user: "user",
     organization: "",
-    owner: "",
-    repo: "",
+    owner: "SmartsquareGmbH",
+    repo: "delete-old-packages",
   }
 
   expect(decideQueryStrategy(input)).toBeInstanceOf(UserQueryStrategy)
@@ -29,8 +29,8 @@ test("decide organization query strategy", () => {
     dryRun: false,
     user: "",
     organization: "org",
-    owner: "",
-    repo: "",
+    owner: "SmartsquareGmbH",
+    repo: "delete-old-packages",
   }
 
   expect(decideQueryStrategy(input)).toBeInstanceOf(OrganizationQueryStrategy)
@@ -61,8 +61,8 @@ test("decide default query strategy", () => {
     dryRun: false,
     user: "",
     organization: "",
-    owner: "",
-    repo: "",
+    owner: "SmartsquareGmbH",
+    repo: "delete-old-packages",
   }
 
   expect(decideQueryStrategy(input)).toBeInstanceOf(RepoQueryStrategy)

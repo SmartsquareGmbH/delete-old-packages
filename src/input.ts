@@ -1,4 +1,5 @@
 import { getBooleanInput, getInput, getMultilineInput } from "@actions/core"
+import { context } from "@actions/github"
 import { Range } from "semver"
 import { Input } from "./types"
 
@@ -44,8 +45,8 @@ export function getActionInput(): Input {
     dryRun: getBooleanInput("dry-run"),
     user: getInput("user"),
     organization: getInput("organization"),
-    owner: getInput("owner"),
-    repo: getInput("repo"),
+    owner: getInput("owner") || context.repo.owner,
+    repo: getInput("repo") || context.repo.repo,
   }
 }
 
