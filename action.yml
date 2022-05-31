@@ -59,10 +59,10 @@ inputs:
     description: >-
       If the action should only print what it would delete instead of actually deleting.
     required: false
-    default: false
+    default: "false"
 
 runs:
-  using: node12
+  using: node16
   main: dist/index.js
 
 branding:
