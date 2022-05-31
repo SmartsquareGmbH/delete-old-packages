@@ -26,7 +26,7 @@ export async function executeAction(input: Input, queryStrategy: QueryStrategy, 
   }
 
   await group(`Found ${processedPackages.length} package(s) after filtering`, async () => {
-    packages.forEach((it) => {
+    processedPackages.forEach((it) => {
       info(`${it.name} with ${it.versions.length} version(s)`)
     })
   })
@@ -45,5 +45,5 @@ export async function executeAction(input: Input, queryStrategy: QueryStrategy, 
     )
   })
 
-  info(`${processedPackages.length} package versions(s) deleted`)
+  info(`${processedPackages.flatMap(pkg => pkg.versions).length} package versions(s) deleted`)
 }
