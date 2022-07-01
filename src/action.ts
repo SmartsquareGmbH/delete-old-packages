@@ -5,7 +5,7 @@ import { DeleteStrategy, Input, QueryStrategy } from "./types"
 export async function executeAction(input: Input, queryStrategy: QueryStrategy, deleteStrategy: DeleteStrategy) {
   if (input.dryRun) {
     warning("Dry run is set")
-    warning("No package versions will be actually deleted.")
+    warning("No package versions will be actually deleted")
   }
 
   info("Fetching packages")

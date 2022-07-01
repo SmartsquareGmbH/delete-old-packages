@@ -60,11 +60,11 @@ export function validateInput(input: Input): Input {
   }
 
   if (input.versionPattern && input.semverPattern) {
-    throw new Error("Only one of version-pattern and semver-pattern can be specified.")
+    throw new Error("Only one of version-pattern and semver-pattern can be specified")
   }
 
   if (!Number.isInteger(input.keep) || input.keep < 0 || input.keep > 100) {
-    throw new Error("keep must be an integer between 0 and 100 (inclusive).")
+    throw new Error("keep must be an integer between 0 and 100 (inclusive)")
   }
 
   if (input.token === "") {
