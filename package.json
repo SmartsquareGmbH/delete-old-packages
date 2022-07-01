@@ -15,28 +15,28 @@
     "verify": "yarn lint && yarn test"
   },
   "dependencies": {
-    "@actions/core": "^1.8.2",
+    "@actions/core": "^1.9.0",
     "@actions/github": "^5.0.3",
     "semver": "^7.3.7"
   },
   "devDependencies": {
-    "@types/jest": "^27.5.1",
-    "@types/node": "^16.11.38",
-    "@types/semver": "^7.3.9",
-    "@typescript-eslint/eslint-plugin": "^5.27.0",
-    "@typescript-eslint/parser": "^5.27.0",
+    "@types/jest": "^28.1.4",
+    "@types/node": "^18.0.0",
+    "@types/semver": "^7.3.10",
+    "@typescript-eslint/eslint-plugin": "^5.30.0",
+    "@typescript-eslint/parser": "^5.30.0",
     "@vercel/ncc": "^0.34.0",
-    "eslint": "^8.16.0",
+    "eslint": "^8.18.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-jest": "^26.4.6",
-    "eslint-plugin-prettier": "^4.0.0",
-    "jest": "^28.1.0",
-    "jest-mock": "^28.1.0",
+    "eslint-plugin-jest": "^26.5.3",
+    "eslint-plugin-prettier": "^4.2.1",
+    "jest": "^28.1.2",
+    "jest-mock": "^28.1.1",
     "jest-mock-extended": "^2.0.6",
-    "prettier": "^2.6.2",
-    "ts-jest": "^28.0.3",
-    "ts-node": "^10.8.0",
-    "typescript": "^4.7.2"
+    "prettier": "^2.7.1",
+    "ts-jest": "^28.0.5",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
   },
   "resolutions": {
     "jest/**/minimist": "^1.2.6"
