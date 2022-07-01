@@ -41,6 +41,7 @@ export function getActionInput(): Input {
     versionPattern: getRegExpInput("version-pattern"),
     semverPattern: genSemVerInput("semver-pattern"),
     keep: Number(getInput("keep") || DEFAULT_KEEP),
+    type: getInput("type").toUpperCase(),
     token: getInput("token"),
     dryRun: getBooleanInput("dry-run"),
     user: getInput("user"),
@@ -65,6 +66,10 @@ export function validateInput(input: Input): Input {
 
   if (!Number.isInteger(input.keep) || input.keep < 0 || input.keep > 100) {
     throw new Error("keep must be an integer between 0 and 100 (inclusive)")
+  }
+
+  if (input.type === "CONTAINER" && !input.user && !input.organization) {
+    throw new Error("The CONTAINER type only works when user or organization is set")
   }
 
   if (input.token === "") {

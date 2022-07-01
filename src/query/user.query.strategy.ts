@@ -3,9 +3,9 @@ import { Input, Package, QueryStrategy } from "../types"
 
 // language=graphql
 const query = `
-  query getVersions($user: String!, $names: [String!]!) {
+  query getVersions($user: String!, $names: [String!]!, $packageType: PackageType) {
     user(login: $user) {
-      packages(first: 20, names: $names) {
+      packages(first: 20, names: $names, packageType: $packageType) {
         nodes {
           name
           versions(last: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
@@ -40,6 +40,7 @@ export default class UserQueryStrategy implements QueryStrategy {
     const result = await getOctokit(input.token).graphql<UserResponse>(query, {
       user: input.user,
       names: input.names,
+      packageType: input.type || null,
       headers: {
         Accept: "application/vnd.github.package-deletes-preview+json",
       },

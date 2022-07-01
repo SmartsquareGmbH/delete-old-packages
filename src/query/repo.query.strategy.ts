@@ -3,9 +3,9 @@ import { Input, Package, QueryStrategy } from "../types"
 
 // language=graphql
 const query = `
-  query getVersions($owner: String!, $repo: String!, $names: [String!]!) {
+  query getVersions($owner: String!, $repo: String!, $names: [String!]!, $packageType: PackageType) {
     repository(owner: $owner, name: $repo) {
-      packages(first: 20, names: $names) {
+      packages(first: 20, names: $names, packageType: $packageType) {
         nodes {
           name
           versions(last: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
@@ -41,6 +41,7 @@ export default class RepoQueryStrategy implements QueryStrategy {
       owner: input.owner,
       repo: input.repo,
       names: input.names,
+      packageType: input.type || null,
       headers: {
         Accept: "application/vnd.github.package-deletes-preview+json",
       },

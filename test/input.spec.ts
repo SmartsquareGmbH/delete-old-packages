@@ -29,6 +29,7 @@ describe("getActionInput", () => {
       names: ["test", "test2"],
       versionPattern: /\d+\.\d+\.\d+-RC\d+/,
       keep: 2,
+      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -56,6 +57,7 @@ describe("getActionInput", () => {
       names: ["test", "test2"],
       semverPattern: new Range("^1.0.0"),
       keep: 2,
+      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -73,6 +75,7 @@ describe("validateInput", () => {
     const input: Input = {
       names: ["test", "test2"],
       keep: 2,
+      type: "NPM",
       token: "token",
       dryRun: true,
       user: "user",
@@ -90,6 +93,7 @@ describe("validateInput", () => {
     const input: Input = {
       names: [],
       keep: 2,
+      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -129,6 +133,7 @@ describe("validateInput", () => {
         "21",
       ],
       keep: 2,
+      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -148,6 +153,7 @@ describe("validateInput", () => {
       versionPattern: /.*/,
       semverPattern: new Range("1.0.0"),
       keep: 2,
+      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -165,6 +171,7 @@ describe("validateInput", () => {
     const input: Input = {
       names: ["test", "test2"],
       keep: 1.5,
+      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -182,6 +189,7 @@ describe("validateInput", () => {
     const input: Input = {
       names: ["test", "test2"],
       keep: -1,
+      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -199,9 +207,28 @@ describe("validateInput", () => {
     const input: Input = {
       names: ["test", "test2"],
       keep: 101,
+      type: "",
       token: "token",
       dryRun: true,
       user: "user",
+      organization: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
+    }
+
+    expect(() => {
+      validateInput(input)
+    }).toThrow()
+  })
+
+  test("CONTAINER type used without organization or user", () => {
+    const input: Input = {
+      names: ["test", "test2"],
+      keep: 2,
+      type: "CONTAINER",
+      token: "token",
+      dryRun: true,
+      user: "",
       organization: "",
       owner: "SmartsquareGmbH",
       repo: "delete-old-packages",
@@ -216,6 +243,7 @@ describe("validateInput", () => {
     const input: Input = {
       names: ["test", "test2"],
       keep: 2,
+      type: "",
       token: "",
       dryRun: true,
       user: "user",

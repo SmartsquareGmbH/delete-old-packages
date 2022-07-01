@@ -7,6 +7,7 @@ test("decide default delete strategy", () => {
     names: ["test"],
     versionPattern: /.*/,
     keep: 0,
+    type: "",
     token: "",
     dryRun: false,
     user: "user",
