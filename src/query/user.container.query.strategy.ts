@@ -31,7 +31,7 @@ export default class UserContainerQueryStrategy implements QueryStrategy {
         per_page: 100,
       })
     } catch (e) {
-      throw new Error(`Failed to query package ${name}`)
+      throw new Error(`Failed to query package ${name}: ${e}`)
     }
   }
 }
