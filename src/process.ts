@@ -11,12 +11,16 @@ export function processPackages(input: Input, packages: Package[]): Package[] {
 export function findVersionsToDelete(input: Input, versions: PackageVersion[]): PackageVersion[] {
   if (input.semverPattern) {
     return versions.filter((version) => {
-      const semver = semverCoerce(version.version)
+      return version.names.some((name) => {
+        const semver = semverCoerce(name)
 
-      return input.semverPattern && semver != null && semverSatisfies(semver, input.semverPattern)
+        return semver && input.semverPattern && semverSatisfies(semver, input.semverPattern)
+      })
     })
   } else if (input.versionPattern) {
-    return versions.filter((version) => input.versionPattern?.test(version.version))
+    return versions.filter((version) => {
+      return version.names.some((name) => input.versionPattern?.test(name))
+    })
   } else {
     return versions
   }

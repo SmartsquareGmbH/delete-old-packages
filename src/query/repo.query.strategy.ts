@@ -49,7 +49,7 @@ export default class RepoQueryStrategy implements QueryStrategy {
 
     return result.repository.packages.nodes.map((pkg) => ({
       name: pkg.name,
-      versions: pkg.versions.nodes.map((version) => ({ id: version.id, version: version.version })),
+      versions: pkg.versions.nodes.map((version) => ({ id: version.id, names: [version.version] })),
     }))
   }
 }

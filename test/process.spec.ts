@@ -6,7 +6,7 @@ test("filters correctly", () => {
     {
       names: ["test", "test2"],
       versionPattern: /^.*$/,
-      keep: 1,
+      keep: 0,
       type: "",
       token: "token",
       dryRun: true,
@@ -19,15 +19,15 @@ test("filters correctly", () => {
       {
         name: "test",
         versions: [
-          { id: "a", version: "2" },
-          { id: "b", version: "1" },
+          { id: "a", names: ["2"] },
+          { id: "b", names: ["1"] },
         ],
       },
       {
         name: "test2",
         versions: [
-          { id: "c", version: "2" },
-          { id: "d", version: "1" },
+          { id: "c", names: ["2"] },
+          { id: "d", names: ["1"] },
         ],
       },
     ]
@@ -35,9 +35,9 @@ test("filters correctly", () => {
 
   expect(result).toHaveLength(2)
   expect(result[0].name).toEqual("test")
-  expect(result[0].versions.map((it) => it.version)).toEqual(["1"])
+  expect(result[0].versions.map((it) => it.id)).toEqual(["a", "b"])
   expect(result[1].name).toEqual("test2")
-  expect(result[1].versions.map((it) => it.version)).toEqual(["1"])
+  expect(result[1].versions.map((it) => it.id)).toEqual(["c", "d"])
 })
 
 test("filters based on semver", () => {
@@ -58,17 +58,17 @@ test("filters based on semver", () => {
       {
         name: "test1",
         versions: [
-          { id: "a", version: "1.0.0" },
-          { id: "b", version: "2.0.1" },
-          { id: "c", version: "3.0.1-alpha01" },
-          { id: "d", version: "v3.10.2" },
+          { id: "a", names: ["1.0.0"] },
+          { id: "b", names: ["2.0.1"] },
+          { id: "c", names: ["3.0.1-alpha01"] },
+          { id: "d", names: ["v3.10.2"] },
         ],
       },
     ]
   )
 
   expect(result[0].versions).toHaveLength(3)
-  expect(result[0].versions.map((it) => it.version)).toEqual(["1.0.0", "3.0.1-alpha01", "v3.10.2"])
+  expect(result[0].versions.map((it) => it.id)).toEqual(["a", "c", "d"])
 })
 
 test("filters based on regex", () => {
@@ -89,15 +89,15 @@ test("filters based on regex", () => {
       {
         name: "test",
         versions: [
-          { id: "a", version: "2-test" },
-          { id: "b", version: "1" },
+          { id: "a", names: ["2-test"] },
+          { id: "b", names: ["1"] },
         ],
       },
       {
         name: "test2",
         versions: [
-          { id: "c", version: "2-test" },
-          { id: "d", version: "1-test" },
+          { id: "c", names: ["2-test"] },
+          { id: "d", names: ["1-test"] },
         ],
       },
     ]
@@ -105,9 +105,9 @@ test("filters based on regex", () => {
 
   expect(result).toHaveLength(2)
   expect(result[0].name).toEqual("test")
-  expect(result[0].versions.map((it) => it.version)).toEqual(["2-test"])
+  expect(result[0].versions.map((it) => it.id)).toEqual(["a"])
   expect(result[1].name).toEqual("test2")
-  expect(result[1].versions.map((it) => it.version)).toEqual(["2-test", "1-test"])
+  expect(result[1].versions.map((it) => it.id)).toEqual(["c", "d"])
 })
 
 test("respects keep", () => {
@@ -127,16 +127,53 @@ test("respects keep", () => {
     [
       {
         name: "test",
-        versions: [{ id: "a", version: "3" }, { id: "b", version: "2" }, { id: "c", version: "1" }],
+        versions: [{ id: "a", names: ["3"] }, { id: "b", names: ["2"] }, { id: "c", names: ["1"] }],
       },
       {
         name: "test2",
-        versions: [{id: "d", version: "1" }, { id: "e", version: "1" }],
+        versions: [{id: "d", names: ["1"] }, { id: "e", names: ["1"] }],
       },
     ],
   )
 
   expect(result).toHaveLength(1)
   expect(result[0].name).toEqual("test")
-  expect(result[0].versions.map(it => it.version)).toEqual(["1"])
+  expect(result[0].versions.map(it => it.id)).toEqual(["c"])
+})
+
+test("filters with multiple names", () => {
+  const result = processPackages(
+    {
+      names: ["test", "test2"],
+      versionPattern: /^.*-test$/,
+      keep: 0,
+      type: "",
+      token: "token",
+      dryRun: true,
+      user: "user",
+      organization: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
+    },
+    [
+      {
+        name: "test",
+        versions: [
+          { id: "a", names: ["2"] },
+          { id: "b", names: ["1", "1-test"] },
+        ],
+      },
+      {
+        name: "test2",
+        versions: [
+          { id: "c", names: ["2"] },
+          { id: "d", names: ["1"] },
+        ],
+      },
+    ]
+  )
+
+  expect(result).toHaveLength(1)
+  expect(result[0].name).toEqual("test")
+  expect(result[0].versions.map((it) => it.id)).toEqual(["b"])
 })

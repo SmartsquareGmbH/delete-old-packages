@@ -21,7 +21,7 @@ export type Package = {
 
 export type PackageVersion = {
   id: string
-  version: string
+  names: string[]
 }
 
 export interface QueryStrategy {
@@ -29,5 +29,5 @@ export interface QueryStrategy {
 }
 
 export interface DeleteStrategy {
-  deletePackageVersion(input: Input, id: string): Promise<void>
+  deletePackageVersion(input: Input, name: string, id: string): Promise<void>
 }

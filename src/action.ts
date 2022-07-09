@@ -37,14 +37,14 @@ export async function executeAction(input: Input, queryStrategy: QueryStrategy, 
       processedPackages
         .flatMap((pkg) => pkg.versions.map((version) => ({ name: pkg.name, version })))
         .map(async ({ name, version }) => {
-          info(`Deleting version ${version.version} of package ${name}`)
+          info(`Deleting version ${version.names.join(", ")} of package ${name}`)
 
           if (!input.dryRun) {
-            await deleteStrategy.deletePackageVersion(input, version.id)
+            await deleteStrategy.deletePackageVersion(input, name, version.id)
           }
         })
     )
   })
 
-  info(`${processedPackages.flatMap(pkg => pkg.versions).length} package versions(s) deleted`)
+  info(`${processedPackages.flatMap((pkg) => pkg.versions).length} package versions(s) deleted`)
 }

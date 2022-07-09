@@ -7,8 +7,8 @@ const packages = [
   {
     name: "test",
     versions: [
-      { id: "MDE0OlBhY2thZ2VWZXJzaW9uNTA2NzYxOQ==", version: "1.0.0" },
-      { id: "MDE0OlBhY2thZ2VWZXJzaW9uNTA2NzYxNg==", version: "docker-base-layer" },
+      { id: "a", names: ["1.0.0"] },
+      { id: "b", names: ["docker-base-layer"] },
     ],
   },
 ]
@@ -32,8 +32,8 @@ test("queries and deletes packages", async () => {
   await executeAction(input, queryStrategy, deleteStrategy)
 
   expect(deleteStrategy.deletePackageVersion).toHaveBeenCalledTimes(2)
-  expect(deleteStrategy.deletePackageVersion).toHaveBeenNthCalledWith(1, input, "MDE0OlBhY2thZ2VWZXJzaW9uNTA2NzYxOQ==")
-  expect(deleteStrategy.deletePackageVersion).toHaveBeenNthCalledWith(2, input, "MDE0OlBhY2thZ2VWZXJzaW9uNTA2NzYxNg==")
+  expect(deleteStrategy.deletePackageVersion).toHaveBeenNthCalledWith(1, input, "test", "a")
+  expect(deleteStrategy.deletePackageVersion).toHaveBeenNthCalledWith(2, input, "test", "b")
 })
 
 test("filters by semver-pattern", async () => {
@@ -56,7 +56,7 @@ test("filters by semver-pattern", async () => {
   await executeAction(input, queryStrategy, deleteStrategy)
 
   expect(deleteStrategy.deletePackageVersion).toHaveBeenCalledTimes(1)
-  expect(deleteStrategy.deletePackageVersion).toHaveBeenNthCalledWith(1, input, "MDE0OlBhY2thZ2VWZXJzaW9uNTA2NzYxOQ==")
+  expect(deleteStrategy.deletePackageVersion).toHaveBeenNthCalledWith(1, input, "test", "a")
 })
 
 test("filters by version-pattern", async () => {
@@ -79,7 +79,7 @@ test("filters by version-pattern", async () => {
   await executeAction(input, queryStrategy, deleteStrategy)
 
   expect(deleteStrategy.deletePackageVersion).toHaveBeenCalledTimes(1)
-  expect(deleteStrategy.deletePackageVersion).toHaveBeenNthCalledWith(1, input, "MDE0OlBhY2thZ2VWZXJzaW9uNTA2NzYxOQ==")
+  expect(deleteStrategy.deletePackageVersion).toHaveBeenNthCalledWith(1, input, "test", "a")
 })
 
 test("Does nothing when empty packages are returned", async () => {

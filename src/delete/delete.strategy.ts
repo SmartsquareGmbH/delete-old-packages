@@ -11,7 +11,7 @@ const mutation = `
 `
 
 export class DefaultDeleteStrategy implements DeleteStrategy {
-  async deletePackageVersion(input: Input, id: string): Promise<void> {
+  async deletePackageVersion(input: Input, name: string, id: string): Promise<void> {
     await getOctokit(input.token).graphql(mutation, {
       packageVersionId: id,
       headers: {
