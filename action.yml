@@ -47,6 +47,11 @@ inputs:
       Defaults to 2.
     required: false
 
+  type:
+    description: >-
+      The type of the packages, e.g. "npm" or "container".
+    required: false
+
   token:
     description: >-
       Token with the necessary scopes to delete and list package versions.
