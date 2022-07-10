@@ -167,6 +167,24 @@ describe("validateInput", () => {
     }).toThrow()
   })
 
+  test("both user and organization", () => {
+    const input: Input = {
+      names: ["test", "test2"],
+      keep: 2,
+      type: "NPM",
+      token: "token",
+      dryRun: true,
+      user: "user",
+      organization: "org",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
+    }
+
+    expect(() => {
+      validateInput(input)
+    }).toThrow()
+  })
+
   test("keep not an integer", () => {
     const input: Input = {
       names: ["test", "test2"],

@@ -64,6 +64,10 @@ export function validateInput(input: Input): Input {
     throw new Error("Only one of version-pattern and semver-pattern can be specified")
   }
 
+  if (input.user && input.organization) {
+    throw new Error("Only one of user and organization can be specified")
+  }
+
   if (!Number.isInteger(input.keep) || input.keep < 0 || input.keep > 100) {
     throw new Error("keep must be an integer between 0 and 100 (inclusive)")
   }
