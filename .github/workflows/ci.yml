@@ -32,10 +32,10 @@ jobs:
       - run: yarn lint
       - run: yarn test
 
-      - if: github.ref == 'refs/heads/master'
+      - if: github.ref == 'refs/heads/main'
         run: yarn build
 
-      - if: github.ref == 'refs/heads/master'
+      - if: github.ref == 'refs/heads/main'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Build
