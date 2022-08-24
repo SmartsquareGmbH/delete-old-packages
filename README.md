@@ -35,7 +35,7 @@ table below) on them and then deleting the matching versions.
 > Delete old versions of the packages "package-1" and "package-2" for the current repository.
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.4.0
+uses: smartsquaregmbh/delete-old-packages@v0.5.0
 with:
   names: |
     package-1
@@ -45,7 +45,7 @@ with:
 > Delete old versions of the packages "package-1" and "package-2" for the organization "my-organization".
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.4.0
+uses: smartsquaregmbh/delete-old-packages@v0.5.0
 with:
   organization: my-organization
   names: |
@@ -56,7 +56,7 @@ with:
 > Delete old versions in the form of "1.0.0-RC1" of the package "package".
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.4.0
+uses: smartsquaregmbh/delete-old-packages@v0.5.0
 with:
   version-pattern: "^\\d+\\.\\d+\\.\\d+-RC\\d+$" # The regex needs to be escaped!
   names: |
@@ -66,7 +66,7 @@ with:
 > Delete old versions with a lower semver version than 2.x of the package "package".
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.4.0
+uses: smartsquaregmbh/delete-old-packages@v0.5.0
 with:
   semver-pattern: "<2.x"
   names: |
@@ -76,7 +76,7 @@ with:
 > Delete old versions of the package "package" but keep at least 5 versions.
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.4.0
+uses: smartsquaregmbh/delete-old-packages@v0.5.0
 with:
   keep: 5
   names: |
@@ -85,7 +85,7 @@ with:
 
 ### ghcr.io packages
 
-As of version v0.4.0 this action is able to delete [ghcr.io](https://ghcr.io/) packages. Since these packages are not integrated (yet) into
+As of version v0.5.0 this action is able to delete [ghcr.io](https://ghcr.io/) packages. Since these packages are not integrated (yet) into
 the APIs this action is using normally, a few additional options are required:
 
 - The `type` needs to be set to `CONTAINER`.
@@ -95,7 +95,7 @@ the APIs this action is using normally, a few additional options are required:
 #### Example
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.4.0
+uses: smartsquaregmbh/delete-old-packages@v0.5.0
 with:
   token: ${{ secrets.GH_ACCESS_TOKEN }}
   organization: my-organization
