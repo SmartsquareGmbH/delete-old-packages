@@ -1,5 +1,6 @@
 import { getOctokit } from "@actions/github"
 import { Input, Package, QueryStrategy } from "../types"
+import { processContainerResponse } from "./container.process"
 
 export default class OrganizationContainerQueryStrategy implements QueryStrategy {
   async queryPackages(input: Input): Promise<Package[]> {
@@ -7,17 +8,7 @@ export default class OrganizationContainerQueryStrategy implements QueryStrategy
       input.names.map(async (name) => {
         const response = await this.queryPackage(input, name)
 
-        const result: Package = {
-          name,
-          versions: response.data
-            .map((version) => ({
-              id: version.id.toString(),
-              names: version.metadata?.container?.tags?.map((it) => it as string) ?? [],
-            }))
-            .filter((it) => it.names.length >= 1),
-        }
-
-        return result
+        return processContainerResponse(name, response)
       })
     )
   }
