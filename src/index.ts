@@ -6,4 +6,6 @@ import { decideQueryStrategy } from "./query/query.strategy.factory"
 
 const input = validateInput(getActionInput())
 
-executeAction(input, decideQueryStrategy(input), decideDeleteStrategy(input)).catch((error) => setFailed(error))
+executeAction(input, decideQueryStrategy(input), decideDeleteStrategy(input)).catch((error: string | Error) =>
+  setFailed(error)
+)

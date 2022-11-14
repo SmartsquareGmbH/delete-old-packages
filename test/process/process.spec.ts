@@ -123,18 +123,25 @@ test("respects keep", () => {
     [
       {
         name: "test",
-        versions: [{ id: "a", names: ["3"] }, { id: "b", names: ["2"] }, { id: "c", names: ["1"] }],
+        versions: [
+          { id: "a", names: ["3"] },
+          { id: "b", names: ["2"] },
+          { id: "c", names: ["1"] },
+        ],
       },
       {
         name: "test2",
-        versions: [{id: "d", names: ["1"] }, { id: "e", names: ["1"] }],
+        versions: [
+          { id: "d", names: ["1"] },
+          { id: "e", names: ["1"] },
+        ],
       },
-    ],
+    ]
   )
 
   expect(result).toHaveLength(1)
   expect(result[0].name).toEqual("test")
-  expect(result[0].versions.map(it => it.id)).toEqual(["c"])
+  expect(result[0].versions.map((it) => it.id)).toEqual(["c"])
 })
 
 test("filters with multiple names", () => {

@@ -16,6 +16,8 @@ export async function executeAction(input: Input, queryStrategy: QueryStrategy, 
     packages.forEach((it) => {
       info(`${it.name} with ${it.versions.length} version(s)`)
     })
+
+    return Promise.resolve()
   })
 
   const processedPackages = processPackages(input, packages)
@@ -30,6 +32,8 @@ export async function executeAction(input: Input, queryStrategy: QueryStrategy, 
     processedPackages.forEach((it) => {
       info(`${it.name} with ${it.versions.length} version(s)`)
     })
+
+    return Promise.resolve()
   })
 
   await group("Deleting packages", async () => {

@@ -11,7 +11,7 @@ function getRegExpInput(name: string): RegExp | undefined {
   if (input !== "") {
     try {
       return new RegExp(input)
-    } catch (error: unknown) {
+    } catch (error) {
       throw new Error(`${name} must be a valid regex: ${error}`)
     }
   } else {
@@ -25,7 +25,7 @@ function genSemVerInput(name: string): Range | undefined {
   if (input !== "") {
     try {
       return new Range(input)
-    } catch (error: unknown) {
+    } catch (error) {
       throw new Error(
         `${name} must be a valid semver pattern (see https://www.npmjs.com/package/semver for examples): ${error}`
       )
@@ -64,7 +64,7 @@ export function getActionInput(): Input {
   }
 }
 
-export function isRestPackageType(type?: PackageType): boolean {
+export function isRestPackageType(type?: PackageType): type is PackageType.Container | PackageType.Npm {
   return type !== undefined && [PackageType.Container, PackageType.Npm].includes(type)
 }
 

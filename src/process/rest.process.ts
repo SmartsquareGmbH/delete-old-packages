@@ -19,7 +19,7 @@ function processVersion(version: RestVersion): PackageVersion {
   if (version.metadata?.package_type === PackageType.Container) {
     return {
       id: version.id.toString(),
-      names: version.metadata?.container?.tags?.map((it) => it as string) ?? [],
+      names: version.metadata?.container?.tags ?? [],
     }
   } else {
     return {

@@ -21,8 +21,8 @@ export default class UserRestQueryStrategy implements QueryStrategy {
         username: input.user,
         per_page: 100,
       })
-    } catch (e) {
-      throw new Error(`Failed to query package ${name}: ${e}`)
+    } catch (error) {
+      throw new Error(`Failed to query package ${name}: ${error}`)
     }
   }
 }
