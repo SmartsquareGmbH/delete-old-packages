@@ -1,5 +1,5 @@
 import { group, info, warning } from "@actions/core"
-import { processPackages } from "./process"
+import { processPackages } from "./process/process"
 import { DeleteStrategy, Input, QueryStrategy } from "./types"
 
 export async function executeAction(input: Input, queryStrategy: QueryStrategy, deleteStrategy: DeleteStrategy) {

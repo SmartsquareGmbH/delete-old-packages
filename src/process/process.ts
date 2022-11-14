@@ -1,6 +1,6 @@
 import semverCoerce from "semver/functions/coerce"
 import semverSatisfies from "semver/functions/satisfies"
-import { Input, Package, PackageVersion } from "./types"
+import { Input, Package, PackageVersion } from "../types"
 
 export function processPackages(input: Input, packages: Package[]): Package[] {
   return packages

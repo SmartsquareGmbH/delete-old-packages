@@ -1,20 +1,21 @@
+import { isRestPackageType } from "../input"
 import { Input, QueryStrategy } from "../types"
-import OrganizationContainerQueryStrategy from "./organization.container.query.strategy"
-import OrganizationQueryStrategy from "./organization.query.strategy"
-import RepoQueryStrategy from "./repo.query.strategy"
-import UserContainerQueryStrategy from "./user.container.query.strategy"
-import UserQueryStrategy from "./user.query.strategy"
+import OrganizationQueryStrategy from "./graphql/organization.query.strategy"
+import RepoQueryStrategy from "./graphql/repo.query.strategy"
+import UserQueryStrategy from "./graphql/user.query.strategy"
+import OrganizationRestQueryStrategy from "./rest/organization.rest.query.strategy"
+import UserRestQueryStrategy from "./rest/user.rest.query.strategy"
 
 export function decideQueryStrategy(input: Input): QueryStrategy {
   if (input.organization) {
-    if (input.type === "CONTAINER") {
-      return new OrganizationContainerQueryStrategy()
+    if (isRestPackageType(input.type)) {
+      return new OrganizationRestQueryStrategy()
     } else {
       return new OrganizationQueryStrategy()
     }
   } else if (input.user) {
-    if (input.type === "CONTAINER") {
-      return new UserContainerQueryStrategy()
+    if (isRestPackageType(input.type)) {
+      return new UserRestQueryStrategy()
     } else {
       return new UserQueryStrategy()
     }

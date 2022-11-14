@@ -1,23 +1,23 @@
 import { getOctokit } from "@actions/github"
-import { Input, Package, QueryStrategy } from "../types"
-import { processContainerResponse } from "./container.process"
+import { processRestResponse } from "../../process/rest.process"
+import { Package, QueryStrategy, RestInput } from "../../types"
 
-export default class OrganizationContainerQueryStrategy implements QueryStrategy {
-  async queryPackages(input: Input): Promise<Package[]> {
+export default class OrganizationRestQueryStrategy implements QueryStrategy {
+  async queryPackages(input: RestInput): Promise<Package[]> {
     return await Promise.all(
       input.names.map(async (name) => {
         const response = await this.queryPackage(input, name)
 
-        return processContainerResponse(name, response)
+        return processRestResponse(name, response)
       })
     )
   }
 
-  private async queryPackage(input: Input, name: string) {
+  private async queryPackage(input: RestInput, name: string) {
     try {
       return await getOctokit(input.token).rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
         package_name: name,
-        package_type: "container",
+        package_type: input.type,
         org: input.organization,
         per_page: 100,
       })

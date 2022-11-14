@@ -1,5 +1,5 @@
 import { Range } from "semver"
-import { processPackages } from "../src/process"
+import { processPackages } from "../../src/process/process"
 
 test("filters correctly", () => {
   const result = processPackages(
@@ -7,7 +7,6 @@ test("filters correctly", () => {
       names: ["test", "test2"],
       versionPattern: /^.*$/,
       keep: 0,
-      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -46,7 +45,6 @@ test("filters based on semver", () => {
       names: ["test", "test2"],
       semverPattern: new Range("^1 || >2.0.1 || >3 <=3.11"),
       keep: 0,
-      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -77,7 +75,6 @@ test("filters based on regex", () => {
       names: ["test", "test2"],
       versionPattern: /^.*-test$/,
       keep: 0,
-      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -116,7 +113,6 @@ test("respects keep", () => {
       names: ["test", "test2"],
       versionPattern: /^.*$/,
       keep: 2,
-      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -147,7 +143,6 @@ test("filters with multiple names", () => {
       names: ["test", "test2"],
       versionPattern: /^.*-test$/,
       keep: 0,
-      type: "",
       token: "token",
       dryRun: true,
       user: "user",

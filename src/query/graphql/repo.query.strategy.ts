@@ -1,10 +1,10 @@
 import { getOctokit } from "@actions/github"
-import { Input, Package, QueryStrategy } from "../types"
+import { Input, Package, QueryStrategy } from "../../types"
 
 // language=graphql
 const query = `
-  query getVersions($organization: String!, $names: [String!]!, $packageType: PackageType) {
-    organization(login: $organization) {
+  query getVersions($owner: String!, $repo: String!, $names: [String!]!, $packageType: PackageType) {
+    repository(owner: $owner, name: $repo) {
       packages(first: 20, names: $names, packageType: $packageType) {
         nodes {
           name
@@ -20,8 +20,8 @@ const query = `
   }
 `
 
-type OrganizationResponse = {
-  organization: {
+type RepoResponse = {
+  repository: {
     packages: {
       nodes: [
         {
@@ -35,10 +35,11 @@ type OrganizationResponse = {
   }
 }
 
-export default class OrganizationQueryStrategy implements QueryStrategy {
+export default class RepoQueryStrategy implements QueryStrategy {
   async queryPackages(input: Input): Promise<Package[]> {
-    const result = await getOctokit(input.token).graphql<OrganizationResponse>(query, {
-      organization: input.organization,
+    const result = await getOctokit(input.token).graphql<RepoResponse>(query, {
+      owner: input.owner,
+      repo: input.repo,
       names: input.names,
       packageType: input.type || null,
       headers: {
@@ -46,7 +47,7 @@ export default class OrganizationQueryStrategy implements QueryStrategy {
       },
     })
 
-    return result.organization.packages.nodes.map((pkg) => ({
+    return result.repository.packages.nodes.map((pkg) => ({
       name: pkg.name,
       versions: pkg.versions.nodes.map((version) => ({ id: version.id, names: [version.version] })),
     }))

@@ -1,7 +1,7 @@
 import { getBooleanInput, getInput, getMultilineInput } from "@actions/core"
 import { context } from "@actions/github"
 import { Range } from "semver"
-import { Input } from "./types"
+import { Input, PackageType } from "./types"
 
 const DEFAULT_KEEP = 2
 
@@ -35,13 +35,26 @@ function genSemVerInput(name: string): Range | undefined {
   }
 }
 
+function getTypeInput(name: string): PackageType | undefined {
+  const packageTypes = Object.values(PackageType).map((it) => it.toString())
+  const input = getInput(name).toLowerCase()
+
+  if (!input) {
+    return undefined
+  } else if (packageTypes.includes(input)) {
+    return input as PackageType
+  } else {
+    throw new Error(`${name} must be one of the supported types: ${packageTypes.join(", ")}`)
+  }
+}
+
 export function getActionInput(): Input {
   return {
     names: getMultilineInput("names"),
     versionPattern: getRegExpInput("version-pattern"),
     semverPattern: genSemVerInput("semver-pattern"),
     keep: Number(getInput("keep") || DEFAULT_KEEP),
-    type: getInput("type").toUpperCase(),
+    type: getTypeInput("type"),
     token: getInput("token"),
     dryRun: getBooleanInput("dry-run"),
     user: getInput("user"),
@@ -49,6 +62,10 @@ export function getActionInput(): Input {
     owner: getInput("owner") || context.repo.owner,
     repo: getInput("repo") || context.repo.repo,
   }
+}
+
+export function isRestPackageType(type?: PackageType): boolean {
+  return type !== undefined && [PackageType.Container, PackageType.Npm].includes(type)
 }
 
 export function validateInput(input: Input): Input {
@@ -72,8 +89,8 @@ export function validateInput(input: Input): Input {
     throw new Error("keep must be an integer between 0 and 100 (inclusive)")
   }
 
-  if (input.type === "CONTAINER" && !input.user && !input.organization) {
-    throw new Error("The CONTAINER type only works when user or organization is set")
+  if (isRestPackageType(input.type) && !input.user && !input.organization) {
+    throw new Error(`The ${input.type} type only works when user or organization is set`)
   }
 
   if (input.token === "") {

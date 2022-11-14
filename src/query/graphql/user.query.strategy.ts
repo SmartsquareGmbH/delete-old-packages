@@ -1,5 +1,5 @@
 import { getOctokit } from "@actions/github"
-import { Input, Package, QueryStrategy } from "../types"
+import { Input, Package, QueryStrategy } from "../../types"
 
 // language=graphql
 const query = `

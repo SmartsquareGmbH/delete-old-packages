@@ -1,5 +1,5 @@
 import { getOctokit } from "@actions/github"
-import { DeleteStrategy, Input } from "../types"
+import { DeleteStrategy, Input } from "../../types"
 
 // language=graphql
 const mutation = `

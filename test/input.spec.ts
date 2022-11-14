@@ -1,6 +1,6 @@
 import { Range } from "semver"
 import { getActionInput, validateInput } from "../src/input"
-import { Input } from "../src/types"
+import { Input, PackageType } from "../src/types"
 
 describe("getActionInput", () => {
   const env = process.env
@@ -29,7 +29,6 @@ describe("getActionInput", () => {
       names: ["test", "test2"],
       versionPattern: /\d+\.\d+\.\d+-RC\d+/,
       keep: 2,
-      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -57,7 +56,6 @@ describe("getActionInput", () => {
       names: ["test", "test2"],
       semverPattern: new Range("^1.0.0"),
       keep: 2,
-      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -68,6 +66,81 @@ describe("getActionInput", () => {
 
     expect(result).toEqual(expected)
   })
+
+  test("get input from env (type)", () => {
+    process.env = {
+      ...env,
+      GITHUB_REPOSITORY: "SmartsquareGmbH/delete-old-packages",
+      INPUT_NAMES: "test\ntest2",
+      INPUT_TOKEN: "token",
+      INPUT_USER: "user",
+      INPUT_TYPE: "npm",
+      "INPUT_DRY-RUN": "true",
+    }
+
+    const result = getActionInput()
+    const expected: Input = {
+      names: ["test", "test2"],
+      keep: 2,
+      type: PackageType.Npm,
+      token: "token",
+      dryRun: true,
+      user: "user",
+      organization: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
+    }
+
+    expect(result).toEqual(expected)
+  })
+
+  test("get input from env (invalid regex)", () => {
+    process.env = {
+      ...env,
+      GITHUB_REPOSITORY: "SmartsquareGmbH/delete-old-packages",
+      INPUT_NAMES: "test\ntest2",
+      INPUT_TOKEN: "token",
+      INPUT_USER: "user",
+      "INPUT_VERSION-PATTERN": "[",
+      "INPUT_DRY-RUN": "true",
+    }
+
+    expect(() => {
+      getActionInput()
+    }).toThrow(/.*must be a valid regex.*/)
+  })
+
+  test("get input from env (invalid semverPattern)", () => {
+    process.env = {
+      ...env,
+      GITHUB_REPOSITORY: "SmartsquareGmbH/delete-old-packages",
+      INPUT_NAMES: "test\ntest2",
+      INPUT_TOKEN: "token",
+      INPUT_USER: "user",
+      "INPUT_SEMVER-PATTERN": "invalid",
+      "INPUT_DRY-RUN": "true",
+    }
+
+    expect(() => {
+      getActionInput()
+    }).toThrow(/.*must be a valid semver pattern.*/)
+  })
+
+  test("get input from env (invalid type)", () => {
+    process.env = {
+      ...env,
+      GITHUB_REPOSITORY: "SmartsquareGmbH/delete-old-packages",
+      INPUT_NAMES: "test\ntest2",
+      INPUT_TOKEN: "token",
+      INPUT_USER: "user",
+      INPUT_TYPE: "invalid",
+      "INPUT_DRY-RUN": "true",
+    }
+
+    expect(() => {
+      getActionInput()
+    }).toThrow(/.*must be one of the supported types.*/)
+  })
 })
 
 describe("validateInput", () => {
@@ -75,7 +148,7 @@ describe("validateInput", () => {
     const input: Input = {
       names: ["test", "test2"],
       keep: 2,
-      type: "NPM",
+      type: PackageType.Maven,
       token: "token",
       dryRun: true,
       user: "user",
@@ -93,7 +166,6 @@ describe("validateInput", () => {
     const input: Input = {
       names: [],
       keep: 2,
-      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -133,7 +205,6 @@ describe("validateInput", () => {
         "21",
       ],
       keep: 2,
-      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -153,7 +224,6 @@ describe("validateInput", () => {
       versionPattern: /.*/,
       semverPattern: new Range("1.0.0"),
       keep: 2,
-      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -171,7 +241,7 @@ describe("validateInput", () => {
     const input: Input = {
       names: ["test", "test2"],
       keep: 2,
-      type: "NPM",
+      type: PackageType.Npm,
       token: "token",
       dryRun: true,
       user: "user",
@@ -189,7 +259,6 @@ describe("validateInput", () => {
     const input: Input = {
       names: ["test", "test2"],
       keep: 1.5,
-      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -207,7 +276,6 @@ describe("validateInput", () => {
     const input: Input = {
       names: ["test", "test2"],
       keep: -1,
-      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -225,7 +293,6 @@ describe("validateInput", () => {
     const input: Input = {
       names: ["test", "test2"],
       keep: 101,
-      type: "",
       token: "token",
       dryRun: true,
       user: "user",
@@ -239,11 +306,29 @@ describe("validateInput", () => {
     }).toThrow()
   })
 
-  test("CONTAINER type used without organization or user", () => {
+  test("container type used without organization or user", () => {
     const input: Input = {
       names: ["test", "test2"],
       keep: 2,
-      type: "CONTAINER",
+      type: PackageType.Container,
+      token: "token",
+      dryRun: true,
+      user: "",
+      organization: "",
+      owner: "SmartsquareGmbH",
+      repo: "delete-old-packages",
+    }
+
+    expect(() => {
+      validateInput(input)
+    }).toThrow()
+  })
+
+  test("npm type used without organization or user", () => {
+    const input: Input = {
+      names: ["test", "test2"],
+      keep: 2,
+      type: PackageType.Npm,
       token: "token",
       dryRun: true,
       user: "",
@@ -261,7 +346,6 @@ describe("validateInput", () => {
     const input: Input = {
       names: ["test", "test2"],
       keep: 2,
-      type: "",
       token: "",
       dryRun: true,
       user: "user",

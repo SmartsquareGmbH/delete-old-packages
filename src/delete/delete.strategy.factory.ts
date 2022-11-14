@@ -1,14 +1,15 @@
+import { isRestPackageType } from "../input"
 import { DeleteStrategy, Input } from "../types"
-import { DefaultDeleteStrategy } from "./delete.strategy"
-import OrganizationContainerDeleteStrategy from "./organization.container.delete.strategy"
-import UserContainerDeleteStrategy from "./user.container.delete.strategy"
+import { DefaultDeleteStrategy } from "./graphql/delete.strategy"
+import OrganizationRestDeleteStrategy from "./rest/organization.rest.delete.strategy"
+import UserRestDeleteStrategy from "./rest/user.rest.delete.strategy"
 
 export function decideDeleteStrategy(input: Input): DeleteStrategy {
-  if (input.type === "CONTAINER") {
+  if (isRestPackageType(input.type)) {
     if (input.organization) {
-      return new OrganizationContainerDeleteStrategy()
+      return new OrganizationRestDeleteStrategy()
     } else {
-      return new UserContainerDeleteStrategy()
+      return new UserRestDeleteStrategy()
     }
   } else {
     return new DefaultDeleteStrategy()
