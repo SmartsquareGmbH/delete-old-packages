@@ -15,12 +15,14 @@ export default class UserRestQueryStrategy implements QueryStrategy {
 
   private async queryPackage(input: RestInput, name: string) {
     try {
-      return await getOctokit(input.token).rest.packages.getAllPackageVersionsForPackageOwnedByUser({
+      const octokit = getOctokit(input.token)
+      const params = {
         package_name: name,
         package_type: input.type,
         username: input.user,
         per_page: 100,
-      })
+      }
+      return await octokit.rest.packages.getAllPackageVersionsForPackageOwnedByUser(params)
     } catch (error) {
       throw new Error(`Failed to query package ${name}: ${error}`)
     }

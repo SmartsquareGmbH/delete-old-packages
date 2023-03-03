@@ -20,7 +20,6 @@ export type Input = {
   user: string
   organization: string
   owner: string
-  repo: string
 }
 
 export type RestInput = Input & {

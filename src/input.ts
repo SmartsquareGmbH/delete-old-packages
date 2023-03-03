@@ -60,12 +60,7 @@ export function getActionInput(): Input {
     user: getInput("user"),
     organization: getInput("organization"),
     owner: getInput("owner") || context.repo.owner,
-    repo: getInput("repo") || context.repo.repo,
   }
-}
-
-export function isRestPackageType(type?: PackageType): type is PackageType.Container | PackageType.Npm {
-  return type !== undefined && [PackageType.Container, PackageType.Npm].includes(type)
 }
 
 export function validateInput(input: Input): Input {
@@ -87,10 +82,6 @@ export function validateInput(input: Input): Input {
 
   if (!Number.isInteger(input.keep) || input.keep < 0 || input.keep > 100) {
     throw new Error("keep must be an integer between 0 and 100 (inclusive)")
-  }
-
-  if (isRestPackageType(input.type) && !input.user && !input.organization) {
-    throw new Error(`The ${input.type} type only works when user or organization is set`)
   }
 
   if (input.token === "") {

@@ -1,8 +1,6 @@
-import OrganizationQueryStrategy from "../../src/query/graphql/organization.query.strategy"
-import RepoQueryStrategy from "../../src/query/graphql/repo.query.strategy"
-import UserQueryStrategy from "../../src/query/graphql/user.query.strategy"
 import { decideQueryStrategy } from "../../src/query/query.strategy.factory"
 import UserRestQueryStrategy from "../../src/query/rest/user.rest.query.strategy"
+import OrganizationRestQueryStrategy from "../../src/query/rest/organization.rest.query.strategy"
 import { Input, PackageType } from "../../src/types"
 
 test("decide user query strategy", () => {
@@ -15,10 +13,9 @@ test("decide user query strategy", () => {
     user: "user",
     organization: "",
     owner: "SmartsquareGmbH",
-    repo: "delete-old-packages",
   }
 
-  expect(decideQueryStrategy(input)).toBeInstanceOf(UserQueryStrategy)
+  expect(decideQueryStrategy(input)).toBeInstanceOf(UserRestQueryStrategy)
 })
 
 test("decide organization query strategy", () => {
@@ -31,26 +28,9 @@ test("decide organization query strategy", () => {
     user: "",
     organization: "org",
     owner: "SmartsquareGmbH",
-    repo: "delete-old-packages",
   }
 
-  expect(decideQueryStrategy(input)).toBeInstanceOf(OrganizationQueryStrategy)
-})
-
-test("decide repo query strategy", () => {
-  const input: Input = {
-    names: ["test"],
-    versionPattern: /.*/,
-    keep: 0,
-    token: "",
-    dryRun: false,
-    user: "",
-    organization: "",
-    owner: "owner",
-    repo: "repo",
-  }
-
-  expect(decideQueryStrategy(input)).toBeInstanceOf(RepoQueryStrategy)
+  expect(decideQueryStrategy(input)).toBeInstanceOf(OrganizationRestQueryStrategy)
 })
 
 test("decide default query strategy", () => {
@@ -64,10 +44,9 @@ test("decide default query strategy", () => {
     user: "",
     organization: "",
     owner: "SmartsquareGmbH",
-    repo: "delete-old-packages",
   }
 
-  expect(decideQueryStrategy(input)).toBeInstanceOf(RepoQueryStrategy)
+  expect(decideQueryStrategy(input)).toBeInstanceOf(UserRestQueryStrategy)
 })
 
 test("decide rest user strategy", () => {
@@ -81,7 +60,6 @@ test("decide rest user strategy", () => {
     user: "user",
     organization: "",
     owner: "SmartsquareGmbH",
-    repo: "delete-old-packages",
   }
 
   expect(decideQueryStrategy(input)).toBeInstanceOf(UserRestQueryStrategy)
