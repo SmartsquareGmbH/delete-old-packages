@@ -1,10 +1,11 @@
 {
   "name": "delete-old-packages",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "GitHub Action for deleting old packages",
   "main": "dist/index.js",
   "repository": "https://github.com/SmartsquareGmbH/delete-old-packages",
   "author": "Ruben Gees",
+  "contributors": [ "Ruben Gees", "Prom3theu5" ],
   "license": "MIT",
   "private": true,
   "scripts": {

@@ -9,12 +9,6 @@ inputs:
       Defaults to the owner of the repo running the action.
     required: false
 
-  repo:
-    description: >-
-      Repo containing the package(s).
-      Defaults to the repo running the action.
-    required: false
-
   user:
     description: >-
       User hosting the package(s).

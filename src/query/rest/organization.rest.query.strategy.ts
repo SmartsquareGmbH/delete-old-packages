@@ -15,12 +15,14 @@ export default class OrganizationRestQueryStrategy implements QueryStrategy {
 
   private async queryPackage(input: RestInput, name: string) {
     try {
-      return await getOctokit(input.token).rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+      const octokit = getOctokit(input.token)
+      const params = {
         package_name: name,
         package_type: input.type,
         org: input.organization,
         per_page: 100,
-      })
+      }
+      return await octokit.rest.packages.getAllPackageVersionsForPackageOwnedByOrg(params)
     } catch (error) {
       throw new Error(`Failed to query package ${name}: ${error}`)
     }

@@ -87,13 +87,13 @@ with:
     package
 ```
 
-### ghcr.io and npm.pkg.github.com packages
+### ghcr.io, nuget.pkg.github.com and npm.pkg.github.com packages
 
 As of version v0.5.0 this action is able to delete [ghcr.io](https://ghcr.io/) packages. With version
-v0.6.0 [npm.pkg.github.com](https://npm.pkg.github.com) packages are also possible. Since these packages are not
+v0.6.0 [npm.pkg.github.com](https://npm.pkg.github.com) packages are also possible. Version 0.7.0 brings [nuget.pkg.github.com](https://nuget.pkg.github.com) support. Since these packages are not
 integrated (yet) into the APIs this action is using normally, a few additional options are required:
 
-- The `type` needs to be set to `container` or `npm`.
+- The `type` needs to be set to `container`, `npm` or `nuget`.
 - A
   [`token`](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
   is required with at least the `repo`, `write:packages` and `delete:packages` permissions.

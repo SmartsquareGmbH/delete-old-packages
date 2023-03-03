@@ -12,7 +12,6 @@ test("filters correctly", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     },
     [
       {
@@ -50,7 +49,6 @@ test("filters based on semver", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     },
     [
       {
@@ -80,7 +78,6 @@ test("filters based on regex", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     },
     [
       {
@@ -118,7 +115,6 @@ test("respects keep", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     },
     [
       {
@@ -155,7 +151,6 @@ test("filters with multiple names", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     },
     [
       {

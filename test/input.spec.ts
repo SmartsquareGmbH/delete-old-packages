@@ -34,7 +34,6 @@ describe("getActionInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     }
 
     expect(result).toEqual(expected)
@@ -61,7 +60,6 @@ describe("getActionInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     }
 
     expect(result).toEqual(expected)
@@ -88,7 +86,6 @@ describe("getActionInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     }
 
     expect(result).toEqual(expected)
@@ -154,7 +151,6 @@ describe("validateInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     }
 
     expect(() => {
@@ -171,7 +167,6 @@ describe("validateInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     }
 
     expect(() => {
@@ -210,7 +205,6 @@ describe("validateInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     }
 
     expect(() => {
@@ -229,7 +223,6 @@ describe("validateInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     }
 
     expect(() => {
@@ -247,7 +240,6 @@ describe("validateInput", () => {
       user: "user",
       organization: "org",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     }
 
     expect(() => {
@@ -264,7 +256,6 @@ describe("validateInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     }
 
     expect(() => {
@@ -281,7 +272,6 @@ describe("validateInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     }
 
     expect(() => {
@@ -298,43 +288,6 @@ describe("validateInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
-    }
-
-    expect(() => {
-      validateInput(input)
-    }).toThrow()
-  })
-
-  test("container type used without organization or user", () => {
-    const input: Input = {
-      names: ["test", "test2"],
-      keep: 2,
-      type: PackageType.Container,
-      token: "token",
-      dryRun: true,
-      user: "",
-      organization: "",
-      owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
-    }
-
-    expect(() => {
-      validateInput(input)
-    }).toThrow()
-  })
-
-  test("npm type used without organization or user", () => {
-    const input: Input = {
-      names: ["test", "test2"],
-      keep: 2,
-      type: PackageType.Npm,
-      token: "token",
-      dryRun: true,
-      user: "",
-      organization: "",
-      owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     }
 
     expect(() => {
@@ -351,7 +304,6 @@ describe("validateInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
-      repo: "delete-old-packages",
     }
 
     expect(() => {
