@@ -20,6 +20,7 @@ export type Input = {
   user: string
   organization: string
   owner: string
+  rateLimit?: boolean
 }
 
 export type RestInput = Input & {

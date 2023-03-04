@@ -60,6 +60,7 @@ export function getActionInput(): Input {
     user: getInput("user"),
     organization: getInput("organization"),
     owner: getInput("owner") || context.repo.owner,
+    rateLimit: getBooleanInput("rate-limit"),
   }
 }
 
