@@ -59,6 +59,12 @@ inputs:
       If the action should only print what it would delete instead of actually deleting.
     required: false
     default: "false"
+    
+  rate-limit:
+    description: >-
+      Enables the rate limit plugin to handle rate limits against the rest api.
+    required: false
+    default: "false"
 
 runs:
   using: node16

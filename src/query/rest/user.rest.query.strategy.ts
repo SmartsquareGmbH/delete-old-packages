@@ -1,8 +1,8 @@
-import { getOctokit } from "@actions/github"
 import { processRestResponse } from "../../process/rest.process"
 import { Package, QueryStrategy, RestInput } from "../../types"
+import { BaseStrategy } from "../../base.strategy"
 
-export default class UserRestQueryStrategy implements QueryStrategy {
+export default class UserRestQueryStrategy extends BaseStrategy implements QueryStrategy {
   async queryPackages(input: RestInput): Promise<Package[]> {
     return await Promise.all(
       input.names.map(async (name) => {
@@ -15,7 +15,7 @@ export default class UserRestQueryStrategy implements QueryStrategy {
 
   private async queryPackage(input: RestInput, name: string) {
     try {
-      const octokit = getOctokit(input.token)
+      const octokit = this.setupClient(input)
       const params = {
         package_name: name,
         package_type: input.type,

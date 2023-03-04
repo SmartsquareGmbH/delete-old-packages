@@ -22,6 +22,7 @@ describe("getActionInput", () => {
       INPUT_USER: "user",
       "INPUT_VERSION-PATTERN": "\\d+\\.\\d+\\.\\d+-RC\\d+",
       "INPUT_DRY-RUN": "true",
+      "INPUT_RATE-LIMIT": "true",
     }
 
     const result = getActionInput()
@@ -34,6 +35,7 @@ describe("getActionInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
+      rateLimit: true,
     }
 
     expect(result).toEqual(expected)
@@ -48,6 +50,7 @@ describe("getActionInput", () => {
       INPUT_USER: "user",
       "INPUT_SEMVER-PATTERN": "^1.0.0",
       "INPUT_DRY-RUN": "true",
+      "INPUT_RATE-LIMIT": "true",
     }
 
     const result = getActionInput()
@@ -60,6 +63,7 @@ describe("getActionInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
+      rateLimit: true,
     }
 
     expect(result).toEqual(expected)
@@ -74,6 +78,7 @@ describe("getActionInput", () => {
       INPUT_USER: "user",
       INPUT_TYPE: "npm",
       "INPUT_DRY-RUN": "true",
+      "INPUT_RATE-LIMIT": "true",
     }
 
     const result = getActionInput()
@@ -86,6 +91,7 @@ describe("getActionInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
+      rateLimit: true,
     }
 
     expect(result).toEqual(expected)
@@ -100,6 +106,7 @@ describe("getActionInput", () => {
       INPUT_USER: "user",
       "INPUT_VERSION-PATTERN": "[",
       "INPUT_DRY-RUN": "true",
+      "INPUT_RATE-LIMIT": "true",
     }
 
     expect(() => {
@@ -116,6 +123,7 @@ describe("getActionInput", () => {
       INPUT_USER: "user",
       "INPUT_SEMVER-PATTERN": "invalid",
       "INPUT_DRY-RUN": "true",
+      "INPUT_RATE-LIMIT": "true",
     }
 
     expect(() => {
@@ -132,6 +140,7 @@ describe("getActionInput", () => {
       INPUT_USER: "user",
       INPUT_TYPE: "invalid",
       "INPUT_DRY-RUN": "true",
+      "INPUT_RATE-LIMIT": "false",
     }
 
     expect(() => {
@@ -151,6 +160,7 @@ describe("validateInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
+      rateLimit: false,
     }
 
     expect(() => {
@@ -167,6 +177,7 @@ describe("validateInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
+      rateLimit: true,
     }
 
     expect(() => {
@@ -205,6 +216,7 @@ describe("validateInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
+      rateLimit: true,
     }
 
     expect(() => {
@@ -223,6 +235,7 @@ describe("validateInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
+      rateLimit: true,
     }
 
     expect(() => {
@@ -240,6 +253,7 @@ describe("validateInput", () => {
       user: "user",
       organization: "org",
       owner: "SmartsquareGmbH",
+      rateLimit: true,
     }
 
     expect(() => {
@@ -256,6 +270,7 @@ describe("validateInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
+      rateLimit: true,
     }
 
     expect(() => {
@@ -272,6 +287,7 @@ describe("validateInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
+      rateLimit: true,
     }
 
     expect(() => {
@@ -288,6 +304,7 @@ describe("validateInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
+      rateLimit: true,
     }
 
     expect(() => {
@@ -304,6 +321,7 @@ describe("validateInput", () => {
       user: "user",
       organization: "",
       owner: "SmartsquareGmbH",
+      rateLimit: true,
     }
 
     expect(() => {
