@@ -1,7 +1,7 @@
 import { mock } from "jest-mock-extended"
 import { Range } from "semver"
 import { executeAction } from "../src/action"
-import { DeleteStrategy, Input, QueryStrategy } from "../src/types"
+import {DeleteStrategy, Input, PackageType, QueryStrategy} from "../src/types"
 
 const packages = [
   {
@@ -22,6 +22,7 @@ test("queries and deletes packages", async () => {
     user: "user",
     organization: "",
     owner: "SmartsquareGmbH",
+    type: PackageType.Npm,
   }
 
   const queryStrategy = mock<QueryStrategy>({ queryPackages: () => Promise.resolve(packages) })
@@ -44,6 +45,7 @@ test("filters by semver-pattern", async () => {
     user: "user",
     organization: "",
     owner: "SmartsquareGmbH",
+    type: PackageType.Npm,
   }
 
   const queryStrategy = mock<QueryStrategy>({ queryPackages: () => Promise.resolve(packages) })
@@ -65,6 +67,7 @@ test("filters by version-pattern", async () => {
     user: "user",
     organization: "",
     owner: "SmartsquareGmbH",
+    type: PackageType.Npm,
   }
 
   const queryStrategy = mock<QueryStrategy>({ queryPackages: () => Promise.resolve(packages) })
@@ -86,6 +89,7 @@ test("Does nothing when empty packages are returned", async () => {
     user: "user",
     organization: "",
     owner: "SmartsquareGmbH",
+    type: PackageType.Npm,
   }
 
   const queryStrategy = mock<QueryStrategy>({ queryPackages: () => Promise.resolve([]) })

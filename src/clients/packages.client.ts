@@ -1,12 +1,16 @@
-import { RestInput } from "./types"
+import {Input} from "../types"
 import { Octokit } from "@octokit/core"
 import { throttling } from "@octokit/plugin-throttling"
 import { getOctokit } from "@actions/github"
 import { GitHub } from "@actions/github/lib/utils"
 import { RequestOptions } from "@octokit/types"
+import { info, warning } from "@actions/core"
 
-export abstract class BaseStrategy {
-  protected setupClient(input: RestInput): InstanceType<typeof GitHub> {
+export class PackagesClient {
+  
+  public client: InstanceType<typeof GitHub>
+  
+  constructor(input: Input) {
     const customClient = Octokit.plugin(throttling)
     let customOctokit
     if (!input.rateLimit) {
@@ -17,30 +21,31 @@ export abstract class BaseStrategy {
         throttle: {
           enabled: true,
           onRateLimit: (retryAfter: number, options: RequestOptions) => {
-            console.warn(`Request quota exhausted for request ${options.method} ${options.url}`)
+            warning(`Request quota exhausted for request ${options.method} ${options.url}`)
 
             // Retry five times after hitting a rate limit error, then give up
             if (options.request?.retryCount <= 5) {
-              console.log(`Retrying after ${retryAfter} seconds!`)
+              info(`Retrying after ${retryAfter} seconds!`)
               return true
             }
           },
           onSecondaryRateLimit: (retryAfter: number, options: RequestOptions) => {
-            console.warn(`Request quota exhausted for request ${options.method} ${options.url}`)
+            warning(`Request quota exhausted for request ${options.method} ${options.url}`)
 
             // Retry five times after hitting a rate limit error, then give up
             if (options.request?.retryCount <= 5) {
-              console.log(`Retrying after ${retryAfter} seconds!`)
+              info(`Retrying after ${retryAfter} seconds!`)
               return true
             }
           },
           onAbuseLimit: (retryAfter: number, options: RequestOptions) => {
             // does not retry, only logs a warning
-            console.warn(`Abuse detected for request ${options.method} ${options.url}`)
+            warning(`Abuse detected for request ${options.method} ${options.url}`)
           },
         },
       })
     }
-    return getOctokit(input.token, { Octokit: customOctokit })
-  }
+    
+    this.client = getOctokit(input.token, { Octokit: customOctokit })
+  } 
 }

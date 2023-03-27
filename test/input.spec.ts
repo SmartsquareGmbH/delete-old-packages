@@ -23,6 +23,7 @@ describe("getActionInput", () => {
       "INPUT_VERSION-PATTERN": "\\d+\\.\\d+\\.\\d+-RC\\d+",
       "INPUT_DRY-RUN": "true",
       "INPUT_RATE-LIMIT": "true",
+      "INPUT_TYPE": "npm",
     }
 
     const result = getActionInput()
@@ -36,6 +37,7 @@ describe("getActionInput", () => {
       organization: "",
       owner: "SmartsquareGmbH",
       rateLimit: true,
+      type: PackageType.Npm,
     }
 
     expect(result).toEqual(expected)
@@ -51,6 +53,7 @@ describe("getActionInput", () => {
       "INPUT_SEMVER-PATTERN": "^1.0.0",
       "INPUT_DRY-RUN": "true",
       "INPUT_RATE-LIMIT": "true",
+      INPUT_TYPE: "npm",
     }
 
     const result = getActionInput()
@@ -64,6 +67,7 @@ describe("getActionInput", () => {
       organization: "",
       owner: "SmartsquareGmbH",
       rateLimit: true,
+      type: PackageType.Npm,
     }
 
     expect(result).toEqual(expected)
@@ -104,6 +108,7 @@ describe("getActionInput", () => {
       INPUT_NAMES: "test\ntest2",
       INPUT_TOKEN: "token",
       INPUT_USER: "user",
+      INPUT_TYPE: "npm",
       "INPUT_VERSION-PATTERN": "[",
       "INPUT_DRY-RUN": "true",
       "INPUT_RATE-LIMIT": "true",
@@ -121,6 +126,7 @@ describe("getActionInput", () => {
       INPUT_NAMES: "test\ntest2",
       INPUT_TOKEN: "token",
       INPUT_USER: "user",
+      INPUT_TYPE: "npm",
       "INPUT_SEMVER-PATTERN": "invalid",
       "INPUT_DRY-RUN": "true",
       "INPUT_RATE-LIMIT": "true",
@@ -146,6 +152,22 @@ describe("getActionInput", () => {
     expect(() => {
       getActionInput()
     }).toThrow(/.*must be one of the supported types.*/)
+  })
+
+test("get input from env (missing type)", () => {
+  process.env = {
+    ...env,
+    GITHUB_REPOSITORY: "SmartsquareGmbH/delete-old-packages",
+    INPUT_NAMES: "test\ntest2",
+    INPUT_TOKEN: "token",
+    INPUT_USER: "user",
+    "INPUT_DRY-RUN": "true",
+    "INPUT_RATE-LIMIT": "false",
+  }
+
+  expect(() => {
+    getActionInput()
+  }).toThrow(/.*is required and must be one of the supported types:*/)
   })
 })
 
@@ -178,6 +200,7 @@ describe("validateInput", () => {
       organization: "",
       owner: "SmartsquareGmbH",
       rateLimit: true,
+      type: PackageType.Npm,
     }
 
     expect(() => {
@@ -217,6 +240,7 @@ describe("validateInput", () => {
       organization: "",
       owner: "SmartsquareGmbH",
       rateLimit: true,
+      type: PackageType.Npm,
     }
 
     expect(() => {
@@ -236,6 +260,7 @@ describe("validateInput", () => {
       organization: "",
       owner: "SmartsquareGmbH",
       rateLimit: true,
+      type: PackageType.Npm,
     }
 
     expect(() => {
@@ -271,6 +296,7 @@ describe("validateInput", () => {
       organization: "",
       owner: "SmartsquareGmbH",
       rateLimit: true,
+      type: PackageType.Npm,
     }
 
     expect(() => {
@@ -288,6 +314,7 @@ describe("validateInput", () => {
       organization: "",
       owner: "SmartsquareGmbH",
       rateLimit: true,
+      type: PackageType.Npm,
     }
 
     expect(() => {
@@ -305,6 +332,7 @@ describe("validateInput", () => {
       organization: "",
       owner: "SmartsquareGmbH",
       rateLimit: true,
+      type: PackageType.Npm,
     }
 
     expect(() => {
@@ -322,6 +350,7 @@ describe("validateInput", () => {
       organization: "",
       owner: "SmartsquareGmbH",
       rateLimit: true,
+      type: PackageType.Npm,
     }
 
     expect(() => {

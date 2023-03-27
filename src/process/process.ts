@@ -1,6 +1,16 @@
 import semverCoerce from "semver/functions/coerce"
 import semverSatisfies from "semver/functions/satisfies"
-import { Input, Package, PackageVersion } from "../types"
+import {Input, Package, PackageType, PackageVersion} from "../types"
+import {
+  RestEndpointMethodTypes
+} from "@octokit/plugin-rest-endpoint-methods/dist-types/generated/parameters-and-response-types";
+import {components} from "@octokit/openapi-types";
+
+type RestResponse =
+    | RestEndpointMethodTypes["packages"]["getAllPackageVersionsForPackageOwnedByOrg"]["response"]
+    | RestEndpointMethodTypes["packages"]["getAllPackageVersionsForPackageOwnedByUser"]["response"]
+
+type RestVersion = components["schemas"]["package-version"]
 
 export function processPackages(input: Input, packages: Package[]): Package[] {
   return packages
@@ -23,5 +33,26 @@ export function findVersionsToDelete(input: Input, versions: PackageVersion[]): 
     })
   } else {
     return versions
+  }
+}
+
+export function processResponse(name: string, response: RestResponse): Package {
+  return {
+    name,
+    versions: response.data.map((version) => processVersion(version)).filter((it) => it.names.length >= 1),
+  }
+}
+
+function processVersion(version: RestVersion): PackageVersion {
+  if (version.metadata?.package_type === PackageType.Container) {
+    return {
+      id: version.id.toString(),
+      names: version.metadata?.container?.tags ?? [],
+    }
+  } else {
+    return {
+      id: version.id.toString(),
+      names: [version.name],
+    }
   }
 }
