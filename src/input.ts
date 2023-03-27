@@ -35,12 +35,12 @@ function genSemVerInput(name: string): Range | undefined {
   }
 }
 
-function getTypeInput(name: string): PackageType | undefined {
+function getTypeInput(name: string): PackageType {
   const packageTypes = Object.values(PackageType).map((it) => it.toString())
   const input = getInput(name).toLowerCase()
 
   if (!input) {
-    return undefined
+    throw new Error(`${name} is required and must be one of the supported types: ${packageTypes.join(", ")}`)
   } else if (packageTypes.includes(input)) {
     return input as PackageType
   } else {
@@ -65,6 +65,10 @@ export function getActionInput(): Input {
 }
 
 export function validateInput(input: Input): Input {
+  if (!input.type) {
+    throw new Error("package feed type is required so must be supplied")
+  }
+  
   if (input.names.length <= 0) {
     throw new Error("names cannot be empty")
   }

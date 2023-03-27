@@ -1,28 +1,33 @@
-import { processRestResponse } from "../../process/rest.process"
+import { processResponse } from "../../process/process"
 import { Package, QueryStrategy, RestInput } from "../../types"
-import { BaseStrategy } from "../../base.strategy"
+import {GitHub} from "@actions/github/lib/utils";
 
-export default class UserRestQueryStrategy extends BaseStrategy implements QueryStrategy {
+export default class OrganizationQueryStrategy implements QueryStrategy {
+  private octokit: InstanceType<typeof GitHub>;
+  
+  constructor(octokit: InstanceType<typeof GitHub>) {
+    this.octokit = octokit;
+  }
+  
   async queryPackages(input: RestInput): Promise<Package[]> {
     return await Promise.all(
       input.names.map(async (name) => {
         const response = await this.queryPackage(input, name)
 
-        return processRestResponse(name, response)
+        return processResponse(name, response)
       })
     )
   }
 
   private async queryPackage(input: RestInput, name: string) {
     try {
-      const octokit = this.setupClient(input)
       const params = {
         package_name: name,
         package_type: input.type,
-        username: input.user,
+        org: input.organization,
         per_page: 100,
       }
-      return await octokit.rest.packages.getAllPackageVersionsForPackageOwnedByUser(params)
+      return await this.octokit.rest.packages.getAllPackageVersionsForPackageOwnedByOrg(params)
     } catch (error) {
       throw new Error(`Failed to query package ${name}: ${error}`)
     }

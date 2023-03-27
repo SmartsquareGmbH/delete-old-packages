@@ -1,6 +1,6 @@
 import { decideQueryStrategy } from "../../src/query/query.strategy.factory"
-import UserRestQueryStrategy from "../../src/query/rest/user.rest.query.strategy"
-import OrganizationRestQueryStrategy from "../../src/query/rest/organization.rest.query.strategy"
+import UserQueryStrategy from "../../src/query/strategies/user.query.strategy"
+import OrganizationQueryStrategy from "../../src/query/strategies/organization.query.strategy"
 import { Input, PackageType } from "../../src/types"
 
 test("decide user query strategy", () => {
@@ -8,14 +8,15 @@ test("decide user query strategy", () => {
     names: ["test"],
     versionPattern: /.*/,
     keep: 0,
-    token: "",
+    token: "abc-123",
     dryRun: false,
     user: "user",
     organization: "",
     owner: "SmartsquareGmbH",
+    type: PackageType.Npm,
   }
 
-  expect(decideQueryStrategy(input)).toBeInstanceOf(UserRestQueryStrategy)
+  expect(decideQueryStrategy(input)).toBeInstanceOf(UserQueryStrategy)
 })
 
 test("decide organization query strategy", () => {
@@ -23,14 +24,15 @@ test("decide organization query strategy", () => {
     names: ["test"],
     versionPattern: /.*/,
     keep: 0,
-    token: "",
+    token: "abc-123",
     dryRun: false,
     user: "",
     organization: "org",
     owner: "SmartsquareGmbH",
+    type: PackageType.Npm,
   }
 
-  expect(decideQueryStrategy(input)).toBeInstanceOf(OrganizationRestQueryStrategy)
+  expect(decideQueryStrategy(input)).toBeInstanceOf(OrganizationQueryStrategy)
 })
 
 test("decide default query strategy", () => {
@@ -39,14 +41,14 @@ test("decide default query strategy", () => {
     versionPattern: /.*/,
     keep: 0,
     type: PackageType.Maven,
-    token: "",
+    token: "abd-123",
     dryRun: false,
     user: "",
     organization: "",
     owner: "SmartsquareGmbH",
   }
 
-  expect(decideQueryStrategy(input)).toBeInstanceOf(UserRestQueryStrategy)
+  expect(decideQueryStrategy(input)).toBeInstanceOf(UserQueryStrategy)
 })
 
 test("decide rest user strategy", () => {
@@ -55,12 +57,12 @@ test("decide rest user strategy", () => {
     versionPattern: /.*/,
     keep: 0,
     type: PackageType.Npm,
-    token: "",
+    token: "abc-123",
     dryRun: false,
     user: "user",
     organization: "",
     owner: "SmartsquareGmbH",
   }
 
-  expect(decideQueryStrategy(input)).toBeInstanceOf(UserRestQueryStrategy)
+  expect(decideQueryStrategy(input)).toBeInstanceOf(UserQueryStrategy)
 })

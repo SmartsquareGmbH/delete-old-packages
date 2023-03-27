@@ -14,7 +14,7 @@ export type Input = {
   versionPattern?: RegExp
   semverPattern?: Range
   keep: number
-  type?: PackageType
+  type: PackageType
   token: string
   dryRun: boolean
   user: string

@@ -15,16 +15,16 @@ table below) on them and then deleting the matching versions.
 | Name              | Description                                                | Required           | Default       |
 |-------------------|------------------------------------------------------------|--------------------|---------------|
 | `owner`           | Owner of the repo containing the package(s)                |                    | Set by GitHub |
-| `repo`            | Repo containing the package(s)                             |                    | Set by GitHub |
 | `user`            | User containing the package(s)                             |                    |               |
 | `organization`    | Organization containing the package(s)                     |                    |               |
 | `names`           | Names of the package(s)                                    | :heavy_check_mark: |               |
-| `type`            | The type of package (e.g. npm)                             |                    |               |
+| `type`            | The type of package (e.g. npm)                             | :heavy_check_mark: |               |
 | `semver-pattern`  | [Semver](https://semver.org) range of the versions         |                    | `^.+$`        |
 | `version-pattern` | Regex pattern of the versions                              |                    |               |
 | `keep`            | Number of versions to exclude from deletions               |                    | 2             |
 | `token`           | Token with the necessary scopes to delete package versions |                    | Set by GitHub |
 | `dry-run`         | If the action should only print what it would do           |                    | `false`       |
+| `rate-limit`      | Do you want to enable rate limiting                        |                    | `false`       |
 
 > :warning: Certain options can not be combined with each other and will lead to errors. These are:
 > - `user`, `owner`/`repo` and `organization`.
@@ -41,6 +41,7 @@ See [ghcr.io and npm.pkg.github.com packages](#ghcrio-and-npmpkggithubcom-packag
 ```yaml
 uses: smartsquaregmbh/delete-old-packages@v0.6.0
 with:
+  type: npm
   names: |
     package-1
     package-2
@@ -51,6 +52,7 @@ with:
 ```yaml
 uses: smartsquaregmbh/delete-old-packages@v0.6.0
 with:
+  type: npm
   organization: my-organization
   names: |
     package-1
@@ -62,6 +64,7 @@ with:
 ```yaml
 uses: smartsquaregmbh/delete-old-packages@v0.6.0
 with:
+  type: npm
   version-pattern: "^\\d+\\.\\d+\\.\\d+-RC\\d+$" # The regex needs to be escaped!
   names: |
     package
@@ -72,6 +75,7 @@ with:
 ```yaml
 uses: smartsquaregmbh/delete-old-packages@v0.6.0
 with:
+  type: npm
   semver-pattern: "<2.x"
   names: |
     package
@@ -82,31 +86,8 @@ with:
 ```yaml
 uses: smartsquaregmbh/delete-old-packages@v0.6.0
 with:
+  type: npm
   keep: 5
-  names: |
-    package
-```
-
-### ghcr.io, nuget.pkg.github.com and npm.pkg.github.com packages
-
-As of version v0.5.0 this action is able to delete [ghcr.io](https://ghcr.io/) packages. With version
-v0.6.0 [npm.pkg.github.com](https://npm.pkg.github.com) packages are also possible. Version 0.7.0 brings [nuget.pkg.github.com](https://nuget.pkg.github.com) support. Since these packages are not
-integrated (yet) into the APIs this action is using normally, a few additional options are required:
-
-- The `type` needs to be set to `container`, `npm` or `nuget`.
-- A
-  [`token`](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-  is required with at least the `repo`, `write:packages` and `delete:packages` permissions.
-- Either an `organization` or an `user` needs to be set. Packages bound to a repository do not work.
-
-#### Example
-
-```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.6.0
-with:
-  token: ${{ secrets.GH_ACCESS_TOKEN }}
-  organization: my-organization
-  type: container
   names: |
     package
 ```
@@ -114,9 +95,16 @@ with:
 ### Rate limit
 
 When using this action with many packages and/or versions you might encounter an error like "API rate limit exceeded".
-This happens because the GitHub APIs we use only allow a specific number of requests. Due to the way the APIs are
-structured, we need to make a request for every package version that is found. If you have hundreds of versions, this
-will hit the limit.
+Internally, the action uses a plugin for octokit which automatically retries requests when the rate limit is exceeded.
+In these cases, the rate limit `retry after` returned from the github api during a request is used to wait before retrying, up to five times.
+If the rate limit is exceeded more than five times, the action will fail.
 
-This is not a big problem though. The action will delete as many versions as it can and will delete more the next time
-it is run. Simply wait a few minutes and run the action again until all versions you want to delete have been processed. 
+```yaml
+uses: smartsquaregmbh/delete-old-packages@v0.6.0
+with:
+  type: npm
+  rate-limit: true
+  keep: 5
+  names: |
+    package
+```
