@@ -24,7 +24,7 @@ table below) on them and then deleting the matching versions.
 | `keep`            | Number of versions to exclude from deletions               |                    | 2             |
 | `token`           | Token with the necessary scopes to delete package versions |                    | Set by GitHub |
 | `dry-run`         | If the action should only print what it would do           |                    | `false`       |
-| `rate-limit`      | Do you want to enable rate limiting                        |                    | `false`       |
+| `rate-limit`      | If rate limiting should be enabled                        |                    | `false`       |
 
 > :warning: Certain options can not be combined with each other and will lead to errors. These are:
 > - `user`, `owner`/`repo` and `organization`.
