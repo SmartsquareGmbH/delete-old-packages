@@ -65,10 +65,6 @@ export function getActionInput(): Input {
 }
 
 export function validateInput(input: Input): Input {
-  if (!input.type) {
-    throw new Error("package feed type is required so must be supplied")
-  }
-  
   if (input.names.length <= 0) {
     throw new Error("names cannot be empty")
   }
