@@ -13,7 +13,6 @@ test("filters correctly", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "SmartsquareGmbH",
       type: PackageType.Npm,
     },
     [
@@ -51,7 +50,6 @@ test("filters based on semver", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "SmartsquareGmbH",
       type: PackageType.Npm,
     },
     [
@@ -81,7 +79,6 @@ test("filters based on regex", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "SmartsquareGmbH",
       type: PackageType.Npm,
     },
     [
@@ -119,7 +116,6 @@ test("respects keep", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "SmartsquareGmbH",
       type: PackageType.Npm,
     },
     [
@@ -156,7 +152,6 @@ test("filters with multiple names", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "SmartsquareGmbH",
       type: PackageType.Npm,
     },
     [

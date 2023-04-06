@@ -21,7 +21,6 @@ test("queries and deletes packages", async () => {
     dryRun: false,
     user: "user",
     organization: "",
-    owner: "SmartsquareGmbH",
     type: PackageType.Npm,
   }
 
@@ -44,7 +43,6 @@ test("filters by semver-pattern", async () => {
     dryRun: false,
     user: "user",
     organization: "",
-    owner: "SmartsquareGmbH",
     type: PackageType.Npm,
   }
 
@@ -66,7 +64,6 @@ test("filters by version-pattern", async () => {
     dryRun: false,
     user: "user",
     organization: "",
-    owner: "SmartsquareGmbH",
     type: PackageType.Npm,
   }
 
@@ -88,7 +85,6 @@ test("Does nothing when empty packages are returned", async () => {
     dryRun: false,
     user: "user",
     organization: "",
-    owner: "SmartsquareGmbH",
     type: PackageType.Npm,
   }
 

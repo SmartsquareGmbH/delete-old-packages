@@ -12,7 +12,6 @@ test("decide default delete strategy", () => {
     dryRun: false,
     user: "",
     organization: "",
-    owner: "SmartsquareGmbH",
     type: PackageType.Npm,
   }
 
@@ -29,7 +28,6 @@ test("decide rest user delete strategy", () => {
     dryRun: false,
     user: "user",
     organization: "",
-    owner: "SmartsquareGmbH",
   }
 
   expect(decideDeleteStrategy(input)).toBeInstanceOf(UserDeleteStrategy)
@@ -45,7 +43,6 @@ test("decide rest organization delete strategy", () => {
     dryRun: false,
     user: "",
     organization: "org",
-    owner: "SmartsquareGmbH",
   }
 
   expect(decideDeleteStrategy(input)).toBeInstanceOf(OrganizationDeleteStrategy)

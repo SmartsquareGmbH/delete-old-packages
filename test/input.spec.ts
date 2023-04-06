@@ -35,7 +35,6 @@ describe("getActionInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "SmartsquareGmbH",
       rateLimit: true,
       type: PackageType.Npm,
     }
@@ -65,7 +64,6 @@ describe("getActionInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "SmartsquareGmbH",
       rateLimit: true,
       type: PackageType.Npm,
     }
@@ -94,7 +92,6 @@ describe("getActionInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "SmartsquareGmbH",
       rateLimit: true,
     }
 
@@ -181,7 +178,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "SmartsquareGmbH",
       rateLimit: false,
     }
 
@@ -198,7 +194,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "SmartsquareGmbH",
       rateLimit: true,
       type: PackageType.Npm,
     }
@@ -238,7 +233,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "SmartsquareGmbH",
       rateLimit: true,
       type: PackageType.Npm,
     }
@@ -258,7 +252,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "SmartsquareGmbH",
       rateLimit: true,
       type: PackageType.Npm,
     }
@@ -277,7 +270,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "org",
-      owner: "SmartsquareGmbH",
       rateLimit: true,
     }
 
@@ -294,7 +286,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "SmartsquareGmbH",
       rateLimit: true,
       type: PackageType.Npm,
     }
@@ -312,7 +303,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "SmartsquareGmbH",
       rateLimit: true,
       type: PackageType.Npm,
     }
@@ -330,7 +320,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "SmartsquareGmbH",
       rateLimit: true,
       type: PackageType.Npm,
     }
@@ -348,7 +337,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      owner: "SmartsquareGmbH",
       rateLimit: true,
       type: PackageType.Npm,
     }

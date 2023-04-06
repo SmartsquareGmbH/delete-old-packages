@@ -3,12 +3,6 @@ name: Delete old packages
 description: Deletes old package versions
 
 inputs:
-  owner:
-    description: >-
-      Owner of the repo containing the package(s).
-      Defaults to the owner of the repo running the action.
-    required: false
-
   user:
     description: >-
       User hosting the package(s).
@@ -59,7 +53,7 @@ inputs:
       If the action should only print what it would delete instead of actually deleting.
     required: false
     default: "false"
-    
+
   rate-limit:
     description: >-
       Enables the rate limit plugin to handle rate limits against the rest api.

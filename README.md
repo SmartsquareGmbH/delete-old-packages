@@ -12,48 +12,38 @@ table below) on them and then deleting the matching versions.
 
 ### Inputs
 
-| Name              | Description                                                | Required           | Default       |
-|-------------------|------------------------------------------------------------|--------------------|---------------|
-| `owner`           | Owner of the repo containing the package(s)                |                    | Set by GitHub |
-| `user`            | User containing the package(s)                             |                    |               |
-| `organization`    | Organization containing the package(s)                     |                    |               |
-| `names`           | Names of the package(s)                                    | :heavy_check_mark: |               |
-| `type`            | The type of package (e.g. npm)                             | :heavy_check_mark: |               |
-| `semver-pattern`  | [Semver](https://semver.org) range of the versions         |                    | `^.+$`        |
-| `version-pattern` | Regex pattern of the versions                              |                    |               |
-| `keep`            | Number of versions to exclude from deletions               |                    | 2             |
-| `token`           | Token with the necessary scopes to delete package versions |                    | Set by GitHub |
-| `dry-run`         | If the action should only print what it would do           |                    | `false`       |
-| `rate-limit`      | If rate limiting should be enabled                        |                    | `false`       |
+| Name              | Description                                                | Required               | Default       |
+|-------------------|------------------------------------------------------------|------------------------|---------------|
+| `user`            | User containing the package(s)                             |                        |               |
+| `organization`    | Organization containing the package(s)                     |                        |               |
+| `names`           | Names of the package(s)                                    | :heavy_check_mark:     |               |
+| `type`            | The type of package (e.g. npm)                             | :heavy_check_mark:     |               |
+| `semver-pattern`  | [Semver](https://semver.org) range of the versions         |                        |               |
+| `version-pattern` | Regex pattern of the versions                              |                        | `^.+$`        |
+| `keep`            | Number of versions to exclude from deletions               |                        | 2             |
+| `token`           | Token with the necessary scopes to delete package versions | Depends on the package | Set by GitHub |
+| `dry-run`         | If the action should only print what it would do           |                        | `false`       |
+| `rate-limit`      | If rate limiting should be enabled                         |                        | `false`       |
 
 > :warning: Certain options can not be combined with each other and will lead to errors. These are:
-> - `user`, `owner`/`repo` and `organization`.
+> - `user` and `organization`.
 > - `semver-pattern` and `version-pattern`.
 
 Supported package types as of the current version are: `npm`, `maven`, `rubygems`, `docker`, `nuget` and `container`.
-The type is optional and by default unset, but depending on the given type, the action may behave differently.
-See [ghcr.io and npm.pkg.github.com packages](#ghcrio-and-npmpkggithubcom-packages).
+
+A `token` might be needed, based on which package you are trying to delete. Tokens can be
+generated [here](https://github.com/settings/tokens) and need to be added as a secret to the repository
+(Settings -> Security -> Secrets and variables -> Actions).
 
 ### Example usage
-
-> Delete old versions of the packages "package-1" and "package-2" for the current repository.
-
-```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.7.0
-with:
-  type: npm
-  names: |
-    package-1
-    package-2
-```
 
 > Delete old versions of the packages "package-1" and "package-2" for the organization "my-organization".
 
 ```yaml
 uses: smartsquaregmbh/delete-old-packages@v0.7.0
 with:
-  type: npm
   organization: my-organization
+  type: npm
   names: |
     package-1
     package-2
@@ -64,6 +54,7 @@ with:
 ```yaml
 uses: smartsquaregmbh/delete-old-packages@v0.7.0
 with:
+  organization: my-organization
   type: npm
   version-pattern: "^\\d+\\.\\d+\\.\\d+-RC\\d+$" # The regex needs to be escaped!
   names: |
@@ -75,6 +66,7 @@ with:
 ```yaml
 uses: smartsquaregmbh/delete-old-packages@v0.7.0
 with:
+  organization: my-organization
   type: npm
   semver-pattern: "<2.x"
   names: |
@@ -86,8 +78,21 @@ with:
 ```yaml
 uses: smartsquaregmbh/delete-old-packages@v0.7.0
 with:
+  organization: my-organization
   type: npm
   keep: 5
+  names: |
+    package
+```
+
+> Delete old versions of the package "package" with a token named "GH_ACCESS_TOKEN".
+
+```yaml
+uses: smartsquaregmbh/delete-old-packages@v0.7.0
+with:
+  token: ${{ secrets.GH_ACCESS_TOKEN }}
+  organization: my-organization
+  type: npm
   names: |
     package
 ```
@@ -96,12 +101,13 @@ with:
 
 When using this action with many packages and/or versions you might encounter an error like "API rate limit exceeded".
 Internally, the action uses a plugin for octokit which automatically retries requests when the rate limit is exceeded.
-In these cases, the rate limit `retry after` returned from the github api during a request is used to wait before retrying, up to five times.
-If the rate limit is exceeded more than five times, the action will fail.
+In these cases, the rate limit `retry after` returned from the GitHub api during a request is used to wait before
+retrying, up to five times. If the rate limit is exceeded more than five times, the action will fail.
 
 ```yaml
 uses: smartsquaregmbh/delete-old-packages@v0.7.0
 with:
+  organization: my-organization
   type: npm
   rate-limit: true
   keep: 5

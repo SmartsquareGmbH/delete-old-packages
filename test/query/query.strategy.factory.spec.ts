@@ -12,7 +12,6 @@ test("decide user query strategy", () => {
     dryRun: false,
     user: "user",
     organization: "",
-    owner: "SmartsquareGmbH",
     type: PackageType.Npm,
   }
 
@@ -28,7 +27,6 @@ test("decide organization query strategy", () => {
     dryRun: false,
     user: "",
     organization: "org",
-    owner: "SmartsquareGmbH",
     type: PackageType.Npm,
   }
 
@@ -45,7 +43,6 @@ test("decide default query strategy", () => {
     dryRun: false,
     user: "",
     organization: "",
-    owner: "SmartsquareGmbH",
   }
 
   expect(decideQueryStrategy(input)).toBeInstanceOf(UserQueryStrategy)
@@ -61,7 +58,6 @@ test("decide rest user strategy", () => {
     dryRun: false,
     user: "user",
     organization: "",
-    owner: "SmartsquareGmbH",
   }
 
   expect(decideQueryStrategy(input)).toBeInstanceOf(UserQueryStrategy)

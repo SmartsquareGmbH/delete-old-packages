@@ -59,7 +59,6 @@ export function getActionInput(): Input {
     dryRun: getBooleanInput("dry-run"),
     user: getInput("user"),
     organization: getInput("organization"),
-    owner: getInput("owner") || context.repo.owner,
     rateLimit: getBooleanInput("rate-limit"),
   }
 }
