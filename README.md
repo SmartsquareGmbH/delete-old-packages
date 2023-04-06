@@ -39,7 +39,7 @@ See [ghcr.io and npm.pkg.github.com packages](#ghcrio-and-npmpkggithubcom-packag
 > Delete old versions of the packages "package-1" and "package-2" for the current repository.
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.6.0
+uses: smartsquaregmbh/delete-old-packages@v0.7.0
 with:
   type: npm
   names: |
@@ -50,7 +50,7 @@ with:
 > Delete old versions of the packages "package-1" and "package-2" for the organization "my-organization".
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.6.0
+uses: smartsquaregmbh/delete-old-packages@v0.7.0
 with:
   type: npm
   organization: my-organization
@@ -62,7 +62,7 @@ with:
 > Delete old versions in the form of "1.0.0-RC1" of the package "package".
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.6.0
+uses: smartsquaregmbh/delete-old-packages@v0.7.0
 with:
   type: npm
   version-pattern: "^\\d+\\.\\d+\\.\\d+-RC\\d+$" # The regex needs to be escaped!
@@ -73,7 +73,7 @@ with:
 > Delete old versions with a lower semver version than 2.x of the package "package".
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.6.0
+uses: smartsquaregmbh/delete-old-packages@v0.7.0
 with:
   type: npm
   semver-pattern: "<2.x"
@@ -84,7 +84,7 @@ with:
 > Delete old versions of the package "package" but keep at least 5 versions.
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.6.0
+uses: smartsquaregmbh/delete-old-packages@v0.7.0
 with:
   type: npm
   keep: 5
@@ -100,7 +100,7 @@ In these cases, the rate limit `retry after` returned from the github api during
 If the rate limit is exceeded more than five times, the action will fail.
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.6.0
+uses: smartsquaregmbh/delete-old-packages@v0.7.0
 with:
   type: npm
   rate-limit: true
