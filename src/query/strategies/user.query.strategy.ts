@@ -23,6 +23,7 @@ export default class UserQueryStrategy implements QueryStrategy {
         username: input.user,
         per_page: 100,
       }
+
       return this.octokit.rest.packages.getAllPackageVersionsForPackageOwnedByUser(params)
     } catch (error) {
       throw new Error(`Failed to query package ${name}: ${error}`)

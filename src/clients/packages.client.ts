@@ -19,7 +19,7 @@ export function createPackagesClient(input: Input): InstanceType<typeof GitHub> 
         onRateLimit: (retryAfter: number, options: RequestOptions) => {
           warning(`Request quota exhausted for request ${options.method} ${options.url}`)
 
-          // Retry five times after hitting a rate limit error, then give up
+          // Retry five times after hitting a rate limit error, then give up.
           if (options.request?.retryCount <= 5) {
             info(`Retrying after ${retryAfter} seconds!`)
             return true
@@ -28,14 +28,14 @@ export function createPackagesClient(input: Input): InstanceType<typeof GitHub> 
         onSecondaryRateLimit: (retryAfter: number, options: RequestOptions) => {
           warning(`Request quota exhausted for request ${options.method} ${options.url}`)
 
-          // Retry five times after hitting a rate limit error, then give up
+          // Retry five times after hitting a rate limit error, then give up.
           if (options.request?.retryCount <= 5) {
             info(`Retrying after ${retryAfter} seconds!`)
             return true
           }
         },
         onAbuseLimit: (retryAfter: number, options: RequestOptions) => {
-          // does not retry, only logs a warning
+          // Do not retry, only log a warning.
           warning(`Abuse detected for request ${options.method} ${options.url}`)
         },
       },

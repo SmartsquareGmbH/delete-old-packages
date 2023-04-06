@@ -23,6 +23,7 @@ export default class OrganizationQueryStrategy implements QueryStrategy {
         org: input.organization,
         per_page: 100,
       }
+
       return this.octokit.rest.packages.getAllPackageVersionsForPackageOwnedByOrg(params)
     } catch (error) {
       throw new Error(`Failed to query package ${name}: ${error}`)

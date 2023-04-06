@@ -3,6 +3,7 @@ import { GitHub } from "@actions/github/lib/utils"
 
 export default class OrganizationDeleteStrategy implements DeleteStrategy {
   constructor(private readonly octokit: InstanceType<typeof GitHub>) {}
+
   async deletePackageVersion(input: RestInput, name: string, id: string): Promise<void> {
     await this.octokit.rest.packages.deletePackageVersionForOrg({
       package_name: name,

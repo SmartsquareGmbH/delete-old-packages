@@ -5,5 +5,6 @@ import { createPackagesClient } from "../clients/packages.client"
 
 export function decideDeleteStrategy(input: Input): DeleteStrategy {
   const packagesClient = createPackagesClient(input)
+
   return input.organization ? new OrganizationDeleteStrategy(packagesClient) : new UserDeleteStrategy(packagesClient)
 }
