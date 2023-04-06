@@ -1,5 +1,4 @@
 import { getBooleanInput, getInput, getMultilineInput } from "@actions/core"
-import { context } from "@actions/github"
 import { Range } from "semver"
 import { Input, PackageType } from "./types"
 
