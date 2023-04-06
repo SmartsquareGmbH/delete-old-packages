@@ -1,7 +1,7 @@
 import { mock } from "jest-mock-extended"
 import { Range } from "semver"
 import { executeAction } from "../src/action"
-import {DeleteStrategy, Input, PackageType, QueryStrategy} from "../src/types"
+import { DeleteStrategy, Input, PackageType, QueryStrategy } from "../src/types"
 
 const packages = [
   {

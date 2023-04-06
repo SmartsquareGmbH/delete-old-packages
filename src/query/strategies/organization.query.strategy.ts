@@ -1,14 +1,10 @@
 import { processResponse } from "../../process/process"
 import { Package, QueryStrategy, RestInput } from "../../types"
-import {GitHub} from "@actions/github/lib/utils";
+import { GitHub } from "@actions/github/lib/utils"
 
 export default class OrganizationQueryStrategy implements QueryStrategy {
-  private octokit: InstanceType<typeof GitHub>;
-  
-  constructor(octokit: InstanceType<typeof GitHub>) {
-    this.octokit = octokit;
-  }
-  
+  constructor(private readonly octokit: InstanceType<typeof GitHub>) {}
+
   async queryPackages(input: RestInput): Promise<Package[]> {
     return await Promise.all(
       input.names.map(async (name) => {
@@ -27,7 +23,7 @@ export default class OrganizationQueryStrategy implements QueryStrategy {
         org: input.organization,
         per_page: 100,
       }
-      return await this.octokit.rest.packages.getAllPackageVersionsForPackageOwnedByOrg(params)
+      return this.octokit.rest.packages.getAllPackageVersionsForPackageOwnedByOrg(params)
     } catch (error) {
       throw new Error(`Failed to query package ${name}: ${error}`)
     }
