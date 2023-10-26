@@ -12,7 +12,11 @@ type RestVersion = components["schemas"]["package-version"]
 
 export function processPackages(input: Input, packages: Package[]): Package[] {
   return packages
-    .map(({ name, versions }) => ({ name, versions: findVersionsToDelete(input, versions).slice(input.keep) }))
+    .map(({ name, versions, totalVersions }) => ({
+      name,
+      versions: findVersionsToDelete(input, versions).slice(input.keep),
+      totalVersions,
+    }))
     .filter((it) => it.versions.length >= 1)
 }
 
@@ -35,9 +39,11 @@ export function findVersionsToDelete(input: Input, versions: PackageVersion[]): 
 }
 
 export function processResponse(name: string, response: RestResponse): Package {
+  const versions = response.data.map((version) => processVersion(version)).filter((it) => it.names.length >= 1)
   return {
     name,
-    versions: response.data.map((version) => processVersion(version)).filter((it) => it.names.length >= 1),
+    versions: versions,
+    totalVersions: versions.length,
   }
 }
 

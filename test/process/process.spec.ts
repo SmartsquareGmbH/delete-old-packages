@@ -22,6 +22,7 @@ test("filters correctly", () => {
           { id: "a", names: ["2"] },
           { id: "b", names: ["1"] },
         ],
+        totalVersions: 2,
       },
       {
         name: "test2",
@@ -29,6 +30,7 @@ test("filters correctly", () => {
           { id: "c", names: ["2"] },
           { id: "d", names: ["1"] },
         ],
+        totalVersions: 2,
       },
     ]
   )
@@ -36,8 +38,10 @@ test("filters correctly", () => {
   expect(result).toHaveLength(2)
   expect(result[0].name).toEqual("test")
   expect(result[0].versions.map((it) => it.id)).toEqual(["a", "b"])
+  expect(result[0].totalVersions).toEqual(2)
   expect(result[1].name).toEqual("test2")
   expect(result[1].versions.map((it) => it.id)).toEqual(["c", "d"])
+  expect(result[1].totalVersions).toEqual(2)
 })
 
 test("filters based on semver", () => {
@@ -61,12 +65,14 @@ test("filters based on semver", () => {
           { id: "c", names: ["3.0.1-alpha01"] },
           { id: "d", names: ["v3.10.2"] },
         ],
+        totalVersions: 4,
       },
     ]
   )
 
   expect(result[0].versions).toHaveLength(3)
   expect(result[0].versions.map((it) => it.id)).toEqual(["a", "c", "d"])
+  expect(result[0].totalVersions).toEqual(4)
 })
 
 test("filters based on regex", () => {
@@ -88,6 +94,7 @@ test("filters based on regex", () => {
           { id: "a", names: ["2-test"] },
           { id: "b", names: ["1"] },
         ],
+        totalVersions: 2,
       },
       {
         name: "test2",
@@ -95,6 +102,7 @@ test("filters based on regex", () => {
           { id: "c", names: ["2-test"] },
           { id: "d", names: ["1-test"] },
         ],
+        totalVersions: 2,
       },
     ]
   )
@@ -102,8 +110,10 @@ test("filters based on regex", () => {
   expect(result).toHaveLength(2)
   expect(result[0].name).toEqual("test")
   expect(result[0].versions.map((it) => it.id)).toEqual(["a"])
+  expect(result[0].totalVersions).toEqual(2)
   expect(result[1].name).toEqual("test2")
   expect(result[1].versions.map((it) => it.id)).toEqual(["c", "d"])
+  expect(result[1].totalVersions).toEqual(2)
 })
 
 test("respects keep", () => {
@@ -126,6 +136,7 @@ test("respects keep", () => {
           { id: "b", names: ["2"] },
           { id: "c", names: ["1"] },
         ],
+        totalVersions: 3,
       },
       {
         name: "test2",
@@ -133,6 +144,7 @@ test("respects keep", () => {
           { id: "d", names: ["1"] },
           { id: "e", names: ["1"] },
         ],
+        totalVersions: 2,
       },
     ]
   )
@@ -140,6 +152,7 @@ test("respects keep", () => {
   expect(result).toHaveLength(1)
   expect(result[0].name).toEqual("test")
   expect(result[0].versions.map((it) => it.id)).toEqual(["c"])
+  expect(result[0].totalVersions).toEqual(3)
 })
 
 test("filters with multiple names", () => {
@@ -161,6 +174,7 @@ test("filters with multiple names", () => {
           { id: "a", names: ["2"] },
           { id: "b", names: ["1", "1-test"] },
         ],
+        totalVersions: 2,
       },
       {
         name: "test2",
@@ -168,6 +182,7 @@ test("filters with multiple names", () => {
           { id: "c", names: ["2"] },
           { id: "d", names: ["1"] },
         ],
+        totalVersions: 2,
       },
     ]
   )
@@ -175,6 +190,7 @@ test("filters with multiple names", () => {
   expect(result).toHaveLength(1)
   expect(result[0].name).toEqual("test")
   expect(result[0].versions.map((it) => it.id)).toEqual(["b"])
+  expect(result[0].totalVersions).toEqual(2)
 })
 
 const containerTestResponse: RestEndpointMethodTypes["packages"]["getAllPackageVersionsForPackageOwnedByOrg"]["response"] =
@@ -314,6 +330,7 @@ test("process rest container response", () => {
         names: ["1.0.0-RC1", "1.0.0-beta1"],
       },
     ],
+    totalVersions: 3,
   })
 })
 
@@ -340,5 +357,6 @@ test("process rest npm response", () => {
         names: ["1.0.0"],
       },
     ],
+    totalVersions: 4,
   })
 })

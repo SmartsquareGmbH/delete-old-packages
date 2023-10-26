@@ -29,6 +29,7 @@ export type RestInput = Input & {
 export type Package = {
   name: string
   versions: PackageVersion[]
+  totalVersions: number
 }
 
 export type PackageVersion = {
@@ -42,4 +43,5 @@ export interface QueryStrategy {
 
 export interface DeleteStrategy {
   deletePackageVersion(input: Input, name: string, id: string): Promise<void>
+  deletePackage(input: Input, name: string): Promise<void>
 }

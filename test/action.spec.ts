@@ -10,6 +10,15 @@ const packages = [
       { id: "a", names: ["1.0.0"] },
       { id: "b", names: ["docker-base-layer"] },
     ],
+    totalVersions: 2,
+  },
+]
+
+const packages_single = [
+  {
+    name: "test",
+    versions: [{ id: "a", names: ["1.0.0"] }],
+    totalVersions: 1,
   },
 ]
 
@@ -74,6 +83,27 @@ test("filters by version-pattern", async () => {
 
   expect(deleteStrategy.deletePackageVersion).toHaveBeenCalledTimes(1)
   expect(deleteStrategy.deletePackageVersion).toHaveBeenNthCalledWith(1, input, "test", "a")
+})
+
+test("deletes whole package if last version", async () => {
+  const input: Input = {
+    names: ["test", "test2"],
+    versionPattern: /^\d+\.\d+\.\d+$/,
+    keep: 0,
+    token: "token",
+    dryRun: false,
+    user: "user",
+    organization: "",
+    type: PackageType.Npm,
+  }
+
+  const queryStrategy = mock<QueryStrategy>({ queryPackages: () => Promise.resolve(packages_single) })
+  const deleteStrategy = mock<DeleteStrategy>()
+
+  await executeAction(input, queryStrategy, deleteStrategy)
+
+  expect(deleteStrategy.deletePackage).toHaveBeenCalledTimes(1)
+  expect(deleteStrategy.deletePackage).toHaveBeenNthCalledWith(1, input, "test")
 })
 
 test("Does nothing when empty packages are returned", async () => {

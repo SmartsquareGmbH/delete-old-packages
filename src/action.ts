@@ -39,12 +39,22 @@ export async function executeAction(input: Input, queryStrategy: QueryStrategy, 
   await group("Deleting packages", async () => {
     await Promise.all(
       processedPackages
-        .flatMap((pkg) => pkg.versions.map((version) => ({ name: pkg.name, version })))
-        .map(async ({ name, version }) => {
-          info(`Deleting version ${version.names.join(", ")} of package ${name}`)
+        .flatMap((pkg) =>
+          pkg.versions.map((version) => ({ name: pkg.name, version, totalVersions: pkg.totalVersions }))
+        )
+        .map(async ({ name, version, totalVersions }) => {
+          if (totalVersions > 1) {
+            info(`Deleting version ${version.names.join(", ")} of package ${name}`)
 
-          if (!input.dryRun) {
-            await deleteStrategy.deletePackageVersion(input, name, version.id)
+            if (!input.dryRun) {
+              await deleteStrategy.deletePackageVersion(input, name, version.id)
+            }
+          } else {
+            info(`Deleting package ${name} since ${version.names.join(", ")} is the last version`)
+
+            if (!input.dryRun) {
+              await deleteStrategy.deletePackage(input, name)
+            }
           }
         })
     )
