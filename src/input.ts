@@ -67,10 +67,6 @@ export function validateInput(input: Input): Input {
     throw new Error("names cannot be empty")
   }
 
-  if (input.names.length > 20) {
-    throw new Error("names cannot contain more than 20 items")
-  }
-
   if (input.versionPattern && input.semverPattern) {
     throw new Error("Only one of version-pattern and semver-pattern can be specified")
   }
