@@ -12,4 +12,12 @@ export default class OrganizationDeleteStrategy implements DeleteStrategy {
       org: input.organization,
     })
   }
+
+  async deletePackage(input: RestInput, name: string): Promise<void> {
+    await this.octokit.rest.packages.deletePackageForOrg({
+      package_name: name,
+      package_type: input.type,
+      org: input.organization,
+    })
+  }
 }

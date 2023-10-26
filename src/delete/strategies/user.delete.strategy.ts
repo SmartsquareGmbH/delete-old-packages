@@ -12,4 +12,12 @@ export default class UserDeleteStrategy implements DeleteStrategy {
       username: input.user,
     })
   }
+
+  async deletePackage(input: RestInput, name: string): Promise<void> {
+    await this.octokit.rest.packages.deletePackageForUser({
+      package_name: name,
+      package_type: input.type,
+      username: input.user,
+    })
+  }
 }
