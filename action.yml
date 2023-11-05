@@ -54,12 +54,6 @@ inputs:
     required: false
     default: "false"
 
-  rate-limit:
-    description: >-
-      Enables the rate limit plugin to handle rate limits against the rest api.
-    required: false
-    default: "false"
-
 runs:
   using: node16
   main: dist/index.js

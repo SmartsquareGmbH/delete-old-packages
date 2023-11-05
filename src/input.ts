@@ -58,7 +58,6 @@ export function getActionInput(): Input {
     dryRun: getBooleanInput("dry-run"),
     user: getInput("user"),
     organization: getInput("organization"),
-    rateLimit: getBooleanInput("rate-limit"),
   }
 }
 

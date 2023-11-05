@@ -19,7 +19,6 @@ export type Input = {
   dryRun: boolean
   user: string
   organization: string
-  rateLimit?: boolean
 }
 
 export type RestInput = Input & {

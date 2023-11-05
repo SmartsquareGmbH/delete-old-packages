@@ -23,7 +23,6 @@ table below) on them and then deleting the matching versions.
 | `keep`            | Number of versions to exclude from deletions               |                        | 2             |
 | `token`           | Token with the necessary scopes to delete package versions | Depends on the package | Set by GitHub |
 | `dry-run`         | If the action should only print what it would do           |                        | `false`       |
-| `rate-limit`      | If rate limiting should be enabled                         |                        | `false`       |
 
 > :warning: Certain options can not be combined with each other and will lead to errors. These are:
 > - `user` and `organization`.
@@ -99,18 +98,7 @@ with:
 
 ### Rate limit
 
-When using this action with many packages and/or versions you might encounter an error like "API rate limit exceeded".
-Internally, the action uses a plugin for octokit which automatically retries requests when the rate limit is exceeded.
-In these cases, the rate limit `retry after` returned from the GitHub api during a request is used to wait before
-retrying, up to five times. If the rate limit is exceeded more than five times, the action will fail.
-
-```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.7.0
-with:
-  organization: my-organization
-  type: npm
-  rate-limit: true
-  keep: 5
-  names: |
-    package
-```
+GitHub imposes a rate limit on API calls which might be triggered by excessive use of this action. Starting from version
+[v0.8.0](https://github.com/SmartsquareGmbH/delete-old-packages/releases/tag/v0.8.0) this should be automatically
+handled: The rate limit `retry after` returned from the GitHub api during a request is used to wait before retrying, up
+to five times. If the rate limit is exceeded more than five times, the action will still fail.

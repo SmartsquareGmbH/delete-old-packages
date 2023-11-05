@@ -22,7 +22,6 @@ describe("getActionInput", () => {
       INPUT_USER: "user",
       "INPUT_VERSION-PATTERN": "\\d+\\.\\d+\\.\\d+-RC\\d+",
       "INPUT_DRY-RUN": "true",
-      "INPUT_RATE-LIMIT": "true",
       INPUT_TYPE: "npm",
     }
 
@@ -35,7 +34,6 @@ describe("getActionInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      rateLimit: true,
       type: PackageType.Npm,
     }
 
@@ -51,7 +49,6 @@ describe("getActionInput", () => {
       INPUT_USER: "user",
       "INPUT_SEMVER-PATTERN": "^1.0.0",
       "INPUT_DRY-RUN": "true",
-      "INPUT_RATE-LIMIT": "true",
       INPUT_TYPE: "npm",
     }
 
@@ -64,7 +61,6 @@ describe("getActionInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      rateLimit: true,
       type: PackageType.Npm,
     }
 
@@ -80,7 +76,6 @@ describe("getActionInput", () => {
       INPUT_USER: "user",
       INPUT_TYPE: "npm",
       "INPUT_DRY-RUN": "true",
-      "INPUT_RATE-LIMIT": "true",
     }
 
     const result = getActionInput()
@@ -92,7 +87,6 @@ describe("getActionInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      rateLimit: true,
     }
 
     expect(result).toEqual(expected)
@@ -108,7 +102,6 @@ describe("getActionInput", () => {
       INPUT_TYPE: "npm",
       "INPUT_VERSION-PATTERN": "[",
       "INPUT_DRY-RUN": "true",
-      "INPUT_RATE-LIMIT": "true",
     }
 
     expect(() => {
@@ -126,7 +119,6 @@ describe("getActionInput", () => {
       INPUT_TYPE: "npm",
       "INPUT_SEMVER-PATTERN": "invalid",
       "INPUT_DRY-RUN": "true",
-      "INPUT_RATE-LIMIT": "true",
     }
 
     expect(() => {
@@ -143,7 +135,6 @@ describe("getActionInput", () => {
       INPUT_USER: "user",
       INPUT_TYPE: "invalid",
       "INPUT_DRY-RUN": "true",
-      "INPUT_RATE-LIMIT": "false",
     }
 
     expect(() => {
@@ -159,7 +150,6 @@ describe("getActionInput", () => {
       INPUT_TOKEN: "token",
       INPUT_USER: "user",
       "INPUT_DRY-RUN": "true",
-      "INPUT_RATE-LIMIT": "false",
     }
 
     expect(() => {
@@ -178,7 +168,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      rateLimit: false,
     }
 
     expect(() => {
@@ -194,7 +183,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      rateLimit: true,
       type: PackageType.Npm,
     }
 
@@ -213,7 +201,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      rateLimit: true,
       type: PackageType.Npm,
     }
 
@@ -231,7 +218,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "org",
-      rateLimit: true,
     }
 
     expect(() => {
@@ -247,7 +233,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      rateLimit: true,
       type: PackageType.Npm,
     }
 
@@ -264,7 +249,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      rateLimit: true,
       type: PackageType.Npm,
     }
 
@@ -281,7 +265,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      rateLimit: true,
       type: PackageType.Npm,
     }
 
@@ -298,7 +281,6 @@ describe("validateInput", () => {
       dryRun: true,
       user: "user",
       organization: "",
-      rateLimit: true,
       type: PackageType.Npm,
     }
 
