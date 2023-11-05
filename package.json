@@ -13,7 +13,7 @@
   "private": true,
   "scripts": {
     "start": "ts-node src/index.ts",
-    "build": "ncc build src/index.ts --license LICENSE.txt --target es2015 --minify",
+    "build": "ncc build src/index.ts --license LICENSE.txt --minify",
     "lint": "eslint --max-warnings 0 .",
     "test": "jest",
     "verify": "yarn lint && yarn test"
@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.0",
-    "@types/node": "^18.15.11",
+    "@types/node": "^20.8.10",
     "@types/semver": "^7.3.13",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
