@@ -1,4 +1,5 @@
 import { Range } from "semver"
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest"
 import { getActionInput, validateInput } from "../src/input"
 import { Input, PackageType } from "../src/types"
 
@@ -6,7 +7,7 @@ describe("getActionInput", () => {
   const env = process.env
 
   beforeEach(() => {
-    jest.resetModules()
+    vi.resetModules()
   })
 
   afterEach(() => {

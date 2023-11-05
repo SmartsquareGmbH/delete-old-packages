@@ -1,6 +1,7 @@
+import { expect, test } from "vitest"
 import { decideQueryStrategy } from "../../src/query/query.strategy.factory"
-import UserQueryStrategy from "../../src/query/strategies/user.query.strategy"
 import OrganizationQueryStrategy from "../../src/query/strategies/organization.query.strategy"
+import UserQueryStrategy from "../../src/query/strategies/user.query.strategy"
 import { Input, PackageType } from "../../src/types"
 
 test("decide user query strategy", () => {

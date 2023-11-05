@@ -5,7 +5,7 @@ module.exports = {
     project: "tsconfig.json",
   },
   parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint", "jest", "prettier"],
+  plugins: ["@typescript-eslint", "prettier"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -14,8 +14,7 @@ module.exports = {
   ],
   rules: {
     "prettier/prettier": "error",
-    "jest/unbound-method": "error",
     "@typescript-eslint/unbound-method": "off",
-    "@typescript-eslint/restrict-template-expressions": "off"
-  }
+    "@typescript-eslint/restrict-template-expressions": "off",
+  },
 }
