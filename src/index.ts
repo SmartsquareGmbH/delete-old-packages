@@ -4,8 +4,10 @@ import { decideDeleteStrategy } from "./delete/delete.strategy.factory"
 import { getActionInput, validateInput } from "./input"
 import { decideQueryStrategy } from "./query/query.strategy.factory"
 
-const input = validateInput(getActionInput())
+async function run() {
+  const input = validateInput(getActionInput())
 
-executeAction(input, decideQueryStrategy(input), decideDeleteStrategy(input)).catch((error: string | Error) =>
-  setFailed(error)
-)
+  await executeAction(input, decideQueryStrategy(input), decideDeleteStrategy(input))
+}
+
+run().catch((error: string | Error) => setFailed(error))
