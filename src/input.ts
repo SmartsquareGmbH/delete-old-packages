@@ -5,7 +5,7 @@ import { Input, PackageType } from "./types"
 const DEFAULT_KEEP = 2
 
 function getRegExpInput(name: string): RegExp | undefined {
-  const input = getInput("version-pattern")
+  const input = getInput(name)
 
   if (input !== "") {
     try {
@@ -50,6 +50,7 @@ function getTypeInput(name: string): PackageType {
 export function getActionInput(): Input {
   return {
     names: getMultilineInput("names"),
+    namePattern: getRegExpInput("name-pattern"),
     versionPattern: getRegExpInput("version-pattern"),
     semverPattern: genSemVerInput("semver-pattern"),
     keep: Number(getInput("keep") || DEFAULT_KEEP),
@@ -62,7 +63,11 @@ export function getActionInput(): Input {
 }
 
 export function validateInput(input: Input): Input {
-  if (input.names.length <= 0) {
+  if (input.namePattern && input.names && input.names.length > 0) {
+    throw new Error("Only one of name-pattern and names can be specified")
+  }
+
+  if (!input.namePattern && (!input.names || input.names.length <= 0)) {
     throw new Error("names cannot be empty")
   }
 

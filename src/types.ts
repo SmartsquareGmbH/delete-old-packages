@@ -10,7 +10,8 @@ export enum PackageType {
 }
 
 export type Input = {
-  names: string[]
+  names?: string[]
+  namePattern?: RegExp
   versionPattern?: RegExp
   semverPattern?: Range
   keep: number
@@ -38,6 +39,7 @@ export type PackageVersion = {
 
 export interface QueryStrategy {
   queryPackages(input: Input): Promise<Package[]>
+  queryPackageNames(input: Input): Promise<string[]>
 }
 
 export interface DeleteStrategy {

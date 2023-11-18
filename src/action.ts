@@ -8,6 +8,16 @@ export async function executeAction(input: Input, queryStrategy: QueryStrategy, 
     warning("No package versions will be actually deleted")
   }
 
+  if (input.namePattern) {
+    info("Fetching package names")
+
+    input.names = await queryStrategy.queryPackageNames(input)
+
+    input.names.forEach((it) => {
+      info(`${it}`)
+    })
+  }
+
   info("Fetching packages")
 
   const packages = await queryStrategy.queryPackages(input)

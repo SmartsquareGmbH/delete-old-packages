@@ -16,7 +16,12 @@ inputs:
   names:
     description: >-
       Names of the packages.
-    required: true
+    required: false
+
+  name-pattern:
+    description: >-
+      Names of the packages.
+    required: false
 
   semver-pattern:
     description: >-
