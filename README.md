@@ -13,7 +13,7 @@ table below) on them and then deleting the matching versions.
 ### Inputs
 
 | Name              | Description                                                | Required               | Default       |
-|-------------------|------------------------------------------------------------|------------------------|---------------|
+| ----------------- | ---------------------------------------------------------- | ---------------------- | ------------- |
 | `user`            | User containing the package(s)                             |                        |               |
 | `organization`    | Organization containing the package(s)                     |                        |               |
 | `names`           | Names of the package(s)                                    | :heavy_check_mark:     |               |
@@ -25,6 +25,7 @@ table below) on them and then deleting the matching versions.
 | `dry-run`         | If the action should only print what it would do           |                        | `false`       |
 
 > :warning: Certain options can not be combined with each other and will lead to errors. These are:
+>
 > - `user` and `organization`.
 > - `semver-pattern` and `version-pattern`.
 

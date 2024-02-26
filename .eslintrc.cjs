@@ -5,16 +5,19 @@ module.exports = {
     project: "tsconfig.json",
   },
   parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint", "prettier"],
+  plugins: ["@typescript-eslint"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier",
   ],
-  rules: {
-    "prettier/prettier": "error",
-    "@typescript-eslint/unbound-method": "off",
-    "@typescript-eslint/restrict-template-expressions": "off",
-  },
+  overrides: [
+    {
+      files: ["test/**/*.ts"],
+      rules: {
+        "@typescript-eslint/unbound-method": "off",
+      },
+    },
+  ],
 }
