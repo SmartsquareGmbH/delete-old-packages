@@ -10,18 +10,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20.x
-          cache: 'yarn'
+          cache: 'pnpm'
 
-      - run: yarn install
-      - run: yarn verify
+      - run: pnpm install
+      - run: pnpm verify
 
       - if: github.ref == 'refs/heads/main'
-        run: yarn build
+        run: pnpm build
 
       - if: github.ref == 'refs/heads/main'
         uses: stefanzweifel/git-auto-commit-action@v4
