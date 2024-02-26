@@ -25,23 +25,25 @@
     "verify": "pnpm pretty && pnpm lint && pnpm test"
   },
   "dependencies": {
-    "@actions/core": "^1.10.0",
-    "@actions/github": "^5.1.1",
-    "@octokit/plugin-throttling": "^5.0.1",
-    "semver": "^7.3.8"
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0",
+    "@octokit/core": "^5.1.0",
+    "@octokit/plugin-throttling": "^8.2.0",
+    "semver": "^7.6.0"
   },
   "devDependencies": {
-    "@types/node": "^20.8.10",
-    "@types/semver": "^7.3.13",
-    "@typescript-eslint/eslint-plugin": "^5.57.1",
-    "@typescript-eslint/parser": "^5.57.1",
-    "@vercel/ncc": "^0.36.1",
-    "eslint": "^8.37.0",
-    "eslint-config-prettier": "^8.8.0",
-    "prettier": "^2.8.7",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.0.3",
-    "vitest": "^0.34.6",
+    "@octokit/types": "^12.6.0",
+    "@types/node": "^20.11.20",
+    "@types/semver": "^7.5.8",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
+    "@vercel/ncc": "^0.38.1",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "vitest": "^1.3.1",
     "vitest-mock-extended": "^1.3.1"
   },
   "packageManager": "pnpm@8.15.4"

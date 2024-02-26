@@ -21,10 +21,6 @@ export type Input = {
   organization: string
 }
 
-export type RestInput = Input & {
-  type: PackageType
-}
-
 export type Package = {
   name: string
   versions: PackageVersion[]

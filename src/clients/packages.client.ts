@@ -31,10 +31,6 @@ export function createPackagesClient(input: Input): InstanceType<typeof GitHub> 
           return true
         }
       },
-      onAbuseLimit: (retryAfter: number, options: RequestOptions) => {
-        // Do not retry, only log a warning.
-        warning(`Abuse detected for request ${options.method} ${options.url}`)
-      },
     },
   })
 

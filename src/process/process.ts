@@ -1,14 +1,12 @@
 import semverCoerce from "semver/functions/coerce"
 import semverSatisfies from "semver/functions/satisfies"
 import { Input, Package, PackageType, PackageVersion } from "../types"
-import { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods/dist-types/generated/parameters-and-response-types"
-import { components } from "@octokit/openapi-types"
+import { Endpoints } from "@octokit/types"
 
-type RestResponse =
-  | RestEndpointMethodTypes["packages"]["getAllPackageVersionsForPackageOwnedByOrg"]["response"]
-  | RestEndpointMethodTypes["packages"]["getAllPackageVersionsForPackageOwnedByUser"]["response"]
+type OctokitPackageResponse =
+  Endpoints["GET /users/{username}/packages/{package_type}/{package_name}/versions"]["response"]
 
-type RestVersion = components["schemas"]["package-version"]
+type OctokitPackageVersion = OctokitPackageResponse["data"][number]
 
 export function processPackages(input: Input, packages: Package[]): Package[] {
   return packages
@@ -38,7 +36,7 @@ export function findVersionsToDelete(input: Input, versions: PackageVersion[]): 
   }
 }
 
-export function processResponse(name: string, response: RestResponse): Package {
+export function processResponse(name: string, response: OctokitPackageResponse): Package {
   const versions = response.data.map((version) => processVersion(version)).filter((it) => it.names.length >= 1)
   return {
     name,
@@ -47,7 +45,7 @@ export function processResponse(name: string, response: RestResponse): Package {
   }
 }
 
-function processVersion(version: RestVersion): PackageVersion {
+function processVersion(version: OctokitPackageVersion): PackageVersion {
   if (version.metadata?.package_type === PackageType.Container) {
     return {
       id: version.id.toString(),

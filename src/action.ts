@@ -36,8 +36,8 @@ export async function executeAction(input: Input, queryStrategy: QueryStrategy, 
     return Promise.resolve()
   })
 
-  await group("Deleting packages", async () => {
-    await Promise.all(
+  await group("Deleting packages", () =>
+    Promise.all(
       processedPackages
         .flatMap((pkg) =>
           pkg.versions.map((version) => ({ name: pkg.name, version, totalVersions: pkg.totalVersions }))
@@ -58,7 +58,7 @@ export async function executeAction(input: Input, queryStrategy: QueryStrategy, 
           }
         })
     )
-  })
+  )
 
   info(`${processedPackages.flatMap((pkg) => pkg.versions).length} package versions(s) deleted`)
 }

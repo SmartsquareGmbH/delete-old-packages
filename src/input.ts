@@ -11,7 +11,7 @@ function getRegExpInput(name: string): RegExp | undefined {
     try {
       return new RegExp(input)
     } catch (error) {
-      throw new Error(`${name} must be a valid regex: ${error}`)
+      throw new Error(`${name} must be a valid regex`, { cause: error })
     }
   } else {
     return undefined
@@ -26,7 +26,8 @@ function genSemVerInput(name: string): Range | undefined {
       return new Range(input)
     } catch (error) {
       throw new Error(
-        `${name} must be a valid semver pattern (see https://www.npmjs.com/package/semver for examples): ${error}`
+        `${name} must be a valid semver pattern (see https://www.npmjs.com/package/semver for examples)`,
+        { cause: error }
       )
     }
   } else {
@@ -68,6 +69,10 @@ export function validateInput(input: Input): Input {
 
   if (input.versionPattern && input.semverPattern) {
     throw new Error("Only one of version-pattern and semver-pattern can be specified")
+  }
+
+  if (!input.user && !input.organization) {
+    throw new Error("Either user or organization must be specified")
   }
 
   if (input.user && input.organization) {

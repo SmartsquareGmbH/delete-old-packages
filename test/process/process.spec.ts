@@ -1,4 +1,4 @@
-import { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods/dist-types/generated/parameters-and-response-types"
+import { Endpoints } from "@octokit/types"
 import { Range } from "semver"
 import { expect, test } from "vitest"
 import { processPackages, processResponse } from "../../src/process/process"
@@ -194,7 +194,7 @@ test("filters with multiple names", () => {
   expect(result[0].totalVersions).toEqual(2)
 })
 
-const containerTestResponse: RestEndpointMethodTypes["packages"]["getAllPackageVersionsForPackageOwnedByOrg"]["response"] =
+const containerTestResponse: Endpoints["GET /users/{username}/packages/{package_type}/{package_name}/versions"]["response"] =
   {
     status: 200,
     url: "https://api.github.com/orgs/test/packages/container/test/versions?per_page=100",
@@ -248,69 +248,72 @@ const containerTestResponse: RestEndpointMethodTypes["packages"]["getAllPackageV
         },
       },
     ],
+    retryCount: 0,
   }
 
-const npmTestResponse: RestEndpointMethodTypes["packages"]["getAllPackageVersionsForPackageOwnedByUser"]["response"] = {
-  status: 200,
-  url: "https://api.github.com/users/test/packages/npm/test/versions?per_page=100",
-  headers: {
-    "content-type": "application/json; charset=utf-8",
-  },
-  data: [
-    {
-      id: 50253897,
-      name: "2.0.0",
-      url: "https://api.github.com/users/test/packages/npm/test/versions/50253897",
-      package_html_url: "https://github.com/users/test/packages/npm/package/test",
-      license: "MIT",
-      created_at: "2022-11-14T10:45:09Z",
-      updated_at: "2022-11-14T10:45:09Z",
-      html_url: "https://github.com/users/test/packages/npm/test/50253897",
-      metadata: {
-        package_type: "npm",
-      },
+const npmTestResponse: Endpoints["GET /users/{username}/packages/{package_type}/{package_name}/versions"]["response"] =
+  {
+    status: 200,
+    url: "https://api.github.com/users/test/packages/npm/test/versions?per_page=100",
+    headers: {
+      "content-type": "application/json; charset=utf-8",
     },
-    {
-      id: 50253886,
-      name: "1.1.0",
-      url: "https://api.github.com/users/test/packages/npm/test/versions/50253886",
-      package_html_url: "https://github.com/users/test/packages/npm/package/test",
-      license: "MIT",
-      created_at: "2022-11-14T10:45:02Z",
-      updated_at: "2022-11-14T10:45:02Z",
-      html_url: "https://github.com/users/test/packages/npm/test/50253886",
-      metadata: {
-        package_type: "npm",
+    data: [
+      {
+        id: 50253897,
+        name: "2.0.0",
+        url: "https://api.github.com/users/test/packages/npm/test/versions/50253897",
+        package_html_url: "https://github.com/users/test/packages/npm/package/test",
+        license: "MIT",
+        created_at: "2022-11-14T10:45:09Z",
+        updated_at: "2022-11-14T10:45:09Z",
+        html_url: "https://github.com/users/test/packages/npm/test/50253897",
+        metadata: {
+          package_type: "npm",
+        },
       },
-    },
-    {
-      id: 50253872,
-      name: "1.0.1",
-      url: "https://api.github.com/users/test/packages/npm/test/versions/50253872",
-      package_html_url: "https://github.com/users/test/packages/npm/package/test",
-      license: "MIT",
-      created_at: "2022-11-14T10:44:55Z",
-      updated_at: "2022-11-14T10:44:55Z",
-      html_url: "https://github.com/users/test/packages/npm/test/50253872",
-      metadata: {
-        package_type: "npm",
+      {
+        id: 50253886,
+        name: "1.1.0",
+        url: "https://api.github.com/users/test/packages/npm/test/versions/50253886",
+        package_html_url: "https://github.com/users/test/packages/npm/package/test",
+        license: "MIT",
+        created_at: "2022-11-14T10:45:02Z",
+        updated_at: "2022-11-14T10:45:02Z",
+        html_url: "https://github.com/users/test/packages/npm/test/50253886",
+        metadata: {
+          package_type: "npm",
+        },
       },
-    },
-    {
-      id: 50253861,
-      name: "1.0.0",
-      url: "https://api.github.com/users/test/packages/npm/test/versions/50253861",
-      package_html_url: "https://github.com/users/test/packages/npm/package/test",
-      license: "MIT",
-      created_at: "2022-11-14T10:44:49Z",
-      updated_at: "2022-11-14T10:44:49Z",
-      html_url: "https://github.com/users/test/packages/npm/test/50253861",
-      metadata: {
-        package_type: "npm",
+      {
+        id: 50253872,
+        name: "1.0.1",
+        url: "https://api.github.com/users/test/packages/npm/test/versions/50253872",
+        package_html_url: "https://github.com/users/test/packages/npm/package/test",
+        license: "MIT",
+        created_at: "2022-11-14T10:44:55Z",
+        updated_at: "2022-11-14T10:44:55Z",
+        html_url: "https://github.com/users/test/packages/npm/test/50253872",
+        metadata: {
+          package_type: "npm",
+        },
       },
-    },
-  ],
-}
+      {
+        id: 50253861,
+        name: "1.0.0",
+        url: "https://api.github.com/users/test/packages/npm/test/versions/50253861",
+        package_html_url: "https://github.com/users/test/packages/npm/package/test",
+        license: "MIT",
+        created_at: "2022-11-14T10:44:49Z",
+        updated_at: "2022-11-14T10:44:49Z",
+        html_url: "https://github.com/users/test/packages/npm/test/50253861",
+        metadata: {
+          package_type: "npm",
+        },
+      },
+    ],
+    retryCount: 0,
+  }
 
 test("process rest container response", () => {
   const result = processResponse("test", containerTestResponse)
