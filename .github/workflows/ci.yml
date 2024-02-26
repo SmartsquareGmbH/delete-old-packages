@@ -20,11 +20,7 @@ jobs:
 
       - run: pnpm install
       - run: pnpm verify
+      - run: pnpm build
 
-      - if: github.ref == 'refs/heads/main'
-        run: pnpm build
-
-      - if: github.ref == 'refs/heads/main'
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Build
+      - name: Verify dist
+        run: git diff --exit-code dist/index.js

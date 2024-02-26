@@ -1,0 +1,4 @@
+pnpm build
+
+git add dist
+git diff --staged --quiet || git commit -m 'Build'
