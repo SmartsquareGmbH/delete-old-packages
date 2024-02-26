@@ -1,5 +1,5 @@
-import { DeleteStrategy, Input } from "../../types"
 import { GitHub } from "@actions/github/lib/utils"
+import { DeleteStrategy, Input } from "../../types"
 
 export default class UserDeleteStrategy implements DeleteStrategy {
   constructor(private readonly octokit: InstanceType<typeof GitHub>) {}

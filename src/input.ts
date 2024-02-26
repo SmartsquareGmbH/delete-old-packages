@@ -27,7 +27,7 @@ function genSemVerInput(name: string): Range | undefined {
     } catch (error) {
       throw new Error(
         `${name} must be a valid semver pattern (see https://www.npmjs.com/package/semver for examples)`,
-        { cause: error }
+        { cause: error },
       )
     }
   } else {

@@ -1,6 +1,6 @@
-import { processResponse } from "../../process/process"
-import { Package, QueryStrategy, Input } from "../../types"
 import { GitHub } from "@actions/github/lib/utils"
+import { processResponse } from "../../process/process"
+import { Input, Package, QueryStrategy } from "../../types"
 
 export default class UserQueryStrategy implements QueryStrategy {
   constructor(private readonly octokit: InstanceType<typeof GitHub>) {}
@@ -11,7 +11,7 @@ export default class UserQueryStrategy implements QueryStrategy {
         const response = await this.queryPackage(input, name)
 
         return processResponse(name, response)
-      })
+      }),
     )
   }
 

@@ -33,7 +33,7 @@ test("filters correctly", () => {
         ],
         totalVersions: 2,
       },
-    ]
+    ],
   )
 
   expect(result).toHaveLength(2)
@@ -68,7 +68,7 @@ test("filters based on semver", () => {
         ],
         totalVersions: 4,
       },
-    ]
+    ],
   )
 
   expect(result[0].versions).toHaveLength(3)
@@ -105,7 +105,7 @@ test("filters based on regex", () => {
         ],
         totalVersions: 2,
       },
-    ]
+    ],
   )
 
   expect(result).toHaveLength(2)
@@ -147,7 +147,7 @@ test("respects keep", () => {
         ],
         totalVersions: 2,
       },
-    ]
+    ],
   )
 
   expect(result).toHaveLength(1)
@@ -185,7 +185,7 @@ test("filters with multiple names", () => {
         ],
         totalVersions: 2,
       },
-    ]
+    ],
   )
 
   expect(result).toHaveLength(1)

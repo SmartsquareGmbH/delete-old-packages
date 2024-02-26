@@ -1,5 +1,5 @@
 import { Range } from "semver"
-import { test, expect } from "vitest"
+import { expect, test } from "vitest"
 import { mock } from "vitest-mock-extended"
 import { executeAction } from "../src/action"
 import { DeleteStrategy, Input, PackageType, QueryStrategy } from "../src/types"

@@ -40,7 +40,7 @@ export async function executeAction(input: Input, queryStrategy: QueryStrategy, 
     Promise.all(
       processedPackages
         .flatMap((pkg) =>
-          pkg.versions.map((version) => ({ name: pkg.name, version, totalVersions: pkg.totalVersions }))
+          pkg.versions.map((version) => ({ name: pkg.name, version, totalVersions: pkg.totalVersions })),
         )
         .map(async ({ name, version, totalVersions }) => {
           if (totalVersions > 1) {
@@ -56,8 +56,8 @@ export async function executeAction(input: Input, queryStrategy: QueryStrategy, 
               await deleteStrategy.deletePackage(input, name)
             }
           }
-        })
-    )
+        }),
+    ),
   )
 
   info(`${processedPackages.flatMap((pkg) => pkg.versions).length} package versions(s) deleted`)

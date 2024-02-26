@@ -1,10 +1,10 @@
-import { Input } from "../types"
-import { Octokit } from "@octokit/core"
-import { throttling } from "@octokit/plugin-throttling"
+import { info, warning } from "@actions/core"
 import { getOctokit } from "@actions/github"
 import { GitHub } from "@actions/github/lib/utils"
+import { Octokit } from "@octokit/core"
+import { throttling } from "@octokit/plugin-throttling"
 import { RequestOptions } from "@octokit/types"
-import { info, warning } from "@actions/core"
+import { Input } from "../types"
 
 export function createPackagesClient(input: Input): InstanceType<typeof GitHub> {
   const customClient = Octokit.plugin(throttling)
