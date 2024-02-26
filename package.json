@@ -18,6 +18,8 @@
     "node": ">=20"
   },
   "scripts": {
+    "prepare": "husky",
+    "pre-commit": "lint-staged",
     "start": "tsx src/index.ts",
     "build": "ncc build src/index.ts --license LICENSE.txt --minify",
     "lint": "eslint --max-warnings 0 .",
@@ -42,6 +44,8 @@
     "@vercel/ncc": "^0.38.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
     "tsx": "^4.7.1",
     "typescript": "^5.3.3",
