@@ -1,7 +1,7 @@
-import { createPackagesClient } from "../clients/packages.client"
-import { Input, QueryStrategy } from "../types"
-import OrganizationQueryStrategy from "./strategies/organization.query.strategy"
-import UserQueryStrategy from "./strategies/user.query.strategy"
+import { createPackagesClient } from "../clients/packages.client.js"
+import { Input, QueryStrategy } from "../types.js"
+import OrganizationQueryStrategy from "./strategies/organization.query.strategy.js"
+import UserQueryStrategy from "./strategies/user.query.strategy.js"
 
 export function decideQueryStrategy(input: Input): QueryStrategy {
   const packagesClient = createPackagesClient(input)

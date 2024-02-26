@@ -1,8 +1,8 @@
 import { setFailed } from "@actions/core"
-import { executeAction } from "./action"
-import { decideDeleteStrategy } from "./delete/delete.strategy.factory"
-import { getActionInput, validateInput } from "./input"
-import { decideQueryStrategy } from "./query/query.strategy.factory"
+import { executeAction } from "./action.js"
+import { decideDeleteStrategy } from "./delete/delete.strategy.factory.js"
+import { getActionInput, validateInput } from "./input.js"
+import { decideQueryStrategy } from "./query/query.strategy.factory.js"
 
 async function run() {
   const input = validateInput(getActionInput())

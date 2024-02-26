@@ -1,8 +1,8 @@
 import { Endpoints } from "@octokit/types"
 import { Range } from "semver"
 import { expect, test } from "vitest"
-import { processPackages, processResponse } from "../../src/process/process"
-import { PackageType } from "../../src/types"
+import { processPackages, processResponse } from "../../src/process/process.js"
+import { PackageType } from "../../src/types.js"
 
 test("filters correctly", () => {
   const result = processPackages(

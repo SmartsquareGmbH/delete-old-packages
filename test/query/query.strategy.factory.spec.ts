@@ -1,8 +1,8 @@
 import { expect, test } from "vitest"
-import { decideQueryStrategy } from "../../src/query/query.strategy.factory"
-import OrganizationQueryStrategy from "../../src/query/strategies/organization.query.strategy"
-import UserQueryStrategy from "../../src/query/strategies/user.query.strategy"
-import { Input, PackageType } from "../../src/types"
+import { decideQueryStrategy } from "../../src/query/query.strategy.factory.js"
+import OrganizationQueryStrategy from "../../src/query/strategies/organization.query.strategy.js"
+import UserQueryStrategy from "../../src/query/strategies/user.query.strategy.js"
+import { Input, PackageType } from "../../src/types.js"
 
 test("decide user query strategy", () => {
   const input: Input = {

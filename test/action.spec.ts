@@ -1,8 +1,8 @@
 import { Range } from "semver"
 import { expect, test } from "vitest"
 import { mock } from "vitest-mock-extended"
-import { executeAction } from "../src/action"
-import { DeleteStrategy, Input, PackageType, QueryStrategy } from "../src/types"
+import { executeAction } from "../src/action.js"
+import { DeleteStrategy, Input, PackageType, QueryStrategy } from "../src/types.js"
 
 const packages = [
   {

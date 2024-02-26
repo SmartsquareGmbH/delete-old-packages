@@ -1,7 +1,6 @@
 import { Endpoints } from "@octokit/types"
-import semverCoerce from "semver/functions/coerce"
-import semverSatisfies from "semver/functions/satisfies"
-import { Input, Package, PackageType, PackageVersion } from "../types"
+import { coerce as semverCoerce, satisfies as semverSatisfies } from "semver"
+import { Input, Package, PackageType, PackageVersion } from "../types.js"
 
 type OctokitPackageResponse =
   Endpoints["GET /users/{username}/packages/{package_type}/{package_name}/versions"]["response"]

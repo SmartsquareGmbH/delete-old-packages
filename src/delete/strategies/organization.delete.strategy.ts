@@ -1,8 +1,8 @@
-import { GitHub } from "@actions/github/lib/utils"
-import { DeleteStrategy, Input } from "../../types"
+import { getOctokit } from "@actions/github"
+import { DeleteStrategy, Input } from "../../types.js"
 
 export default class OrganizationDeleteStrategy implements DeleteStrategy {
-  constructor(private readonly octokit: InstanceType<typeof GitHub>) {}
+  constructor(private readonly octokit: ReturnType<typeof getOctokit>) {}
 
   async deletePackageVersion(input: Input, name: string, id: string): Promise<void> {
     await this.octokit.rest.packages.deletePackageVersionForOrg({

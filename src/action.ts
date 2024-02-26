@@ -1,6 +1,6 @@
 import { group, info, warning } from "@actions/core"
-import { processPackages } from "./process/process"
-import { DeleteStrategy, Input, QueryStrategy } from "./types"
+import { processPackages } from "./process/process.js"
+import { DeleteStrategy, Input, QueryStrategy } from "./types.js"
 
 export async function executeAction(input: Input, queryStrategy: QueryStrategy, deleteStrategy: DeleteStrategy) {
   if (input.dryRun) {
