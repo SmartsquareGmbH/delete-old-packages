@@ -10,4 +10,10 @@ async function run() {
   await executeAction(input, decideQueryStrategy(input), decideDeleteStrategy(input))
 }
 
-run().catch((error: string | Error) => setFailed(error))
+function formatError(error: Error): string {
+  const cause = error.cause instanceof Error ? "\nCaused by: " + formatError(error.cause) : ""
+
+  return error.toString() + cause
+}
+
+run().catch((error: string | Error) => setFailed(error instanceof Error ? formatError(error) : error))

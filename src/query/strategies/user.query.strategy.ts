@@ -26,7 +26,7 @@ export default class UserQueryStrategy implements QueryStrategy {
 
       return await this.octokit.rest.packages.getAllPackageVersionsForPackageOwnedByUser(params)
     } catch (error) {
-      throw new Error(`Failed to query package ${name}`, { cause: error })
+      throw new Error(`Failed to query package ${name} of type ${input.type}`, { cause: error })
     }
   }
 }
