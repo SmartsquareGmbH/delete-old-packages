@@ -25,33 +25,33 @@
     "build": "ncc build src/index.ts --license LICENSE.txt --minify",
     "lint": "eslint --max-warnings 0 .",
     "pretty": "prettier --check .",
+    "check": "tsc --noEmit",
     "test": "vitest run",
-    "verify": "pnpm pretty && pnpm lint && pnpm test"
+    "verify": "pnpm pretty && pnpm lint && pnpm check && pnpm test"
   },
   "dependencies": {
     "@actions/core": "^1.10.1",
     "@actions/github": "^6.0.0",
-    "@octokit/core": "^5.1.0",
-    "@octokit/plugin-throttling": "^8.2.0",
-    "semver": "^7.6.0"
+    "@octokit/core": "^6.1.2",
+    "@octokit/plugin-throttling": "^9.3.1",
+    "semver": "^7.6.3"
   },
   "devDependencies": {
-    "@octokit/types": "^12.6.0",
+    "@eslint/js": "^9.9.1",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "@types/node": "^20.11.20",
+    "@types/node": "^22.5.4",
     "@types/semver": "^7.5.8",
-    "@typescript-eslint/eslint-plugin": "^7.0.2",
-    "@typescript-eslint/parser": "^7.0.2",
     "@vercel/ncc": "^0.38.1",
-    "eslint": "^8.57.0",
+    "eslint": "^9.9.1",
     "eslint-config-prettier": "^9.1.0",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.2",
-    "prettier": "^3.2.5",
-    "tsx": "^4.7.1",
-    "typescript": "^5.3.3",
-    "vitest": "^1.3.1",
-    "vitest-mock-extended": "^1.3.1"
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.4.0",
+    "vitest": "^2.0.5",
+    "vitest-mock-extended": "^2.0.2"
   },
-  "packageManager": "pnpm@8.15.4"
+  "packageManager": "pnpm@9.9.0+sha512.60c18acd138bff695d339be6ad13f7e936eea6745660d4cc4a776d5247c540d0edee1a563695c183a66eb917ef88f2b4feb1fc25f32a7adcadc7aaf3438e99c1"
 }

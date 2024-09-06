@@ -2,7 +2,6 @@ import { info, warning } from "@actions/core"
 import { getOctokit } from "@actions/github"
 import { Octokit } from "@octokit/core"
 import { throttling } from "@octokit/plugin-throttling"
-import { RequestOptions } from "@octokit/types"
 import { Input } from "../types.js"
 
 export function createPackagesClient(input: Input): ReturnType<typeof getOctokit> {
@@ -12,7 +11,7 @@ export function createPackagesClient(input: Input): ReturnType<typeof getOctokit
     auth: input.token,
     throttle: {
       enabled: true,
-      onRateLimit: (retryAfter: number, options: RequestOptions) => {
+      onRateLimit: (retryAfter, options) => {
         warning(`Request quota exhausted for request ${options.method} ${options.url}`)
 
         // Retry five times after hitting a rate limit error, then give up.
@@ -21,7 +20,7 @@ export function createPackagesClient(input: Input): ReturnType<typeof getOctokit
           return true
         }
       },
-      onSecondaryRateLimit: (retryAfter: number, options: RequestOptions) => {
+      onSecondaryRateLimit: (retryAfter, options) => {
         warning(`Request quota exhausted for request ${options.method} ${options.url}`)
 
         // Retry five times after hitting a rate limit error, then give up.
