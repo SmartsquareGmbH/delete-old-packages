@@ -40,7 +40,7 @@ generated [here](https://github.com/settings/tokens) and need to be added as a s
 > Delete old versions of the packages "package-1" and "package-2" for the organization "my-organization".
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.7.0
+uses: smartsquaregmbh/delete-old-packages@v0.8.0
 with:
   organization: my-organization
   type: npm
@@ -52,7 +52,7 @@ with:
 > Delete old versions in the form of "1.0.0-RC1" of the package "package".
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.7.0
+uses: smartsquaregmbh/delete-old-packages@v0.8.0
 with:
   organization: my-organization
   type: npm
@@ -64,7 +64,7 @@ with:
 > Delete old versions with a lower semver version than 2.x of the package "package".
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.7.0
+uses: smartsquaregmbh/delete-old-packages@v0.8.0
 with:
   organization: my-organization
   type: npm
@@ -76,7 +76,7 @@ with:
 > Delete old versions of the package "package" but keep at least 5 versions.
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.7.0
+uses: smartsquaregmbh/delete-old-packages@v0.8.0
 with:
   organization: my-organization
   type: npm
@@ -88,7 +88,7 @@ with:
 > Delete old versions of the package "package" with a token named "GH_ACCESS_TOKEN".
 
 ```yaml
-uses: smartsquaregmbh/delete-old-packages@v0.7.0
+uses: smartsquaregmbh/delete-old-packages@v0.8.0
 with:
   token: ${{ secrets.GH_ACCESS_TOKEN }}
   organization: my-organization
