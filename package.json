@@ -1,6 +1,6 @@
 {
   "name": "delete-old-packages",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "GitHub Action for deleting old packages",
   "repository": "https://github.com/SmartsquareGmbH/delete-old-packages",
   "author": "Ruben Gees",
