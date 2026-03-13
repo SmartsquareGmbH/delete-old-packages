@@ -13,7 +13,7 @@ table below) on them and then deleting the matching versions.
 ### Inputs
 
 | Name              | Description                                                | Required               | Default       |
-|-------------------|------------------------------------------------------------|------------------------|---------------|
+| ----------------- | ---------------------------------------------------------- | ---------------------- | ------------- |
 | `user`            | User containing the package(s)                             |                        |               |
 | `organization`    | Organization containing the package(s)                     |                        |               |
 | `names`           | Names of the package(s)                                    | :heavy_check_mark:     |               |
