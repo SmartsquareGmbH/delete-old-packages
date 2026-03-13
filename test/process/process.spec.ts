@@ -200,6 +200,7 @@ const containerTestResponse: OctokitPackageResponse = {
   headers: {
     "content-type": "application/json; charset=utf-8",
   },
+  retryCount: 0,
   data: [
     {
       id: 37433327,
@@ -255,6 +256,7 @@ const npmTestResponse: OctokitPackageResponse = {
   headers: {
     "content-type": "application/json; charset=utf-8",
   },
+  retryCount: 0,
   data: [
     {
       id: 50253897,

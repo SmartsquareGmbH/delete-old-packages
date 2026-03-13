@@ -1,4 +1,4 @@
-import { GitHub } from "@actions/github/lib/utils.js"
+import { GitHub } from "@actions/github/lib/utils"
 
 type OctokitPackageCall = InstanceType<typeof GitHub>["rest"]["packages"]["getAllPackageVersionsForPackageOwnedByOrg"]
 

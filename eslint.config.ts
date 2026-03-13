@@ -1,31 +1,33 @@
-// @ts-check
 import eslint from "@eslint/js"
+import vitest from "@vitest/eslint-plugin"
 import eslintConfigPrettier from "eslint-config-prettier"
+import { defineConfig } from "eslint/config"
 import tseslint from "typescript-eslint"
 
-export default tseslint.config(
+export default defineConfig(
   {
     ignores: ["coverage", "dist"],
   },
   eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
+  tseslint.configs.recommendedTypeChecked,
   eslintConfigPrettier,
   {
     languageOptions: {
       parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
+        projectService: {
+          allowDefaultProject: ["*.js", "*.mjs"],
+        },
       },
     },
   },
   {
-    files: ["test/**/*.ts"],
+    files: ["test/**"],
+    plugins: {
+      vitest,
+    },
     rules: {
+      ...vitest.configs.recommended.rules,
       "@typescript-eslint/unbound-method": "off",
     },
-  },
-  {
-    files: ["**/*.js"],
-    ...tseslint.configs.disableTypeChecked,
   },
 )

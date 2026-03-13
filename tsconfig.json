@@ -1,3 +1,14 @@
 {
-  "extends": "@tsconfig/node20/tsconfig.json"
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "lib": ["ES2022"],
+    "module": "NodeNext",
+    "noUnusedLocals": true,
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "strict": true,
+    "target": "ES2022"
+  }
 }
