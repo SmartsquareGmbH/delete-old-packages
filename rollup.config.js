@@ -10,7 +10,7 @@ export default {
     esModule: true,
     file: "dist/index.js",
     format: "es",
-    sourcemap: true,
+    sourcemap: "inline",
   },
   plugins: [typescript(), nodeResolve({ preferBuiltins: true }), commonjs()],
 }
