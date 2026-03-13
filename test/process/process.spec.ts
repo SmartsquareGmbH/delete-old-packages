@@ -1,8 +1,8 @@
 import { Range } from "semver"
 import { expect, test } from "vitest"
 import { processPackages, processResponse } from "../../src/process/process.js"
+import { OctokitPackageResponse } from "../../src/process/process.js"
 import { PackageType } from "../../src/types.js"
-import { OctokitPackageResponse } from "../../src/types/octokit.js"
 
 test("filters correctly", () => {
   const result = processPackages(

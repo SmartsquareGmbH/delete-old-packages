@@ -1,6 +1,11 @@
+import { getOctokit } from "@actions/github"
 import { coerce as semverCoerce, satisfies as semverSatisfies } from "semver"
 import { Input, Package, PackageType, PackageVersion } from "../types.js"
-import { OctokitPackageResponse, OctokitPackageVersion } from "../types/octokit.js"
+
+type Octokit = ReturnType<typeof getOctokit>
+type OctokitPackageCall = Octokit["rest"]["packages"]["getAllPackageVersionsForPackageOwnedByOrg"]
+export type OctokitPackageResponse = Awaited<ReturnType<OctokitPackageCall>>
+export type OctokitPackageVersion = OctokitPackageResponse["data"][number]
 
 export function processPackages(input: Input, packages: Package[]): Package[] {
   return packages
