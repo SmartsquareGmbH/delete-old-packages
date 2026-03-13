@@ -37835,14 +37835,19 @@ function decideQueryStrategy(input) {
     return input.organization ? new OrganizationQueryStrategy(packagesClient) : new UserQueryStrategy(packagesClient);
 }
 
-async function run() {
-    const input = validateInput(getActionInput());
-    await executeAction(input, decideQueryStrategy(input), decideDeleteStrategy(input));
-}
-
 function formatError(error) {
     const cause = error.cause instanceof Error ? "\nCaused by: " + formatError(error.cause) : "";
     return error.toString() + cause;
 }
-run().catch((error) => setFailed(error instanceof Error ? formatError(error) : error));
+async function run() {
+    const input = validateInput(getActionInput());
+    try {
+        await executeAction(input, decideQueryStrategy(input), decideDeleteStrategy(input));
+    }
+    catch (error) {
+        setFailed(error instanceof Error ? formatError(error) : error);
+    }
+}
+
+await run();
 //# sourceMappingURL=index.js.map
