@@ -37839,6 +37839,7 @@ async function run() {
     const input = validateInput(getActionInput());
     await executeAction(input, decideQueryStrategy(input), decideDeleteStrategy(input));
 }
+
 function formatError(error) {
     const cause = error.cause instanceof Error ? "\nCaused by: " + formatError(error.cause) : "";
     return error.toString() + cause;
