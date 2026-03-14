@@ -189,7 +189,7 @@ describe("validateInput", () => {
 
     expect(() => {
       validateInput(input)
-    }).toThrow()
+    }).toThrow("names cannot be empty")
   })
 
   test("both versionPattern and semverPattern", () => {
@@ -207,7 +207,7 @@ describe("validateInput", () => {
 
     expect(() => {
       validateInput(input)
-    }).toThrow()
+    }).toThrow("Only one of version-pattern and semver-pattern can be specified")
   })
 
   test("both user and organization", () => {
@@ -223,7 +223,7 @@ describe("validateInput", () => {
 
     expect(() => {
       validateInput(input)
-    }).toThrow()
+    }).toThrow("Only one of user and organization can be specified")
   })
 
   test("keep not an integer", () => {
@@ -239,7 +239,7 @@ describe("validateInput", () => {
 
     expect(() => {
       validateInput(input)
-    }).toThrow()
+    }).toThrow("keep must be an integer between 0 and 100 (inclusive)")
   })
 
   test("keep too small", () => {
@@ -255,7 +255,7 @@ describe("validateInput", () => {
 
     expect(() => {
       validateInput(input)
-    }).toThrow()
+    }).toThrow("keep must be an integer between 0 and 100 (inclusive)")
   })
 
   test("keep too large", () => {
@@ -271,7 +271,7 @@ describe("validateInput", () => {
 
     expect(() => {
       validateInput(input)
-    }).toThrow()
+    }).toThrow("keep must be an integer between 0 and 100 (inclusive)")
   })
 
   test("token empty", () => {
@@ -287,6 +287,6 @@ describe("validateInput", () => {
 
     expect(() => {
       validateInput(input)
-    }).toThrow()
+    }).toThrow("token cannot be empty")
   })
 })

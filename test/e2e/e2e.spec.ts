@@ -324,9 +324,9 @@ describe("user packages", () => {
       type: PackageType.Npm,
     }
 
-    await expect(
-      executeAction(input, new UserQueryStrategy(octokit), new UserDeleteStrategy(octokit)),
-    ).rejects.toThrow()
+    await expect(executeAction(input, new UserQueryStrategy(octokit), new UserDeleteStrategy(octokit))).rejects.toThrow(
+      "Failed to query package nonexistent of type npm",
+    )
   })
 })
 
