@@ -1,5 +1,5 @@
 import type { Configuration } from "lint-staged"
 
 export default {
-  "*.{js,ts}": ["prettier --write", "oxlint --fix"],
+  "*.{js,ts}": ["oxfmt", "oxlint --fix"],
 } satisfies Configuration

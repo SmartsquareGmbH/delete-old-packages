@@ -1,22 +1,19 @@
 {
   "name": "delete-old-packages",
   "version": "1.0.0",
+  "private": true,
   "description": "GitHub Action for deleting old packages",
-  "repository": "https://github.com/SmartsquareGmbH/delete-old-packages",
+  "license": "MIT",
   "author": "Ruben Gees",
   "contributors": [
     "Ruben Gees",
     "Prom3theu5",
     "tisoft"
   ],
-  "license": "MIT",
-  "private": true,
+  "repository": "https://github.com/SmartsquareGmbH/delete-old-packages",
   "type": "module",
   "exports": {
     ".": "./dist/index.js"
-  },
-  "engines": {
-    "node": ">=24"
   },
   "scripts": {
     "prepare": "husky",
@@ -24,8 +21,8 @@
     "start": "local-action . src/main.ts .env",
     "build": "rolldown -c",
     "lint": "oxlint",
-    "format:check": "prettier --check .",
-    "format:write": "prettier --write .",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "check": "tsc --noEmit",
     "test": "vitest run",
     "verify": "pnpm format:check && pnpm lint && pnpm check && pnpm test"
@@ -39,20 +36,22 @@
   },
   "devDependencies": {
     "@github/local-action": "^7.0.1",
-    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^24.12.0",
     "@types/semver": "^7.7.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "msw": "^2.12.10",
+    "oxfmt": "^0.40.0",
     "oxlint": "^1.55.0",
     "oxlint-tsgolint": "^0.16.0",
-    "prettier": "^3.8.1",
     "rolldown": "1.0.0-rc.9",
     "typescript": "^5.9.3",
     "vite": "^8.0.0",
     "vitest": "^4.1.0",
     "vitest-mock-extended": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=24"
   },
   "packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be"
 }
