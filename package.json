@@ -23,7 +23,7 @@
     "lint": "oxlint",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "check": "tsc --noEmit",
+    "check": "tsgo --noEmit",
     "test": "vitest run",
     "verify": "pnpm format:check && pnpm lint && pnpm check && pnpm test"
   },
@@ -38,6 +38,7 @@
     "@github/local-action": "^7.0.1",
     "@types/node": "^24.12.0",
     "@types/semver": "^7.7.1",
+    "@typescript/native-preview": "7.0.0-dev.20260323.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "msw": "^2.12.10",
@@ -45,7 +46,6 @@
     "oxlint": "^1.55.0",
     "oxlint-tsgolint": "^0.16.0",
     "rolldown": "1.0.0-rc.9",
-    "typescript": "^5.9.3",
     "vite": "^8.0.0",
     "vitest": "^4.1.0",
     "vitest-mock-extended": "^3.1.0"

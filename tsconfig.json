@@ -4,6 +4,7 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "lib": ["ES2022"],
+    "types": ["node"],
     "module": "NodeNext",
     "noUnusedLocals": true,
     "outDir": "./dist",
