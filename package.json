@@ -45,7 +45,7 @@
     "oxfmt": "^0.40.0",
     "oxlint": "^1.55.0",
     "oxlint-tsgolint": "^0.16.0",
-    "rolldown": "1.0.0-rc.9",
+    "rolldown": "1.0.0-rc.10",
     "vite": "^8.0.0",
     "vitest": "^4.1.0",
     "vitest-mock-extended": "^3.1.0"
