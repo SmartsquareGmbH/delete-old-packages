@@ -21260,10 +21260,9 @@ var import_light = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((expo
 			}
 		};
 		var version = "2.19.5";
-		var version$1 = { version };
 		var version$2 = /* @__PURE__ */ Object.freeze({
 			version,
-			default: version$1
+			default: { version }
 		});
 		var require$$2 = () => console.log("You must import the full version of Bottleneck in order to use this feature.");
 		var require$$3 = () => console.log("You must import the full version of Bottleneck in order to use this feature.");
