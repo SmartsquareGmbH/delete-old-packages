@@ -44,7 +44,7 @@
     "msw": "^2.12.10",
     "oxfmt": "^0.43.0",
     "oxlint": "^1.55.0",
-    "oxlint-tsgolint": "^0.18.0",
+    "oxlint-tsgolint": "^0.19.0",
     "rolldown": "1.0.0-rc.12",
     "vite": "^8.0.0",
     "vitest": "^4.1.0",
