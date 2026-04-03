@@ -3,6 +3,10 @@ import * as os$1 from "os";
 import os, { EOL } from "os";
 import * as fs from "fs";
 import { constants, existsSync, promises, readFileSync } from "fs";
+import * as path from "path";
+import * as events from "events";
+import "child_process";
+import "timers";
 //#region \0rolldown/runtime.js
 var __create = Object.create;
 var __defProp = Object.defineProperty;
@@ -135,7 +139,7 @@ var require_tunnel$1 = /* @__PURE__ */ __commonJSMin(((exports) => {
 	var tls = __require("tls");
 	var http$2 = __require("http");
 	var https$1 = __require("https");
-	var events = __require("events");
+	var events$1 = __require("events");
 	__require("assert");
 	var util$2 = __require("util");
 	exports.httpOverHttp = httpOverHttp;
@@ -187,7 +191,7 @@ var require_tunnel$1 = /* @__PURE__ */ __commonJSMin(((exports) => {
 			self.removeSocket(socket);
 		});
 	}
-	util$2.inherits(TunnelingAgent, events.EventEmitter);
+	util$2.inherits(TunnelingAgent, events$1.EventEmitter);
 	TunnelingAgent.prototype.addRequest = function addRequest(req, host, port, localAddress) {
 		var self = this;
 		var options = mergeOptions({ request: req }, self.options, toOptions(host, port, localAddress));
@@ -3837,6 +3841,12 @@ var require_util$6 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				if (isURLPotentiallyTrustworthy(referrerURL) && !isURLPotentiallyTrustworthy(currentURL)) return "no-referrer";
 				return referrerOrigin;
 			}
+			/**
+			* 1. If referrerURL is a potentially trustworthy URL and
+			* request’s current URL is not a potentially trustworthy URL,
+			* then return no referrer.
+			* 2. Return referrerOrigin
+			*/
 			default: return isNonPotentiallyTrustWorthy ? "no-referrer" : referrerOrigin;
 		}
 	}
@@ -15917,10 +15927,191 @@ var Summary = class {
 	}
 };
 new Summary();
+//#endregion
+//#region node_modules/.pnpm/@actions+io@3.0.2/node_modules/@actions/io/lib/io-util.js
+var __awaiter$6 = function(thisArg, _arguments, P, generator) {
+	function adopt(value) {
+		return value instanceof P ? value : new P(function(resolve) {
+			resolve(value);
+		});
+	}
+	return new (P || (P = Promise))(function(resolve, reject) {
+		function fulfilled(value) {
+			try {
+				step(generator.next(value));
+			} catch (e) {
+				reject(e);
+			}
+		}
+		function rejected(value) {
+			try {
+				step(generator["throw"](value));
+			} catch (e) {
+				reject(e);
+			}
+		}
+		function step(result) {
+			result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+		}
+		step((generator = generator.apply(thisArg, _arguments || [])).next());
+	});
+};
 const { chmod, copyFile, lstat, mkdir, open, readdir, rename, rm, rmdir, stat, symlink, unlink } = fs.promises;
-process.platform;
+const IS_WINDOWS$1 = process.platform === "win32";
 fs.constants.O_RDONLY;
+/**
+* On OSX/Linux, true if path starts with '/'. On Windows, true for paths like:
+* \, \hello, \\hello\share, C:, and C:\hello (and corresponding alternate separator cases).
+*/
+function isRooted(p) {
+	p = normalizeSeparators(p);
+	if (!p) throw new Error("isRooted() parameter \"p\" cannot be empty");
+	if (IS_WINDOWS$1) return p.startsWith("\\") || /^[A-Z]:/i.test(p);
+	return p.startsWith("/");
+}
+/**
+* Best effort attempt to determine whether a file exists and is executable.
+* @param filePath    file path to check
+* @param extensions  additional file extensions to try
+* @return if file exists and is executable, returns the file path. otherwise empty string.
+*/
+function tryGetExecutablePath(filePath, extensions) {
+	return __awaiter$6(this, void 0, void 0, function* () {
+		let stats = void 0;
+		try {
+			stats = yield stat(filePath);
+		} catch (err) {
+			if (err.code !== "ENOENT") console.log(`Unexpected error attempting to determine if executable file exists '${filePath}': ${err}`);
+		}
+		if (stats && stats.isFile()) {
+			if (IS_WINDOWS$1) {
+				const upperExt = path.extname(filePath).toUpperCase();
+				if (extensions.some((validExt) => validExt.toUpperCase() === upperExt)) return filePath;
+			} else if (isUnixExecutable(stats)) return filePath;
+		}
+		const originalFilePath = filePath;
+		for (const extension of extensions) {
+			filePath = originalFilePath + extension;
+			stats = void 0;
+			try {
+				stats = yield stat(filePath);
+			} catch (err) {
+				if (err.code !== "ENOENT") console.log(`Unexpected error attempting to determine if executable file exists '${filePath}': ${err}`);
+			}
+			if (stats && stats.isFile()) {
+				if (IS_WINDOWS$1) {
+					try {
+						const directory = path.dirname(filePath);
+						const upperName = path.basename(filePath).toUpperCase();
+						for (const actualName of yield readdir(directory)) if (upperName === actualName.toUpperCase()) {
+							filePath = path.join(directory, actualName);
+							break;
+						}
+					} catch (err) {
+						console.log(`Unexpected error attempting to determine the actual case of the file '${filePath}': ${err}`);
+					}
+					return filePath;
+				} else if (isUnixExecutable(stats)) return filePath;
+			}
+		}
+		return "";
+	});
+}
+function normalizeSeparators(p) {
+	p = p || "";
+	if (IS_WINDOWS$1) {
+		p = p.replace(/\//g, "\\");
+		return p.replace(/\\\\+/g, "\\");
+	}
+	return p.replace(/\/\/+/g, "/");
+}
+function isUnixExecutable(stats) {
+	return (stats.mode & 1) > 0 || (stats.mode & 8) > 0 && process.getgid !== void 0 && stats.gid === process.getgid() || (stats.mode & 64) > 0 && process.getuid !== void 0 && stats.uid === process.getuid();
+}
+//#endregion
+//#region node_modules/.pnpm/@actions+io@3.0.2/node_modules/@actions/io/lib/io.js
+var __awaiter$5 = function(thisArg, _arguments, P, generator) {
+	function adopt(value) {
+		return value instanceof P ? value : new P(function(resolve) {
+			resolve(value);
+		});
+	}
+	return new (P || (P = Promise))(function(resolve, reject) {
+		function fulfilled(value) {
+			try {
+				step(generator.next(value));
+			} catch (e) {
+				reject(e);
+			}
+		}
+		function rejected(value) {
+			try {
+				step(generator["throw"](value));
+			} catch (e) {
+				reject(e);
+			}
+		}
+		function step(result) {
+			result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+		}
+		step((generator = generator.apply(thisArg, _arguments || [])).next());
+	});
+};
+/**
+* Returns path of a tool had the tool actually been invoked.  Resolves via paths.
+* If you check and the tool does not exist, it will throw.
+*
+* @param     tool              name of the tool
+* @param     check             whether to check if tool exists
+* @returns   Promise<string>   path to tool
+*/
+function which(tool, check) {
+	return __awaiter$5(this, void 0, void 0, function* () {
+		if (!tool) throw new Error("parameter 'tool' is required");
+		if (check) {
+			const result = yield which(tool, false);
+			if (!result) if (IS_WINDOWS$1) throw new Error(`Unable to locate executable file: ${tool}. Please verify either the file path exists or the file can be found within a directory specified by the PATH environment variable. Also verify the file has a valid extension for an executable file.`);
+			else throw new Error(`Unable to locate executable file: ${tool}. Please verify either the file path exists or the file can be found within a directory specified by the PATH environment variable. Also check the file mode to verify the file is executable.`);
+			return result;
+		}
+		const matches = yield findInPath(tool);
+		if (matches && matches.length > 0) return matches[0];
+		return "";
+	});
+}
+/**
+* Returns a list of all occurrences of the given tool on the system path.
+*
+* @returns   Promise<string[]>  the paths of the tool
+*/
+function findInPath(tool) {
+	return __awaiter$5(this, void 0, void 0, function* () {
+		if (!tool) throw new Error("parameter 'tool' is required");
+		const extensions = [];
+		if (IS_WINDOWS$1 && process.env["PATHEXT"]) {
+			for (const extension of process.env["PATHEXT"].split(path.delimiter)) if (extension) extensions.push(extension);
+		}
+		if (isRooted(tool)) {
+			const filePath = yield tryGetExecutablePath(tool, extensions);
+			if (filePath) return [filePath];
+			return [];
+		}
+		if (tool.includes(path.sep)) return [];
+		const directories = [];
+		if (process.env.PATH) {
+			for (const p of process.env.PATH.split(path.delimiter)) if (p) directories.push(p);
+		}
+		const matches = [];
+		for (const directory of directories) {
+			const filePath = yield tryGetExecutablePath(path.join(directory, tool), extensions);
+			if (filePath) matches.push(filePath);
+		}
+		return matches;
+	});
+}
 process.platform;
+events.EventEmitter;
+events.EventEmitter;
 os.platform();
 os.arch();
 //#endregion
@@ -17144,6 +17335,7 @@ var require_min_version = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 						break;
 					case "<":
 					case "<=": break;
+					/* istanbul ignore next */
 					default: throw new Error(`Unexpected operation: ${comparator.operator}`);
 				}
 			});
@@ -18350,13 +18542,12 @@ var before_after_hook_default = {
 };
 //#endregion
 //#region node_modules/.pnpm/@octokit+endpoint@11.0.3/node_modules/@octokit/endpoint/dist-bundle/index.js
-var userAgent = `octokit-endpoint.js/0.0.0-development ${getUserAgent()}`;
 var DEFAULTS = {
 	method: "GET",
 	baseUrl: "https://api.github.com",
 	headers: {
 		accept: "application/vnd.github.v3+json",
-		"user-agent": userAgent
+		"user-agent": `octokit-endpoint.js/0.0.0-development ${getUserAgent()}`
 	},
 	mediaType: { format: "" }
 };
@@ -18570,7 +18761,7 @@ function withDefaults$2(oldDefaults, newDefaults) {
 }
 var endpoint = withDefaults$2(null, DEFAULTS);
 //#endregion
-//#region node_modules/.pnpm/json-with-bigint@3.5.7/node_modules/json-with-bigint/json-with-bigint.js
+//#region node_modules/.pnpm/json-with-bigint@3.5.8/node_modules/json-with-bigint/json-with-bigint.js
 var import_fast_content_type_parse = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
 	const NullObject = function NullObject() {};
 	NullObject.prototype = Object.create(null);
@@ -18688,13 +18879,25 @@ const originalParse = JSON.parse;
 const customFormat = /^-?\d+n$/;
 const bigIntsStringify = /([\[:])?"(-?\d+)n"($|([\\n]|\s)*(\s|[\\n])*[,\}\]])/g;
 const noiseStringify = /([\[:])?("-?\d+n+)n("$|"([\\n]|\s)*(\s|[\\n])*[,\}\]])/g;
-/** @typedef {(key: string, value: any, context?: { source: string }) => any} Reviver */
 /**
-* Function to serialize value to a JSON string.
-* Converts BigInt values to a custom format (strings with digits and "n" at the end) and then converts them to proper big integers in a JSON string.
-* @param {*} value - The value to convert to a JSON string.
-* @param {(Function|Array<string>|null)} [replacer] - A function that alters the behavior of the stringification process, or an array of strings to indicate properties to exclude.
-* @param {(string|number)} [space] - A string or number to specify indentation or pretty-printing.
+* @typedef {(this: any, key: string | number | undefined, value: any) => any} Replacer
+* @typedef {(key: string | number | undefined, value: any, context?: { source: string }) => any} Reviver
+*/
+/**
+* Converts a JavaScript value to a JSON string.
+*
+* Supports serialization of BigInt values using two strategies:
+* 1. Custom format "123n" → "123" (universal fallback)
+* 2. Native JSON.rawJSON() (Node.js 22+, fastest) when available
+*
+* All other values are serialized exactly like native JSON.stringify().
+*
+* @param {*} value The value to convert to a JSON string.
+* @param {Replacer | Array<string | number> | null} [replacer]
+*   A function that alters the behavior of the stringification process,
+*   or an array of strings/numbers to indicate properties to exclude.
+* @param {string | number} [space]
+*   A string or number to specify indentation or pretty-printing.
 * @returns {string} The JSON string representation.
 */
 const JSONStringify = (value, replacer, space) => {
@@ -18706,32 +18909,60 @@ const JSONStringify = (value, replacer, space) => {
 	}, space);
 	if (!value) return originalStringify(value, replacer, space);
 	return originalStringify(value, (key, value) => {
-		if (typeof value === "string" && Boolean(value.match(noiseValue))) return value.toString() + "n";
+		if (typeof value === "string" && noiseValue.test(value)) return value.toString() + "n";
 		if (typeof value === "bigint") return value.toString() + "n";
 		if (typeof replacer === "function") return replacer(key, value);
 		if (Array.isArray(replacer) && replacer.includes(key)) return value;
 		return value;
 	}, space).replace(bigIntsStringify, "$1$2$3").replace(noiseStringify, "$1$2$3");
 };
+const featureCache = /* @__PURE__ */ new Map();
 /**
-* Support for JSON.parse's context.source feature detection.
-* @type {boolean}
+* Detects if the current JSON.parse implementation supports the context.source feature.
+*
+* Uses toString() fingerprinting to cache results and automatically detect runtime
+* replacements of JSON.parse (polyfills, mocks, etc.).
+*
+* @returns {boolean} true if context.source is supported, false otherwise.
 */
-const isContextSourceSupported = () => JSON.parse("1", (_, __, context) => !!context && context.source === "1");
+const isContextSourceSupported = () => {
+	const parseFingerprint = JSON.parse.toString();
+	if (featureCache.has(parseFingerprint)) return featureCache.get(parseFingerprint);
+	try {
+		const result = JSON.parse("1", (_, __, context) => !!context?.source && context.source === "1");
+		featureCache.set(parseFingerprint, result);
+		return result;
+	} catch {
+		featureCache.set(parseFingerprint, false);
+		return false;
+	}
+};
 /**
-* Convert marked big numbers to BigInt
-* @type {Reviver}
+* Reviver function that converts custom-format BigInt strings back to BigInt values.
+* Also handles "noise" strings that accidentally match the BigInt format.
+*
+* @param {string | number | undefined} key The object key.
+* @param {*} value The value being parsed.
+* @param {object} [context] Parse context (if supported by JSON.parse).
+* @param {Reviver} [userReviver] User's custom reviver function.
+* @returns {any} The transformed value.
 */
 const convertMarkedBigIntsReviver = (key, value, context, userReviver) => {
-	if (typeof value === "string" && value.match(customFormat)) return BigInt(value.slice(0, -1));
-	if (typeof value === "string" && value.match(noiseValue)) return value.slice(0, -1);
+	if (typeof value === "string" && customFormat.test(value)) return BigInt(value.slice(0, -1));
+	if (typeof value === "string" && noiseValue.test(value)) return value.slice(0, -1);
 	if (typeof userReviver !== "function") return value;
 	return userReviver(key, value, context);
 };
 /**
-* Faster (2x) and simpler function to parse JSON.
-* Based on JSON.parse's context.source feature, which is not universally available now.
-* Does not support the legacy custom format, used in the first version of this library.
+* Fast JSON.parse implementation (~2x faster than classic fallback).
+* Uses JSON.parse's context.source feature to detect integers and convert
+* large numbers directly to BigInt without string manipulation.
+*
+* Does not support legacy custom format from v1 of this library.
+*
+* @param {string} text JSON string to parse.
+* @param {Reviver} [reviver] Transform function to apply to each value.
+* @returns {any} Parsed JavaScript value.
 */
 const JSONParseV2 = (text, reviver) => {
 	return JSON.parse(text, (key, value, context) => {
@@ -18747,16 +18978,28 @@ const MAX_DIGITS = MAX_INT.length;
 const stringsOrLargeNumbers = /"(?:\\.|[^"])*"|-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?/g;
 const noiseValueWithQuotes = /^"-?\d+n+"$/;
 /**
-* Function to parse JSON.
-* If JSON has number values greater than Number.MAX_SAFE_INTEGER, we convert those values to a custom format, then parse them to BigInt values.
-* Other types of values are not affected and parsed as native JSON.parse() would parse them.
+* Converts a JSON string into a JavaScript value.
+*
+* Supports parsing of large integers using two strategies:
+* 1. Classic fallback: Marks large numbers with "123n" format, then converts to BigInt
+* 2. Fast path (JSONParseV2): Uses context.source feature (~2x faster) when available
+*
+* All other JSON values are parsed exactly like native JSON.parse().
+*
+* @param {string} text A valid JSON string.
+* @param {Reviver} [reviver]
+*   A function that transforms the results. This function is called for each member
+*   of the object. If a member contains nested objects, the nested objects are
+*   transformed before the parent object is.
+* @returns {any} The parsed JavaScript value.
+* @throws {SyntaxError} If text is not valid JSON.
 */
 const JSONParse = (text, reviver) => {
 	if (!text) return originalParse(text, reviver);
 	if (isContextSourceSupported()) return JSONParseV2(text, reviver);
 	return originalParse(text.replace(stringsOrLargeNumbers, (text, digits, fractional, exponential) => {
 		const isString = text[0] === "\"";
-		if (isString && Boolean(text.match(noiseValueWithQuotes))) return text.substring(0, text.length - 1) + "n\"";
+		if (isString && noiseValueWithQuotes.test(text)) return text.substring(0, text.length - 1) + "n\"";
 		const isFractionalOrExponential = fractional || exponential;
 		const isLessThanMaxSafeInt = digits && (digits.length < MAX_DIGITS || digits.length === MAX_DIGITS && digits <= MAX_INT);
 		if (isString || isFractionalOrExponential || isLessThanMaxSafeInt) return text;
@@ -18794,8 +19037,7 @@ var RequestError = class extends Error {
 };
 //#endregion
 //#region node_modules/.pnpm/@octokit+request@10.0.8/node_modules/@octokit/request/dist-bundle/index.js
-var VERSION$5 = "10.0.8";
-var defaults_default = { headers: { "user-agent": `octokit-request.js/${VERSION$5} ${getUserAgent()}` } };
+var defaults_default = { headers: { "user-agent": `octokit-request.js/10.0.8 ${getUserAgent()}` } };
 function isPlainObject(value) {
 	if (typeof value !== "object" || value === null) return false;
 	if (Object.prototype.toString.call(value) !== "[object Object]") return false;
