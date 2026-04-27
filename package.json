@@ -38,20 +38,20 @@
     "@github/local-action": "7.0.1",
     "@types/node": "25.6.0",
     "@types/semver": "7.7.1",
-    "@typescript/native-preview": "7.0.0-dev.20260417.1",
+    "@typescript/native-preview": "7.0.0-dev.20260424.1",
     "husky": "9.1.7",
     "lint-staged": "16.4.0",
-    "msw": "2.13.4",
-    "oxfmt": "0.45.0",
-    "oxlint": "1.60.0",
+    "msw": "2.13.5",
+    "oxfmt": "0.46.0",
+    "oxlint": "1.61.0",
     "oxlint-tsgolint": "0.21.1",
-    "rolldown": "1.0.0-rc.16",
-    "vite": "8.0.8",
-    "vitest": "4.1.4",
+    "rolldown": "1.0.0-rc.17",
+    "vite": "8.0.10",
+    "vitest": "4.1.5",
     "vitest-mock-extended": "4.0.0"
   },
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319"
+  "packageManager": "pnpm@10.33.2+sha512.a90faf6feeab71ad6c6e57f94e0fe1a12f5dcc22cd754db40ae9593eb6a3e0b6b12e3540218bb37ae083404b1f2ce6db2a4121e979829b4aff94b99f49da1cf8"
 }
