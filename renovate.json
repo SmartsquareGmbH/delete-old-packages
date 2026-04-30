@@ -4,9 +4,16 @@
   "automerge": true,
   "packageRules": [
     {
+      "matchManagers": ["npm"],
       "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "all non-major dependencies",
-      "groupSlug": "all-minor-patch"
+      "groupName": "all non-major npm dependencies",
+      "groupSlug": "all-minor-patch-npm"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "groupName": "all non-major github actions dependencies",
+      "groupSlug": "all-minor-patch-github-actions"
     },
     {
       "matchUpdateTypes": ["major"],
