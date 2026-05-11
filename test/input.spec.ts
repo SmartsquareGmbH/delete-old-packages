@@ -1,7 +1,8 @@
 import { Range } from "semver"
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest"
 import { getActionInput, validateInput } from "../src/input.js"
-import { Input, PackageType } from "../src/types.js"
+import type { Input } from "../src/types.js"
+import { PackageType } from "../src/types.js"
 
 describe("getActionInput", () => {
   const env = process.env

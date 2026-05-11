@@ -1,7 +1,7 @@
 import { Range } from "semver"
 import { expect, test } from "vitest"
 import { processPackages, processResponse } from "../../src/process/process.js"
-import { OctokitPackageResponse } from "../../src/process/process.js"
+import type { OctokitPackageResponse } from "../../src/process/process.js"
 import { PackageType } from "../../src/types.js"
 
 test("filters correctly", () => {

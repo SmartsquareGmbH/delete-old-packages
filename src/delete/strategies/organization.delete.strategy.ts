@@ -1,5 +1,5 @@
-import { getOctokit } from "@actions/github"
-import { DeleteStrategy, Input } from "../../types.js"
+import type { getOctokit } from "@actions/github"
+import type { DeleteStrategy, Input } from "../../types.js"
 
 export default class OrganizationDeleteStrategy implements DeleteStrategy {
   constructor(private readonly octokit: ReturnType<typeof getOctokit>) {}

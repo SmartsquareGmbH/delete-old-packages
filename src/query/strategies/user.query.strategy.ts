@@ -1,6 +1,6 @@
-import { getOctokit } from "@actions/github"
+import type { getOctokit } from "@actions/github"
 import { processResponse } from "../../process/process.js"
-import { Input, Package, QueryStrategy } from "../../types.js"
+import type { Input, Package, QueryStrategy } from "../../types.js"
 
 export default class UserQueryStrategy implements QueryStrategy {
   constructor(private readonly octokit: ReturnType<typeof getOctokit>) {}

@@ -6,10 +6,11 @@ import { afterAll, afterEach, beforeAll, describe, expect, test } from "vitest"
 import { executeAction } from "../../src/action.js"
 import OrganizationDeleteStrategy from "../../src/delete/strategies/organization.delete.strategy.js"
 import UserDeleteStrategy from "../../src/delete/strategies/user.delete.strategy.js"
-import { OctokitPackageVersion } from "../../src/process/process.js"
+import type { OctokitPackageVersion } from "../../src/process/process.js"
 import OrganizationQueryStrategy from "../../src/query/strategies/organization.query.strategy.js"
 import UserQueryStrategy from "../../src/query/strategies/user.query.strategy.js"
-import { Input, PackageType } from "../../src/types.js"
+import type { Input } from "../../src/types.js"
+import { PackageType } from "../../src/types.js"
 
 const BASE_URL = "https://api.github.com"
 

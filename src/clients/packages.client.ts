@@ -2,7 +2,7 @@ import { info, warning } from "@actions/core"
 import { getOctokit } from "@actions/github"
 import { Octokit } from "@octokit/core"
 import { throttling } from "@octokit/plugin-throttling"
-import { Input } from "../types.js"
+import type { Input } from "../types.js"
 
 export function createPackagesClient(input: Input): ReturnType<typeof getOctokit> {
   const customClient = Octokit.plugin(throttling)

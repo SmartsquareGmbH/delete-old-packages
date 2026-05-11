@@ -1,6 +1,7 @@
 import { getBooleanInput, getInput, getMultilineInput } from "@actions/core"
 import { Range } from "semver"
-import { Input, PackageType } from "./types.js"
+import type { Input } from "./types.js"
+import { PackageType } from "./types.js"
 
 const DEFAULT_KEEP = 2
 

@@ -1,6 +1,7 @@
-import { getOctokit } from "@actions/github"
+import type { getOctokit } from "@actions/github"
 import { coerce as semverCoerce, satisfies as semverSatisfies } from "semver"
-import { Input, Package, PackageType, PackageVersion } from "../types.js"
+import type { Input, Package, PackageVersion } from "../types.js"
+import { PackageType } from "../types.js"
 
 type Octokit = ReturnType<typeof getOctokit>
 type OctokitPackageCall = Octokit["rest"]["packages"]["getAllPackageVersionsForPackageOwnedByOrg"]

@@ -5,6 +5,9 @@
     "maxWarnings": 0,
     "typeAware": true
   },
+  "rules": {
+    "consistent-type-imports": "error"
+  },
   "overrides": [
     {
       "files": ["test/**.ts"],

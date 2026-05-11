@@ -1,5 +1,5 @@
 import { createPackagesClient } from "../clients/packages.client.js"
-import { DeleteStrategy, Input } from "../types.js"
+import type { DeleteStrategy, Input } from "../types.js"
 import OrganizationDeleteStrategy from "./strategies/organization.delete.strategy.js"
 import UserDeleteStrategy from "./strategies/user.delete.strategy.js"
 

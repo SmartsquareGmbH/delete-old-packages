@@ -1,4 +1,4 @@
-import { Range } from "semver"
+import type { Range } from "semver"
 
 export enum PackageType {
   Npm = "npm",

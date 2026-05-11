@@ -1,5 +1,5 @@
 import { createPackagesClient } from "../clients/packages.client.js"
-import { Input, QueryStrategy } from "../types.js"
+import type { Input, QueryStrategy } from "../types.js"
 import OrganizationQueryStrategy from "./strategies/organization.query.strategy.js"
 import UserQueryStrategy from "./strategies/user.query.strategy.js"
 

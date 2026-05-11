@@ -2,7 +2,8 @@ import { expect, test } from "vitest"
 import { decideDeleteStrategy } from "../../src/delete/delete.strategy.factory.js"
 import OrganizationDeleteStrategy from "../../src/delete/strategies/organization.delete.strategy.js"
 import UserDeleteStrategy from "../../src/delete/strategies/user.delete.strategy.js"
-import { Input, PackageType } from "../../src/types.js"
+import type { Input } from "../../src/types.js"
+import { PackageType } from "../../src/types.js"
 
 test("decide default delete strategy", () => {
   const input: Input = {
