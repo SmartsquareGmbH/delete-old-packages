@@ -22359,6 +22359,7 @@ function createPackagesClient(input) {
 //#endregion
 //#region src/delete/strategies/organization.delete.strategy.ts
 var OrganizationDeleteStrategy = class {
+	octokit;
 	constructor(octokit) {
 		this.octokit = octokit;
 	}
@@ -22381,6 +22382,7 @@ var OrganizationDeleteStrategy = class {
 //#endregion
 //#region src/delete/strategies/user.delete.strategy.ts
 var UserDeleteStrategy = class {
+	octokit;
 	constructor(octokit) {
 		this.octokit = octokit;
 	}
@@ -22459,6 +22461,7 @@ function validateInput(input) {
 //#endregion
 //#region src/query/strategies/organization.query.strategy.ts
 var OrganizationQueryStrategy = class {
+	octokit;
 	constructor(octokit) {
 		this.octokit = octokit;
 	}
@@ -22484,6 +22487,7 @@ var OrganizationQueryStrategy = class {
 //#endregion
 //#region src/query/strategies/user.query.strategy.ts
 var UserQueryStrategy = class {
+	octokit;
 	constructor(octokit) {
 		this.octokit = octokit;
 	}
