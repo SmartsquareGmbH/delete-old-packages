@@ -37,21 +37,21 @@
   "devDependencies": {
     "@github/local-action": "7.0.1",
     "@tsconfig/node24": "24.0.4",
-    "@types/node": "24.12.3",
+    "@types/node": "24.12.4",
     "@types/semver": "7.7.1",
-    "@typescript/native-preview": "7.0.0-dev.20260508.1",
+    "@typescript/native-preview": "7.0.0-dev.20260515.1",
     "husky": "9.1.7",
-    "lint-staged": "17.0.3",
-    "msw": "2.14.5",
-    "oxfmt": "0.48.0",
-    "oxlint": "1.63.0",
+    "lint-staged": "17.0.4",
+    "msw": "2.14.6",
+    "oxfmt": "0.49.0",
+    "oxlint": "1.64.0",
     "oxlint-tsgolint": "0.22.1",
-    "rolldown": "1.0.0",
-    "vitest": "4.1.5",
+    "rolldown": "1.0.1",
+    "vitest": "4.1.6",
     "vitest-mock-extended": "4.0.0"
   },
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "pnpm@11.1.0+sha512.0c44e842e5686b2c061a81adda8b2258bd8818e9704b2cf2c63d56b931a7b2e910092e085027003b96ca3911ab56a07f6df5abaed2be9925034cdd686a535b14"
+  "packageManager": "pnpm@11.1.2+sha512.415a1cc25974731e75455c1468371be74c5aa5fb7621b50d4056d222451609f11412f23fd602e6169f1e060466641f798597e1be961a10688836a67b16569499"
 }
