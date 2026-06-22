@@ -2,9 +2,8 @@ allowBuilds:
   esbuild: false
   msw: true
 overrides:
-  "@actions/core": ^3.0.0
   "@actions/github": ^9.1.0
-  "@octokit/core": ^7.0.6
   "@octokit/endpoint": ^11.0.3
+  nanoid@<=3.3.14: ^5
   semver: ^7.7.4
 trustPolicy: no-downgrade

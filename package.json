@@ -23,30 +23,30 @@
     "lint": "oxlint",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "check": "tsgo --noEmit",
+    "check": "tsc --noEmit",
     "test": "vitest run",
     "verify": "pnpm format:check && pnpm lint && pnpm check && pnpm test"
   },
   "dependencies": {
-    "@actions/core": "^3.0.0",
-    "@actions/github": "^9.1.0",
+    "@actions/core": "^3.0.1",
+    "@actions/github": "^9.1.1",
     "@octokit/core": "^7.0.6",
     "@octokit/plugin-throttling": "^11.0.3",
-    "semver": "^7.7.4"
+    "semver": "^7.8.5"
   },
   "devDependencies": {
     "@github/local-action": "7.0.1",
     "@tsconfig/node24": "24.0.4",
     "@types/node": "24.13.2",
     "@types/semver": "7.7.1",
-    "@typescript/native-preview": "7.0.0-dev.20260619.1",
     "husky": "9.1.7",
-    "lint-staged": "17.0.7",
+    "lint-staged": "17.0.8",
     "msw": "2.14.6",
     "oxfmt": "0.55.0",
     "oxlint": "1.70.0",
     "oxlint-tsgolint": "0.23.0",
     "rolldown": "1.1.2",
+    "typescript": "7.0.1-rc",
     "vitest": "4.1.9",
     "vitest-mock-extended": "4.0.0"
   },
