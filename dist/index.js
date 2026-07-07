@@ -19313,8 +19313,8 @@ var RequestError = class extends Error {
 	}
 };
 //#endregion
-//#region node_modules/.pnpm/@octokit+request@10.0.10/node_modules/@octokit/request/dist-bundle/index.js
-var defaults_default = { headers: { "user-agent": `octokit-request.js/10.0.10 ${getUserAgent()}` } };
+//#region node_modules/.pnpm/@octokit+request@10.0.11/node_modules/@octokit/request/dist-bundle/index.js
+var defaults_default = { headers: { "user-agent": `octokit-request.js/10.0.11 ${getUserAgent()}` } };
 function isPlainObject(value) {
 	if (typeof value !== "object" || value === null) return false;
 	if (Object.prototype.toString.call(value) !== "[object Object]") return false;
@@ -19422,9 +19422,10 @@ function isJSONResponse(mimetype) {
 function toErrorMessage(data) {
 	if (typeof data === "string") return data;
 	if (data instanceof ArrayBuffer) return "Unknown error";
-	if ("message" in data) {
-		const suffix = "documentation_url" in data ? ` - ${data.documentation_url}` : "";
-		return Array.isArray(data.errors) ? `${data.message}: ${data.errors.map((v) => JSON.stringify(v)).join(", ")}${suffix}` : `${data.message}${suffix}`;
+	if (typeof data === "object" && data !== null && "message" in data) {
+		const objectData = data;
+		const suffix = "documentation_url" in objectData ? ` - ${objectData.documentation_url}` : "";
+		return Array.isArray(objectData.errors) ? `${objectData.message}: ${objectData.errors.map((v) => JSON.stringify(v)).join(", ")}${suffix}` : `${objectData.message}${suffix}`;
 	}
 	return `Unknown error: ${JSON.stringify(data)}`;
 }
