@@ -18752,7 +18752,7 @@ var before_after_hook_default = {
 	Collection
 };
 //#endregion
-//#region node_modules/.pnpm/@octokit+endpoint@11.0.4/node_modules/@octokit/endpoint/dist-bundle/index.js
+//#region node_modules/.pnpm/@octokit+endpoint@11.0.5/node_modules/@octokit/endpoint/dist-bundle/index.js
 var DEFAULTS = {
 	method: "GET",
 	baseUrl: "https://api.github.com",
