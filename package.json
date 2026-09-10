@@ -30,7 +30,7 @@
   "dependencies": {
     "@actions/core": "^3.0.1",
     "@actions/github": "^9.1.1",
-    "@octokit/core": "^7.0.7",
+    "@octokit/core": "^7.0.8",
     "@octokit/plugin-throttling": "^11.0.5",
     "semver": "^7.8.5"
   },
@@ -40,18 +40,18 @@
     "@types/node": "24.13.3",
     "@types/semver": "7.8.0",
     "husky": "9.1.7",
-    "lint-staged": "17.4.1",
+    "lint-staged": "17.5.0",
     "msw": "2.15.0",
-    "oxfmt": "0.65.0",
-    "oxlint": "1.80.0",
+    "oxfmt": "0.67.0",
+    "oxlint": "1.82.0",
     "oxlint-tsgolint": "7.0.2001",
-    "rolldown": "1.2.6",
+    "rolldown": "1.2.7",
     "typescript": "7.0.2",
-    "vitest": "4.1.11",
+    "vitest": "5.0.0",
     "vitest-mock-extended": "5.1.1"
   },
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "pnpm@11.24.0+sha512.bd27e345e976dcb0be0b7a1228217b049a817e21b1f355c90dbe7dc46671895a8bc1e6d06c24554505ea93ea0b45f489a27ec1bfbc8de6a9659fca0f16fa0000"
+  "packageManager": "pnpm@12.4.0+sha512.37536c26ed40ab4134b6511e09f6b27f3ebb45687468f2406ca3805279a4e5ca158c1931350ad9774d6ab2108d71b3dbaeb39943159294375e4d053e8e05685c"
 }
