@@ -19090,12 +19090,40 @@ function withDefaults$2(oldDefaults, newDefaults) {
 }
 var endpoint = withDefaults$2(null, DEFAULTS);
 //#endregion
-//#region node_modules/.pnpm/content-type@3.0.0/node_modules/content-type/dist/index.js
+//#region node_modules/.pnpm/content-type@3.1.0/node_modules/content-type/dist/index.js
 /*!
 * content-type
 * Copyright(c) 2015 Douglas Christopher Wilson
 * MIT Licensed
 */
+const SP = 32;
+const HTAB = 9;
+const SEMI = 59;
+const EQ = 61;
+const DQUOTE = 34;
+const BSLASH = 92;
+const COMMA = 44;
+const LOWER_CASE = 1;
+const OWS = 2;
+const SEMI_FLAG = 4;
+const COMMA_FLAG = 8;
+const TOKEN_FLAG = 16;
+const NON_ASCII = 65280;
+const CASE_FLAGS = 65281;
+/**
+* Character flags used to normalize HTTP field values while scanning.
+* Out-of-range reads intentionally coerce to zero in bitwise expressions.
+*/
+const CHAR_MAP = /* @__PURE__ */ new Uint8Array(256);
+CHAR_MAP[HTAB] |= OWS;
+CHAR_MAP[SP] |= OWS;
+CHAR_MAP[SEMI] |= SEMI_FLAG;
+CHAR_MAP[COMMA] |= COMMA_FLAG;
+for (let code = 128; code <= 255; code++) CHAR_MAP[code] |= LOWER_CASE;
+for (const char of "!#$%&'*+-.^_`|~") CHAR_MAP[char.charCodeAt(0)] |= TOKEN_FLAG;
+for (let code = 48; code <= 57; code++) CHAR_MAP[code] |= TOKEN_FLAG;
+for (let code = 65; code <= 90; code++) CHAR_MAP[code] |= 17;
+for (let code = 97; code <= 122; code++) CHAR_MAP[code] |= TOKEN_FLAG;
 /**
 * Null object perf optimization. Faster than `Object.create(null)` and `{ __proto__: null }`.
 */
@@ -19108,70 +19136,117 @@ const NullObject = /* @__PURE__ */ (() => {
 * Parse a `Content-Type` header.
 */
 function parse(header, options) {
-	const stopChar = options?.comma === true ? COMMA : 65536;
+	const stopFlags = SEMI_FLAG | (options?.comma === true ? COMMA_FLAG : 0);
 	const len = header.length;
-	let index = skipOWS(header, options?.start ?? 0, len);
-	const valueStart = index;
-	index = skipValue(header, index, len, stopChar);
-	const valueEnd = trailingOWS(header, valueStart, index);
-	const type = header.slice(valueStart, valueEnd).toLowerCase();
-	if (options?.parameters === false) return {
+	let valueStart = options?.start ?? 0;
+	while ((CHAR_MAP[header.charCodeAt(valueStart)] & OWS) !== 0) valueStart++;
+	let index = valueStart;
+	let typeFlags = 0;
+	let whitespace = -1;
+	let stop = options?.parameters === false ? COMMA_FLAG : 0;
+	while (index < len) {
+		const code = header.charCodeAt(index);
+		const flags = CHAR_MAP[code];
+		if ((flags & stopFlags) !== 0) {
+			stop |= flags & COMMA_FLAG;
+			break;
+		}
+		if ((flags & OWS) !== 0) {
+			if (whitespace === -1) whitespace = index;
+		} else whitespace = -1;
+		typeFlags |= code & NON_ASCII | flags;
+		index++;
+	}
+	const valueEnd = whitespace === -1 ? index : whitespace;
+	const value = header.slice(valueStart, valueEnd);
+	const type = (typeFlags & CASE_FLAGS) === 0 ? value : value.toLowerCase();
+	if (index === len || stop !== 0) return {
 		type,
 		index,
 		parameters: new NullObject()
 	};
-	return parseParameters(header, type, index, len, stopChar);
+	return parseParameters(header, type, index, len, stopFlags);
 }
-const SP = 32;
-const HTAB = 9;
-const SEMI = 59;
-const EQ = 61;
-const DQUOTE = 34;
-const BSLASH = 92;
-const COMMA = 44;
 /**
 * Parses the parameters of a `Content-Type` header starting at the given index.
 */
-function parseParameters(header, type, index, len, stopChar) {
+function parseParameters(header, type, index, len, stopFlags) {
 	const parameters = new NullObject();
 	parameter: while (index < len) {
-		if (header.charCodeAt(index) === stopChar) break;
-		index = skipOWS(header, index + 1, len);
+		index++;
+		while ((CHAR_MAP[header.charCodeAt(index)] & OWS) !== 0) index++;
 		const keyStart = index;
+		let keyFlags = 0;
+		let keyWhitespace = -1;
 		while (index < len) {
 			const code = header.charCodeAt(index);
-			if (code === stopChar) break parameter;
-			if (code === SEMI) continue parameter;
+			const flags = CHAR_MAP[code];
+			if ((flags & stopFlags) !== 0) {
+				if ((flags & COMMA_FLAG) !== 0) break parameter;
+				continue parameter;
+			}
 			if (code === EQ) {
-				const keyEnd = trailingOWS(header, keyStart, index);
-				const key = header.slice(keyStart, keyEnd).toLowerCase();
-				index = skipOWS(header, index + 1, len);
+				const keyEnd = keyWhitespace === -1 ? index : keyWhitespace;
+				const value = header.slice(keyStart, keyEnd);
+				const key = (keyFlags & CASE_FLAGS) === 0 ? value : value.toLowerCase();
+				index++;
+				while ((CHAR_MAP[header.charCodeAt(index)] & OWS) !== 0) index++;
 				if (index < len && header.charCodeAt(index) === DQUOTE) {
-					index++;
-					let value = "";
+					const quotedStart = ++index;
+					let escaped = false;
 					while (index < len) {
-						const code = header.charCodeAt(index++);
+						const code = header.charCodeAt(index);
 						if (code === DQUOTE) {
-							index = skipValue(header, index, len, stopChar);
-							if (parameters[key] === void 0) parameters[key] = value;
-							break;
+							if (parameters[key] === void 0) parameters[key] = escaped ? unescapeQuotedPairs(header, quotedStart, index) : header.slice(quotedStart, index);
+							index++;
+							let stop = 0;
+							while (index < len) {
+								const code = header.charCodeAt(index);
+								const flags = CHAR_MAP[code];
+								if ((flags & stopFlags) !== 0) {
+									stop = flags & COMMA_FLAG;
+									break;
+								}
+								index++;
+							}
+							if (stop !== 0) break parameter;
+							continue parameter;
 						}
-						if (code === BSLASH && index < len) {
-							value += header[index++];
+						if (code === BSLASH && index + 1 < len) {
+							escaped = true;
+							index += 2;
 							continue;
 						}
-						value += String.fromCharCode(code);
+						index++;
 					}
 					continue parameter;
 				}
 				const valueStart = index;
-				index = skipValue(header, index, len, stopChar);
+				let stop = 0;
+				let valueWhitespace = -1;
+				while (index < len) {
+					const code = header.charCodeAt(index);
+					const flags = CHAR_MAP[code];
+					if ((flags & stopFlags) !== 0) {
+						stop = flags & COMMA_FLAG;
+						break;
+					}
+					if ((flags & OWS) !== 0) {
+						if (valueWhitespace === -1) valueWhitespace = index;
+					} else valueWhitespace = -1;
+					index++;
+				}
 				if (parameters[key] === void 0) {
-					const valueEnd = trailingOWS(header, valueStart, index);
+					const valueEnd = valueWhitespace === -1 ? index : valueWhitespace;
 					parameters[key] = header.slice(valueStart, valueEnd);
 				}
+				if (stop !== 0) break parameter;
 				continue parameter;
 			}
+			if ((flags & OWS) !== 0) {
+				if (keyWhitespace === -1) keyWhitespace = index;
+			} else keyWhitespace = -1;
+			keyFlags |= code & NON_ASCII | flags;
 			index++;
 		}
 	}
@@ -19182,41 +19257,15 @@ function parseParameters(header, type, index, len, stopChar) {
 	};
 }
 /**
-* Skip over characters until a semicolon or other exit character.
+* Remove backslashes from quoted pairs in a known-terminated quoted string body.
 */
-function skipValue(str, index, len, stopChar) {
-	while (index < len) {
-		const code = str.charCodeAt(index);
-		if (code === SEMI || code === stopChar) break;
-		index++;
+function unescapeQuotedPairs(str, start, end) {
+	let result = "";
+	for (let index = start; index < end; index++) if (str.charCodeAt(index) === BSLASH) {
+		result += str.slice(start, index);
+		start = ++index;
 	}
-	return index;
-}
-/**
-* Skip optional whitespace (OWS) in an HTTP header value.
-*
-* OWS is defined in RFC 9110 sec 5.6.3 as SP (" ") or HTAB ("\t").
-*/
-function skipOWS(header, index, len) {
-	while (index < len) {
-		const char = header.charCodeAt(index);
-		if (char !== SP && char !== HTAB) break;
-		index++;
-	}
-	return index;
-}
-/**
-* Trim optional whitespace (OWS) from the end of a substring.
-*
-* OWS is defined in RFC 9110 sec 5.6.3 as SP (" ") or HTAB ("\t").
-*/
-function trailingOWS(header, start, end) {
-	while (end > start) {
-		const char = header.charCodeAt(end - 1);
-		if (char !== SP && char !== HTAB) break;
-		end--;
-	}
-	return end;
+	return result + str.slice(start, end);
 }
 //#endregion
 //#region node_modules/.pnpm/json-with-bigint@3.5.12/node_modules/json-with-bigint/json-with-bigint.js
