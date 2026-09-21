@@ -19090,7 +19090,7 @@ function withDefaults$2(oldDefaults, newDefaults) {
 }
 var endpoint = withDefaults$2(null, DEFAULTS);
 //#endregion
-//#region node_modules/.pnpm/content-type@3.1.0/node_modules/content-type/dist/index.js
+//#region node_modules/.pnpm/content-type@3.1.1/node_modules/content-type/dist/index.js
 /*!
 * content-type
 * Copyright(c) 2015 Douglas Christopher Wilson
