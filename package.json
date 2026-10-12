@@ -42,10 +42,10 @@
     "husky": "9.1.7",
     "lint-staged": "17.6.0",
     "msw": "2.15.0",
-    "oxfmt": "0.71.0",
-    "oxlint": "1.86.0",
+    "oxfmt": "0.72.0",
+    "oxlint": "1.87.0",
     "oxlint-tsgolint": "7.0.2003",
-    "rolldown": "1.2.12",
+    "rolldown": "1.2.13",
     "typescript": "7.0.2",
     "vitest": "5.0.3",
     "vitest-mock-extended": "5.1.1"
@@ -53,5 +53,5 @@
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "pnpm@12.8.2+sha512.a5941679663d952c5f0ecc38ba98af98b4dc01b95780354f6894f2f873973cef2f7e2989d7db3ee5393938ae21f62fe06bcdf685d475ddad829a62095d2b8b11"
+  "packageManager": "pnpm@12.10.1+sha512.ba40a37eb1a370d60fea8c4cf1d364c13bcccef518e98ad2bcee954f539d38da37458e58261a3fa55e06523450ea0ffff9f497b135be41f2c15c1642bacace6c"
 }
