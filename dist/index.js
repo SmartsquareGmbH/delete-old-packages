@@ -1,6 +1,6 @@
 import { createRequire } from "node:module";
-import * as os$1 from "os";
-import os, { EOL } from "os";
+import * as os from "os";
+import os$1, { EOL } from "os";
 import * as fs from "fs";
 import { constants, existsSync, promises, readFileSync } from "fs";
 import "path";
@@ -93,7 +93,7 @@ function toCommandProperties(annotationProperties) {
 */
 function issueCommand(command, properties, message) {
 	const cmd = new Command(command, properties, message);
-	process.stdout.write(cmd.toString() + os$1.EOL);
+	process.stdout.write(cmd.toString() + os.EOL);
 }
 function issue(name, message = "") {
 	issueCommand(name, {}, message);
@@ -1885,7 +1885,7 @@ var require_dispatcher_base = /* @__PURE__ */ __commonJSMin(((exports, module) =
 		get webSocketOptions() {
 			return {
 				maxFragments: this[kWebSocketOptions].maxFragments ?? 131072,
-				maxPayloadSize: this[kWebSocketOptions].maxPayloadSize ?? 134217728
+				maxPayloadSize: this[kWebSocketOptions].maxPayloadSize ?? 0x8000000
 			};
 		}
 		get eventSourceOptions() {
@@ -6185,7 +6185,7 @@ var require_client_h2 = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		});
 		return {
 			version: "h2",
-			defaultPipelining: Infinity,
+			defaultPipelining: 1e400,
 			write(...args) {
 				return writeH2(client, ...args);
 			},
@@ -9574,7 +9574,7 @@ var require_pending_interceptors_formatter = /* @__PURE__ */ __commonJSMin(((exp
 				"Status code": statusCode,
 				Persistent: persist ? PERSISTENT : NOT_PERSISTENT,
 				Invocations: timesInvoked,
-				Remaining: persist ? Infinity : times - timesInvoked
+				Remaining: persist ? 1e400 : times - timesInvoked
 			}));
 			this.logger.table(withPrettyHeaders);
 			return this.transform.read().toString();
@@ -10024,7 +10024,7 @@ var require_dns = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			pick: interceptorOpts?.pick ?? null,
 			dualStack,
 			affinity,
-			maxItems: interceptorOpts?.maxItems ?? Infinity
+			maxItems: interceptorOpts?.maxItems ?? 1e400
 		});
 		return (dispatch) => {
 			return function dnsInterceptor(origDispatchOpts, handler) {
@@ -13105,7 +13105,7 @@ var require_cache = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 			}
 			return true;
 		}
-		#internalMatchAll(request, options, maxResponses = Infinity) {
+		#internalMatchAll(request, options, maxResponses = 1e400) {
 			let r = null;
 			if (request !== void 0) {
 				if (request instanceof Request) {
@@ -16463,8 +16463,8 @@ fs.constants.O_RDONLY;
 process.platform;
 events.EventEmitter;
 events.EventEmitter;
-os.platform();
-os.arch();
+os$1.platform();
+os$1.arch();
 // node_modules/.pnpm/@actions+core@3.0.1/node_modules/@actions/core/lib/core.js
 var __awaiter$1 = function(thisArg, _arguments, P, generator) {
 	function adopt(value) {
@@ -16591,7 +16591,7 @@ function warning(message, properties = {}) {
 * @param message info message
 */
 function info(message) {
-	process.stdout.write(message + os$1.EOL);
+	process.stdout.write(message + os.EOL);
 }
 /**
 * Begin an output group.
@@ -16636,7 +16636,7 @@ var require_constants = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		MAX_SAFE_COMPONENT_LENGTH: 16,
 		MAX_SAFE_BUILD_LENGTH: 250,
 		MAX_SAFE_INTEGER: Number.MAX_SAFE_INTEGER || 
-		/* istanbul ignore next */ 9007199254740991,
+		/* istanbul ignore next */ 0x1fffffffffffff,
 		WHITESPACE_CHARACTERS: [
 			"	",
 			"\n",
@@ -18502,8 +18502,7 @@ var require_proxy = /* @__PURE__ */ __commonJSMin(((exports) => {
 	}
 	function checkBypass(reqUrl) {
 		if (!reqUrl.hostname) return false;
-		const reqHost = reqUrl.hostname;
-		if (isLoopbackAddress(reqHost)) return true;
+		if (isLoopbackAddress(reqUrl.hostname)) return true;
 		const noProxy = process.env["no_proxy"] || process.env["NO_PROXY"] || "";
 		if (!noProxy) return false;
 		let reqPort;
@@ -21929,6 +21928,7 @@ function getOctokit(token, options, ...additionalPlugins) {
 }
 // node_modules/.pnpm/@octokit+plugin-throttling@11.0.5_@octokit+core@7.0.8/node_modules/@octokit/plugin-throttling/dist-bundle/index.js
 var import_light = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((exports, module, this$1) => {
+	var define;
 	/**
 	* This file contains the Bottleneck library (MIT), compiled to ES2017, and without Clustering support.
 	* https://github.com/SGrondin/bottleneck
