@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@github/local-action": "7.0.1",
-    "@tsconfig/node24": "24.0.5",
+    "@tsconfig/node26": "26.0.0",
     "@types/node": "24.19.2",
     "@types/semver": "7.8.0",
     "husky": "9.1.7",
